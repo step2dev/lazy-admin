@@ -23,9 +23,10 @@
     ],
     "require": {
         "php": "^8.1",
-        "spatie/laravel-package-tools": "^1.14.0",
         "illuminate/contracts": "^10.0",
-        "lazy-adm/lazy-component": "dev-main"
+        "lazy-adm/lazy-component": "dev-main",
+        "spatie/laravel-package-tools": "^1.14.0",
+        "spatie/laravel-permission": "^5.10"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
