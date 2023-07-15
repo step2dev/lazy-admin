@@ -8,6 +8,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\ThemeSwitcher;
+use Spatie\Permission\PermissionServiceProvider;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -28,11 +29,17 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ])
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
+                    ->callSilently('vendor:publish', [
+                        '--provider' => PermissionServiceProvider::class,
+                    ]);
+
+                $command
                     ->publishConfigFile()
-                    ->publishAssets()
                     ->publishMigrations()
                     ->askToRunMigrations()
+                    ->publishAssets()
                     ->askToStarRepoOnGitHub('step2dev/lazy-admin');
+
             })
             ->hasViewComponents('lazy',
                 ThemeSwitcher::class,
