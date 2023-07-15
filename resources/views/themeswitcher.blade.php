@@ -1,4 +1,4 @@
-@switch(config('lazy-admin.theme-toggle', 'multiple'))
+@switch(config('lazy.admin.theme-toggle'))
     @case ('multiple')
         <div title="Change Theme" class="dropdown dropdown-end z-[9999]">
             <div tabindex="0" class="btn btn-ghost gap-1 normal-case">
@@ -16,7 +16,7 @@
             <div
                 class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 h-[70vh] max-h-96 w-52 overflow-y-auto shadow-2xl">
                 <div class="grid grid-cols-1 gap-3 p-3" tabindex="0">
-                    @foreach(config('lazy-admin.themes') as $theme)
+                    @foreach(config('lazy.admin.themes') as $theme)
                         <div class="outline-base-content overflow-hidden rounded-lg outline-2 outline-offset-2"
                              data-set-theme="{{ $theme }}" data-act-class="outline">
                             <div data-theme="{{ $theme }}"
