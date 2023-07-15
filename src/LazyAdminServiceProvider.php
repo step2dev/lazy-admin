@@ -31,6 +31,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishAssets()
                     ->publishMigrations()
+                    ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('step2dev/lazy-admin');
             })
             ->hasViewComponents('lazy',
