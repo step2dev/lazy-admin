@@ -5,10 +5,10 @@ namespace Step2dev\LazyAdmin;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\ThemeSwitcher;
-use Spatie\Permission\PermissionServiceProvider;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {

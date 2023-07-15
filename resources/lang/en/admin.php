@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'btn'       => [
-        'back'   => 'Back',
+    'btn' => [
+        'back' => 'Back',
         'create' => 'Create',
-        'edit'   => 'Edit',
-        'show'   => 'Show',
+        'edit' => 'Edit',
+        'show' => 'Show',
         'delete' => 'Delete',
-        'save'   => 'Save',
+        'save' => 'Save',
     ],
     'copyright' => 'Copyright © 2022 - All right reserved',
 ];
