@@ -6,12 +6,12 @@ return [
      * This type of toggle will be used for the theme switcher.
      * Available options: multiple, single, toggle
      */
-    'theme-toggle'   => 'multiple',
+    'theme-toggle' => 'multiple',
     /*
      * This is the list of themes that will be available for the theme switcher.
      * You can add your own themes here.
      */
-    'themes'         => [
+    'themes' => [
         'light',
         'dark',
         'acid',
