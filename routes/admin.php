@@ -8,6 +8,6 @@ Route::name('admin.')
     ->middleware(config('lazy.admin.middleware'))
     ->group(static function () {
         Route::prefix(config('lazy.admin.prefix'))->group(function () {
-            Route::get('setting', SettingController::class)->name('setting.index');
+            Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
         });
     });
