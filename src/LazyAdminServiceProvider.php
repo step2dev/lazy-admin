@@ -6,6 +6,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
+use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\ThemeSwitcher;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
@@ -25,7 +26,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 'create_settings_table',
             ])
-            ->runsMigrations()
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
@@ -36,6 +36,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             })
             ->hasViewComponents('lazy',
                 ThemeSwitcher::class,
+                Footer::class,
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
             ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')
