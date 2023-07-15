@@ -2,6 +2,7 @@
 
 namespace Step2dev\LazyAdmin;
 
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
@@ -21,9 +22,22 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasConfigFile('lazy/admin')
             ->hasViews('lazy')
             ->hasTranslations()
+            ->hasMigrations([
+                'create_settings_table',
+            ])
+            ->runsMigrations()
+            ->hasInstallCommand(static function (InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishAssets()
+                    ->askToStarRepoOnGitHub('step2dev/lazy-admin');
+            })
             ->hasViewComponents('lazy',
                 ThemeSwitcher::class,
             )
+            ->sharesDataWithAllViews('companyName', 'Step2Dev')
+            ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')
+            ->sharesDataWithAllViews('githubUrl', 'https://github.com/step2dev/lazy-admin')
             ->hasCommand(LazyAdminCommand::class);
     }
 }
