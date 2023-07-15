@@ -5,6 +5,7 @@ namespace Step2dev\LazyAdmin;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
+use Step2dev\LazyAdmin\Components\ThemeSwitcher;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -17,10 +18,12 @@ class LazyAdminServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('lazy-admin')
+            ->hasConfigFile('lazy/admin')
             ->hasViews('lazy')
-            ->hasConfigFile()
-            ->hasViews()
-//            ->hasMigration('create_lazy-admin_table')
+            ->hasTranslations()
+            ->hasViewComponents('lazy',
+                ThemeSwitcher::class,
+            )
             ->hasCommand(LazyAdminCommand::class);
     }
 }
