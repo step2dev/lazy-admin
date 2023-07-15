@@ -26,6 +26,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 'create_settings_table',
             ])
+            ->hasRoute('admin')
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
                     ->startWith(static function (InstallCommand $installCommand) {
