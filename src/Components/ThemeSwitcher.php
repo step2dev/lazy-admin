@@ -14,7 +14,6 @@ class ThemeSwitcher extends LazyComponent
             $themeToggle = config('lazy.admin.theme-toggle');
             $themes = config('lazy.admin.themes');
 
-
             $data['attributes']['theme-toggle'] = $themeToggle;
             $data['attributes']['themes'] = $themes;
 
