@@ -10,5 +10,4 @@ class SettingController extends Controller
     {
         return 'Hello World';
     }
-
 }
