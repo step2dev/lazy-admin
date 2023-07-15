@@ -30,18 +30,16 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
                     ->startWith(static function (InstallCommand $installCommand) {
-                        $installCommand->info('Publishing the Spatie Permission');
-                        $installCommand->callSilently('vendor:publish', [
-                            '--provider' => PermissionServiceProvider::class,
-
-                        ]);
+                        $installCommand->info('Installing Lazy Admin...');
                     })
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
                     ->publishAssets()
-                    ->askToStarRepoOnGitHub('step2dev/lazy-admin');
-
+                    ->askToStarRepoOnGitHub('step2dev/lazy-admin')
+                    ->endWith(static function (InstallCommand $installCommand) {
+                        $installCommand->info('Lazy Admin installed successfully. Enjoy!');
+                    });
             })
             ->hasViewComponents('lazy',
                 ThemeSwitcher::class,
