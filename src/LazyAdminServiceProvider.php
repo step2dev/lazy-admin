@@ -29,11 +29,13 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ])
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
-                    ->callSilently('vendor:publish', [
-                        '--provider' => PermissionServiceProvider::class,
-                    ]);
+                    ->startWith(static function (InstallCommand $installCommand) {
+                        $installCommand->info('Publishing the Spatie Permission');
+                        $installCommand->callSilently('vendor:publish', [
+                            '--provider' => PermissionServiceProvider::class,
 
-                $command
+                        ]);
+                    })
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
