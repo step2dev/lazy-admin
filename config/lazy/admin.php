@@ -55,7 +55,7 @@ return [
      * This is the path where the admin panel will be accessible from.
      * Change this to whatever you want.
      */
-    'path' => env('LAZY_PATH', 'admin'),
+    'prefix' => env('LAZY_PATH', 'admin'),
 
     /*
      * This is the domain where the admin panel will be accessible from.
