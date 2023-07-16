@@ -119,11 +119,11 @@ final class DbOptimize extends BaseCommand
         $tableNames = $tables->implode("','");
 
         return $this->db
-                ->newQuery()
-                ->fromRaw('INFORMATION_SCHEMA.TABLES')
-                ->whereRaw('TABLE_SCHEMA = \'?\'', [$this->getDatabase()])
-                ->whereRaw('TABLE_NAME IN (\'?\')', [$tableNames])
-                ->count() === $tables->count();
+            ->newQuery()
+            ->fromRaw('INFORMATION_SCHEMA.TABLES')
+            ->whereRaw('TABLE_SCHEMA = \'?\'', [$this->getDatabase()])
+            ->whereRaw('TABLE_NAME IN (\'?\')', [$tableNames])
+            ->count() === $tables->count();
     }
 
     /**
@@ -137,5 +137,4 @@ final class DbOptimize extends BaseCommand
             $this->progress->advance();
         }
     }
-
 }
