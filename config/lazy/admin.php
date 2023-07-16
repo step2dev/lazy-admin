@@ -1,6 +1,8 @@
 <?php
 
 // config for Step2dev/LazyAdmin
+use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
+
 return [
     /*
      * This type of toggle will be used for the theme switcher.
@@ -70,5 +72,13 @@ return [
     'middleware' => [
         'web',
         'auth',
+        LazyAdminMiddleware::class,
+    ],
+
+    'roles' => [
+        'superadmin',
+        'admin',
+        'manager',
+        'moderator',
     ],
 ];
