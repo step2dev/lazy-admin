@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 class GenerateRoute
 {
-    final public function make(): static
+    final public static function make(): static
     {
         return new static();
     }
