@@ -31,6 +31,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 'create_settings_table',
             ])
+//            ->hasAssets()
             ->hasRoute('admin')
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
@@ -40,7 +41,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->publishAssets()
+//                    ->publishAssets()
                     ->askToStarRepoOnGitHub('step2dev/lazy-admin')
                     ->endWith(static function (InstallCommand $installCommand) {
                         $installCommand->info('Lazy Admin installed successfully. Enjoy!');
