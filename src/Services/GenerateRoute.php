@@ -26,12 +26,12 @@ class GenerateRoute
             if ($route['name'] && str($routeName)->contains($route['showOn'])) {
                 if (in_array($key, ['index', 'create'])) {
                     $routes[$key] = [
-                        'url'    => route($route['name']),
+                        'url' => route($route['name']),
                         'target' => $route['target'] ?? '_self',
                     ];
                 } else {
                     $routes[$key] = [
-                        'url'    => $route['url'] ?? route($route['name'], $this->getRouteParameters()),
+                        'url' => $route['url'] ?? route($route['name'], $this->getRouteParameters()),
                         'target' => $route['target'] ?? '_self',
                     ];
                 }
@@ -44,24 +44,24 @@ class GenerateRoute
     public function getDefaultRoutes(): array
     {
         return [
-            'index'   => [
-                'name'   => $this->getRouteIndexName(),
+            'index' => [
+                'name' => $this->getRouteIndexName(),
                 'showOn' => [],
             ],
-            'create'  => [
-                'name'   => $this->getRouteCreateName(),
+            'create' => [
+                'name' => $this->getRouteCreateName(),
                 'showOn' => ['index', 'edit'],
             ],
-            'show'    => [
-                'name'   => $this->getRouteShowName(),
+            'show' => [
+                'name' => $this->getRouteShowName(),
                 'showOn' => ['edit'],
             ],
-            'edit'    => [
-                'name'   => $this->getRouteEditName(),
+            'edit' => [
+                'name' => $this->getRouteEditName(),
                 'showOn' => ['show'],
             ],
             'destroy' => [
-                'name'   => $this->getRouteDestroyName(),
+                'name' => $this->getRouteDestroyName(),
                 'showOn' => ['show', 'edit'],
             ],
         ];
