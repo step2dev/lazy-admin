@@ -19,6 +19,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Qafar',
             'regional' => 'aa_ER',
+            'flag' => '🇪🇷'
         ],
         'ab' => [
             'name' => 'Abkhazian',
@@ -26,6 +27,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Аҧсуа',
             'regional' => '',
+            'flag' => '🇬🇪'
         ],
         'ace' => [
             'name' => 'Achinese',
@@ -33,6 +35,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Aceh',
             'regional' => '',
+            'flag' => '🇮🇩'
         ],
         'ady' => [
             'name' => 'Adyghe',
@@ -40,6 +43,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Адыгэбзэ',
             'regional' => '',
+            'flag' => '🇷🇺'
         ],
         'ae' => [
             'name' => 'Avestan',
@@ -47,6 +51,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Avesta',
             'regional' => '',
+            'flag' => '🇮🇷'
         ],
         'af' => [
             'name' => 'Afrikaans',
@@ -54,6 +59,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Afrikaans',
             'regional' => 'af_ZA',
+            'flag' => '🇿🇦'
         ],
         'agq' => [
             'name' => 'Aghem',
@@ -61,6 +67,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Aghem',
             'regional' => '',
+            'flag' => '🇨🇲'
         ],
         'ak' => [
             'name' => 'Akan',
@@ -68,6 +75,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Akan',
             'regional' => 'ak_GH',
+            'flag' => '🇬🇭'
         ],
         'ale' => [
             'name' => 'Aleut',
@@ -75,6 +83,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Unangax tunuu',
             'regional' => '',
+            'flag' => '🇺🇸'
         ],
         'am' => [
             'name' => 'Amharic',
@@ -82,6 +91,7 @@ return [
             'dir' => 'ltr',
             'native' => 'አማርኛ',
             'regional' => 'am_ET',
+            'flag' => '🇪🇹'
         ],
         'an' => [
             'name' => 'Aragonese',
@@ -89,6 +99,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Aragonés',
             'regional' => 'an_ES',
+            'flag' => '🇪🇸'
         ],
         'ang' => [
             'name' => 'Old English',
@@ -96,6 +107,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Old English',
             'regional' => '',
+            'flag' => '🏴󠁧󠁢󠁥󠁮󠁧󠁿'
         ],
         'ar' => [
             'name' => 'Arabic',
@@ -103,6 +115,7 @@ return [
             'dir' => 'rtl',
             'native' => 'العربية',
             'regional' => 'ar_AE',
+            'flag' => '🇦🇪'
         ],
         'as' => [
             'name' => 'Assamese',
@@ -110,6 +123,7 @@ return [
             'dir' => 'ltr',
             'native' => 'অসমীয়া',
             'regional' => 'as_IN',
+            'flag' => '🇮🇳'
         ],
         'asa' => [
             'name' => 'Kipare',
@@ -117,6 +131,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kipare',
             'regional' => '',
+            'flag' => '🇹🇿'
         ],
         'av' => [
             'name' => 'Avaric',
@@ -124,6 +139,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Авар мацӀ',
             'regional' => '',
+            'flag' => '🇷🇺'
         ],
         'ay' => [
             'name' => 'Aymara',
@@ -131,6 +147,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Aymar aru',
             'regional' => 'ay_PE',
+            'flag' => '🇵🇪'
         ],
         'az' => [
             'name' => 'Azerbaijani (Latin)',
@@ -138,6 +155,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Azərbaycanca',
             'regional' => 'az_AZ',
+            'flag' => '🇦🇿'
         ],
         'az-Cyrl' => [
             'name' => 'Azerbaijani (Cyrillic)',
@@ -145,6 +163,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Азәрбајҹан',
             'regional' => 'uz_UZ',
+            'flag' => '🇦🇿'
         ],
 
         // B
@@ -155,6 +174,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Башҡорт теле',
             'regional' => '',
+            'flag' => '🇷🇺'
         ],
         'bas' => [
             'name' => 'Basa',
@@ -162,6 +182,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ɓàsàa',
             'regional' => '',
+            'flag' => '🇨🇲'
         ],
         'be' => [
             'name' => 'Belarusian',
@@ -169,6 +190,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Беларуская',
             'regional' => 'be_BY',
+            'flag' => '🇧🇾'
         ],
         'bem' => [
             'name' => 'Bemba',
@@ -176,6 +198,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ichibemba',
             'regional' => 'bem_ZM',
+            'flag' => '🇿🇲'
         ],
         'bez' => [
             'name' => 'Bena',
@@ -183,6 +206,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Hibena',
             'regional' => '',
+            'flag' => '🇹🇿'
         ],
         'bg' => [
             'name' => 'Bulgarian',
@@ -190,6 +214,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Български',
             'regional' => 'bg_BG',
+            'flag' => '🇧🇬'
         ],
         'bh' => [
             'name' => 'Bihari',
@@ -197,6 +222,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Bihari',
             'regional' => '',
+            'flag' => '🇮🇳'
         ],
         'bi' => [
             'name' => 'Bislama',
@@ -204,6 +230,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Bislama',
             'regional' => '',
+            'flag' => '🇻🇺'
         ],
         'bm' => [
             'name' => 'Bambara',
@@ -211,6 +238,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Bamanakan',
             'regional' => '',
+            'flag' => '🇲🇱'
         ],
         'bn' => [
             'name' => 'Bengali',
@@ -218,6 +246,7 @@ return [
             'dir' => 'ltr',
             'native' => 'বাংলা',
             'regional' => 'bn_BD',
+            'flag' => '🇧🇩'
         ],
         'bo' => [
             'name' => 'Tibetan',
@@ -225,6 +254,7 @@ return [
             'dir' => 'ltr',
             'native' => 'པོད་སྐད་',
             'regional' => 'bo_IN',
+            'flag' => '🇨🇳'
         ],
         'br' => [
             'name' => 'Breton',
@@ -232,6 +262,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Brezhoneg',
             'regional' => 'br_FR',
+            'flag' => '🇫🇷'
         ],
         'bra' => [
             'name' => 'Braj',
@@ -239,6 +270,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ब्रज भाषा',
             'regional' => '',
+            'flag' => '🇮🇳'
         ],
         'brx' => [
             'name' => 'Bodo',
@@ -246,6 +278,7 @@ return [
             'dir' => 'ltr',
             'native' => 'बड़ो',
             'regional' => 'brx_IN',
+            'flag' => '🇮🇳'
         ],
         'bs' => [
             'name' => 'Bosnian',
@@ -253,6 +286,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Bosanski',
             'regional' => 'bs_BA',
+            'flag' => '🇧🇦'
         ],
         'byn' => [
             'name' => 'Blin',
@@ -260,6 +294,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ብሊን',
             'regional' => 'byn_ER',
+            'flag' => '🇪🇷'
         ],
 
         // C
@@ -270,6 +305,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Català',
             'regional' => 'ca_ES',
+            'flag' => '🇦🇩'
         ],
         'ca-valencia' => [
             'name' => 'Valencian',
@@ -277,6 +313,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Valencià',
             'regional' => '',
+            'flag' => '🇪🇸'
         ],
         'cch' => [
             'name' => 'Atsam',
@@ -284,6 +321,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Atsam',
             'regional' => '',
+            'flag' => '🇳🇬'
         ],
         'ce' => [
             'name' => 'Chechen',
@@ -291,6 +329,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Нохчийн мотт',
             'regional' => 'ce_RU',
+            'flag' => '🇷🇺'
         ],
         'cgg' => [
             'name' => 'Chiga',
@@ -298,6 +337,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Rukiga',
             'regional' => '',
+            'flag' => '🇺🇬'
         ],
         'ch' => [
             'name' => 'Chamorro',
@@ -305,6 +345,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Chamoru',
             'regional' => '',
+            'flag' => '🇬🇺'
         ],
         'chr' => [
             'name' => 'Cherokee',
@@ -312,6 +353,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ᏣᎳᎩ',
             'regional' => '',
+            'flag' => '🇺🇸'
         ],
         'co' => [
             'name' => 'Corsican',
@@ -319,6 +361,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Corsu',
             'regional' => '',
+            'flag' => '🇫🇷'
         ],
         'cr' => [
             'name' => 'Cree',
@@ -326,6 +369,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ᓀᐦᐃᔭᐍᐏᐣ',
             'regional' => '',
+            'flag' => '🇨🇦'
         ],
         'cs' => [
             'name' => 'Czech',
@@ -333,6 +377,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Čeština',
             'regional' => 'cs_CZ',
+            'flag' => '🇨🇿'
         ],
         'cu' => [
             'name' => 'Church Slavic',
@@ -340,6 +385,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ѩзыкъ словѣньскъ',
             'regional' => '',
+            'flag' => '🇷🇸'
         ],
         'cv' => [
             'name' => 'Chuvash',
@@ -347,6 +393,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Чӑваш чӗлхи',
             'regional' => 'cv_RU',
+            'flag' => '🇷🇺'
         ],
         'cy' => [
             'name' => 'Welsh',
@@ -354,6 +401,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Cymraeg',
             'regional' => 'cy_GB',
+            'flag' => '🇬🇧'
         ],
 
         // D
@@ -364,6 +412,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Dansk',
             'regional' => 'da_DK',
+            'flag' => '🇩🇰'
         ],
         'dav' => [
             'name' => 'Dawida',
@@ -371,6 +420,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kitaita',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'de' => [
             'name' => 'German',
@@ -378,6 +428,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Deutsch',
             'regional' => 'de_DE',
+            'flag' => '🇩🇪'
         ],
         'de-AT' => [
             'name' => 'Austrian German',
@@ -385,6 +436,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Österreichisches Deutsch',
             'regional' => 'de_AT',
+            'flag' => '🇦🇹'
         ],
         'de-CH' => [
             'name' => 'Swiss High German',
@@ -392,6 +444,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Schweizer Hochdeutsch',
             'regional' => 'de_CH',
+            'flag' => '🇨🇭'
         ],
         'dje' => [
             'name' => 'Zarma',
@@ -399,6 +452,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Zarmaciine',
             'regional' => '',
+            'flag' => '🇳🇪'
         ],
         'doi' => [
             'name' => 'Dogri',
@@ -406,6 +460,7 @@ return [
             'dir' => 'ltr',
             'native' => 'डोगरी',
             'regional' => 'doi_IN',
+            'flag' => '🇮🇳'
         ],
         'dua' => [
             'name' => 'Duala',
@@ -413,6 +468,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Duálá',
             'regional' => '',
+            'flag' => '🇨🇲'
         ],
         'dv' => [
             'name' => 'Divehi',
@@ -420,6 +476,7 @@ return [
             'dir' => 'rtl',
             'native' => 'ދިވެހިބަސް',
             'regional' => 'dv_MV',
+            'flag' => '🇲🇻'
         ],
         'dyo' => [
             'name' => 'Jola-Fonyi',
@@ -427,6 +484,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Joola',
             'regional' => '',
+            'flag' => '🇸🇳'
         ],
         'dz' => [
             'name' => 'Dzongkha',
@@ -434,6 +492,7 @@ return [
             'dir' => 'ltr',
             'native' => 'རྫོང་ཁ',
             'regional' => 'dz_BT',
+            'flag' => '🇧🇹'
         ],
 
         // E
@@ -444,6 +503,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kĩembu',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'ee' => [
             'name' => 'Ewe',
@@ -451,6 +511,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Eʋegbe',
             'regional' => '',
+            'flag' => '🇬🇭'
         ],
         'en' => [
             'name' => 'English',
@@ -458,6 +519,7 @@ return [
             'dir' => 'ltr',
             'native' => 'English',
             'regional' => 'en_GB',
+            'flag' => '🇬🇧'
         ],
         'en-AU' => [
             'name' => 'Australian English',
@@ -465,6 +527,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Australian English',
             'regional' => 'en_AU',
+            'flag' => '🇦🇺'
         ],
         'en-GB' => [
             'name' => 'British English',
@@ -472,6 +535,7 @@ return [
             'dir' => 'ltr',
             'native' => 'British English',
             'regional' => 'en_GB',
+            'flag' => '🇬🇧'
         ],
         'en-US' => [
             'name' => 'U.S. English',
@@ -479,6 +543,7 @@ return [
             'dir' => 'ltr',
             'native' => 'U.S. English',
             'regional' => 'en_US',
+            'flag' => '🇺🇸'
         ],
         'el' => [
             'name' => 'Greek',
@@ -486,6 +551,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ελληνικά',
             'regional' => 'el_GR',
+            'flag' => '🇬🇷'
         ],
         'eo' => [
             'name' => 'Esperanto',
@@ -493,6 +559,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Esperanto',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'es' => [
             'name' => 'Spanish',
@@ -500,6 +567,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Español',
             'regional' => 'es_ES',
+            'flag' => '🇪🇸'
         ],
         'et' => [
             'name' => 'Estonian',
@@ -507,6 +575,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Eesti',
             'regional' => 'et_EE',
+            'flag' => '🇪🇪'
         ],
         'eu' => [
             'name' => 'Basque',
@@ -514,6 +583,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Euskara',
             'regional' => 'eu_ES',
+            'flag' => '🇪🇸'
         ],
         'ewo' => [
             'name' => 'Ewondo',
@@ -521,6 +591,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ewondo',
             'regional' => '',
+            'flag' => '🇨🇲'
         ],
 
         // F
@@ -531,6 +602,7 @@ return [
             'dir' => 'rtl',
             'native' => 'فارسی',
             'regional' => 'fa_IR',
+            'flag' => '🇮🇷'
         ],
         'ff' => [
             'name' => 'Fulah',
@@ -538,6 +610,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Pulaar',
             'regional' => 'ff_SN',
+            'flag' => '🇸🇳'
         ],
         'fi' => [
             'name' => 'Finnish',
@@ -545,6 +618,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Suomi',
             'regional' => 'fi_FI',
+            'flag' => '🇫🇮'
         ],
         'fil' => [
             'name' => 'Filipino',
@@ -552,6 +626,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Filipino',
             'regional' => 'fil_PH',
+            'flag' => '🇵🇭'
         ],
         'fj' => [
             'name' => 'Fijian',
@@ -559,6 +634,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Vosa Vakaviti',
             'regional' => '',
+            'flag' => '🇫🇯'
         ],
         'fo' => [
             'name' => 'Faroese',
@@ -566,6 +642,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Føroyskt',
             'regional' => 'fo_FO',
+            'flag' => '🇫🇴'
         ],
         'fr' => [
             'name' => 'French',
@@ -573,6 +650,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Français',
             'regional' => 'fr_FR',
+            'flag' => '🇫🇷'
         ],
         'fr-CA' => [
             'name' => 'Canadian French',
@@ -580,6 +658,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Français canadien',
             'regional' => 'fr_CA',
+            'flag' => '🇨🇦'
         ],
         'fur' => [
             'name' => 'Friulian',
@@ -587,6 +666,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Furlan',
             'regional' => 'fur_IT',
+            'flag' => '🇮🇹'
         ],
         'fy' => [
             'name' => 'Western Frisian',
@@ -594,6 +674,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Frysk',
             'regional' => 'fy_DE',
+            'flag' => '🇩🇪'
         ],
 
         // G
@@ -604,6 +685,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Gaeilge',
             'regional' => 'ga_IE',
+            'flag' => '🇮🇪'
         ],
         'gaa' => [
             'name' => 'Ga',
@@ -611,6 +693,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ga',
             'regional' => '',
+            'flag' => '🇬🇭'
         ],
         'gd' => [
             'name' => 'Scottish Gaelic',
@@ -618,6 +701,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Gàidhlig',
             'regional' => 'gd_GB',
+            'flag' => '🏴󠁧󠁢󠁳󠁣󠁴󠁿'
         ],
         'gl' => [
             'name' => 'Galician',
@@ -625,6 +709,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Galego',
             'regional' => 'gl_ES',
+            'flag' => '🇪🇸'
         ],
         'gn' => [
             'name' => 'Guaraní',
@@ -632,6 +717,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Avañe’ẽ',
             'regional' => '',
+            'flag' => '🇵🇾'
         ],
         'gsw' => [
             'name' => 'Swiss German',
@@ -639,6 +725,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Schwiizertüütsch',
             'regional' => '',
+            'flag' => '🇨🇭'
         ],
         'gu' => [
             'name' => 'Gujarati',
@@ -646,6 +733,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ગુજરાતી',
             'regional' => 'gu_IN',
+            'flag' => '🇮🇳'
         ],
         'guz' => [
             'name' => 'Ekegusii',
@@ -653,6 +741,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ekegusii',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'gv' => [
             'name' => 'Manx',
@@ -660,6 +749,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Gaelg',
             'regional' => 'gv_GB',
+            'flag' => '🇮🇲'
         ],
 
         // H
@@ -670,6 +760,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Hausa',
             'regional' => 'ha_NG',
+            'flag' => '🇳🇬'
         ],
         'haw' => [
             'name' => 'Hawaiian',
@@ -677,6 +768,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ʻŌlelo Hawaiʻi',
             'regional' => '',
+            'flag' => '🇺🇸'
         ],
         'he' => [
             'name' => 'Hebrew',
@@ -684,6 +776,7 @@ return [
             'dir' => 'rtl',
             'native' => 'עברית',
             'regional' => 'he_IL',
+            'flag' => '🇮🇱'
         ],
         'hi' => [
             'name' => 'Hindi',
@@ -691,6 +784,7 @@ return [
             'dir' => 'ltr',
             'native' => 'हिन्दी',
             'regional' => 'hi_IN',
+            'flag' => '🇮🇳'
         ],
         'ho' => [
             'name' => 'Hiri Motu',
@@ -698,6 +792,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Hiri Motu',
             'regional' => '',
+            'flag' => '🇵🇬'
         ],
         'hr' => [
             'name' => 'Croatian',
@@ -705,6 +800,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Hrvatski',
             'regional' => 'hr_HR',
+            'flag' => '🇭🇷'
         ],
         'ht' => [
             'name' => 'Haitian',
@@ -712,6 +808,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kreyòl ayisyen',
             'regional' => 'ht_HT',
+            'flag' => '🇭🇹'
         ],
         'hu' => [
             'name' => 'Hungarian',
@@ -719,6 +816,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Magyar',
             'regional' => 'hu_HU',
+            'flag' => '🇭🇺'
         ],
         'hy' => [
             'name' => 'Armenian',
@@ -726,6 +824,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Հայերէն',
             'regional' => 'hy_AM',
+            'flag' => '🇦🇲'
         ],
         'hz' => [
             'name' => 'Herero',
@@ -733,6 +832,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Otjiherero',
             'regional' => '',
+            'flag' => '🇳🇦'
         ],
 
         // I
@@ -743,6 +843,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Interlingua',
             'regional' => 'ia_FR',
+            'flag' => '🇫🇷'
         ],
         'id' => [
             'name' => 'Indonesian',
@@ -750,6 +851,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Bahasa Indonesia',
             'regional' => 'id_ID',
+            'flag' => '🇮🇩'
         ],
         'ig' => [
             'name' => 'Igbo',
@@ -757,6 +859,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Igbo',
             'regional' => 'ig_NG',
+            'flag' => '🇳🇬'
         ],
         'ii' => [
             'name' => 'Sichuan Yi',
@@ -764,6 +867,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ꆈꌠꉙ',
             'regional' => '',
+            'flag' => '🇨🇳'
         ],
         'ik' => [
             'name' => 'Inupiaq',
@@ -771,6 +875,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Iñupiaq',
             'regional' => 'ik_CA',
+            'flag' => '🇺🇸'
         ],
         'io' => [
             'name' => 'Ido',
@@ -778,6 +883,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ido',
             'regional' => '',
+            'flag' => '🇮🇹'
         ],
         'is' => [
             'name' => 'Icelandic',
@@ -785,6 +891,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Íslenska',
             'regional' => 'is_IS',
+            'flag' => '🇮🇸'
         ],
         'it' => [
             'name' => 'Italian',
@@ -792,6 +899,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Italiano',
             'regional' => 'it_IT',
+            'flag' => '🇮🇹'
         ],
         'iu' => [
             'name' => 'Inuktitut (Canadian Aboriginal Syllabics)',
@@ -799,6 +907,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ᐃᓄᒃᑎᑐᑦ',
             'regional' => 'iu_CA',
+            'flag' => '🇨🇦'
         ],
         'iu-Latin' => [
             'name' => 'Inuktitut (Latin)',
@@ -806,6 +915,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Inuktitut',
             'regional' => 'ia_FR',
+            'flag' => '🇫🇷'
         ],
 
         // J
@@ -816,6 +926,7 @@ return [
             'dir' => 'ltr',
             'native' => '日本語',
             'regional' => 'ja_JP',
+            'flag' => '🇯🇵'
         ],
         'jmc' => [
             'name' => 'Machame',
@@ -823,6 +934,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kimachame',
             'regional' => '',
+            'flag' => '🇹🇿'
         ],
         'jv' => [
             'name' => 'Javanese (Latin)',
@@ -830,6 +942,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Basa Jawa',
             'regional' => '',
+            'flag' => '🇮🇩'
         ],
         'jv-Java' => [
             'name' => 'Javanese (Javanese)',
@@ -837,6 +950,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ꦧꦱꦗꦮ',
             'regional' => '',
+            'flag' => '🇮🇩'
         ],
 
         // K
@@ -847,6 +961,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ქართული',
             'regional' => 'ka_GE',
+            'flag' => '🇬🇪'
         ],
         'kab' => [
             'name' => 'Kabyle',
@@ -854,6 +969,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Taqbaylit',
             'regional' => 'kab_DZ',
+            'flag' => '🇩🇿'
         ],
         'kaj' => [
             'name' => 'Jju',
@@ -861,6 +977,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kaje',
             'regional' => '',
+            'flag' => '🇳🇬'
         ],
         'kam' => [
             'name' => 'Kamba',
@@ -868,6 +985,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kikamba',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'kcg' => [
             'name' => 'Tyap',
@@ -875,6 +993,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Katab',
             'regional' => '',
+            'flag' => '🇳🇬'
         ],
         'kde' => [
             'name' => 'Makonde',
@@ -882,6 +1001,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Chimakonde',
             'regional' => '',
+            'flag' => '🇹🇿'
         ],
         'kea' => [
             'name' => 'Kabuverdianu',
@@ -889,6 +1009,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kabuverdianu',
             'regional' => '',
+            'flag' => '🇨🇻'
         ],
         'kg' => [
             'name' => 'Kongo',
@@ -896,6 +1017,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kikongo',
             'regional' => '',
+            'flag' => '🇨🇩'
         ],
         'khq' => [
             'name' => 'Koyra Chiini',
@@ -903,6 +1025,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Koyra ciini',
             'regional' => '',
+            'flag' => '🇲🇱'
         ],
         'ki' => [
             'name' => 'Kikuyu',
@@ -910,6 +1033,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Gikuyu',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'kj' => [
             'name' => 'Kuanyama',
@@ -917,6 +1041,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kwanyama',
             'regional' => '',
+            'flag' => '🇳🇦'
         ],
         'kk' => [
             'name' => 'Kazakh',
@@ -924,6 +1049,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Қазақ тілі',
             'regional' => 'kk_KZ',
+            'flag' => '🇰🇿'
         ],
         'kl' => [
             'name' => 'Kalaallisut',
@@ -931,6 +1057,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kalaallisut',
             'regional' => 'kl_GL',
+            'flag' => '🇬🇱'
         ],
         'kln' => [
             'name' => 'Kalenjin',
@@ -938,6 +1065,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kalenjin',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'km' => [
             'name' => 'Khmer',
@@ -945,6 +1073,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ភាសាខ្មែរ',
             'regional' => 'km_KH',
+            'flag' => '🇰🇭'
         ],
         'kn' => [
             'name' => 'Kannada',
@@ -952,6 +1081,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ಕನ್ನಡ',
             'regional' => 'kn_IN',
+            'flag' => '🇮🇳'
         ],
         'ko' => [
             'name' => 'Korean',
@@ -959,6 +1089,7 @@ return [
             'dir' => 'ltr',
             'native' => '한국어',
             'regional' => 'ko_KR',
+            'flag' => '🇰🇷'
         ],
         'kok' => [
             'name' => 'Konkani',
@@ -966,6 +1097,7 @@ return [
             'dir' => 'ltr',
             'native' => 'कोंकणी',
             'regional' => 'kok_IN',
+            'flag' => '🇮🇳'
         ],
         'kr' => [
             'name' => 'Kanuri',
@@ -973,6 +1105,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kanuri',
             'regional' => '',
+            'flag' => '🇳🇪'
         ],
         'ks' => [
             'name' => 'Kashmiri (Arabic)',
@@ -980,6 +1113,7 @@ return [
             'dir' => 'rtl',
             'native' => 'کأشُر',
             'regional' => 'ks_IN',
+            'flag' => '🇮🇳'
         ],
         'ks-Deva' => [
             'name' => 'Kashmiri (Devaganari)',
@@ -987,6 +1121,7 @@ return [
             'dir' => 'ltr',
             'native' => 'कॉशुर',
             'regional' => 'ks_IN',
+            'flag' => '🇮🇳'
         ],
         'ksb' => [
             'name' => 'Shambala',
@@ -994,6 +1129,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kishambaa',
             'regional' => '',
+            'flag' => '🇹🇿'
         ],
         'ksf' => [
             'name' => 'Bafia',
@@ -1001,6 +1137,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Rikpa',
             'regional' => '',
+            'flag' => '🇨🇲'
         ],
         'ksh' => [
             'name' => 'Kölsch',
@@ -1008,6 +1145,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kölsch',
             'regional' => '',
+            'flag' => '🇩🇪'
         ],
         'ku' => [
             'name' => 'Kurdish',
@@ -1015,6 +1153,7 @@ return [
             'dir' => 'rtl',
             'native' => 'کوردی',
             'regional' => 'ku_TR',
+            'flag' => '🇹🇷'
         ],
         'kv' => [
             'name' => 'Komi',
@@ -1022,6 +1161,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Коми кыв',
             'regional' => '',
+            'flag' => '🇷🇺'
         ],
         'kw' => [
             'name' => 'Cornish',
@@ -1029,6 +1169,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kernewek',
             'regional' => 'kw_GB',
+            'flag' => '🇬🇧'
         ],
         'ky' => [
             'name' => 'Kyrgyz',
@@ -1036,6 +1177,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Кыргыз',
             'regional' => 'ky_KG',
+            'flag' => '🇰🇬'
         ],
 
         // L
@@ -1046,6 +1188,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Latine',
             'regional' => '',
+            'flag' => '🏴'
         ],
         'lag' => [
             'name' => 'Langi',
@@ -1053,6 +1196,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kɨlaangi',
             'regional' => '',
+            'flag' => '🇹🇿'
         ],
         'lah' => [
             'name' => 'Lahnda',
@@ -1060,6 +1204,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Lahnda',
             'regional' => '',
+            'flag' => '🇵🇰'
         ],
         'lb' => [
             'name' => 'Luxembourgish',
@@ -1067,6 +1212,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Lëtzebuergesch',
             'regional' => 'lb_LU',
+            'flag' => ''
         ],
         'lg' => [
             'name' => 'Ganda',
@@ -1074,6 +1220,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Luganda',
             'regional' => 'lg_UG',
+            'flag' => '🇺🇬'
         ],
         'li' => [
             'name' => 'Limburgish',
@@ -1081,6 +1228,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Limburgs',
             'regional' => 'li_BE',
+            'flag' => '🇧🇪'
         ],
         'ln' => [
             'name' => 'Lingala',
@@ -1088,6 +1236,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Lingála',
             'regional' => '',
+            'flag' => '🇨🇩'
         ],
         'lo' => [
             'name' => 'Lao',
@@ -1095,6 +1244,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ລາວ',
             'regional' => 'lo_LA',
+            'flag' => '🇱🇦'
         ],
         'lt' => [
             'name' => 'Lithuanian',
@@ -1102,6 +1252,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Lietuvių',
             'regional' => 'lt_LT',
+            'flag' => '🇱🇹'
         ],
         'lu' => [
             'name' => 'Luba-Katanga',
@@ -1109,6 +1260,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tshiluba',
             'regional' => '',
+            'flag' => '🇨🇩'
         ],
         'luo' => [
             'name' => 'Luo',
@@ -1116,6 +1268,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Dholuo',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'luy' => [
             'name' => 'Oluluyia',
@@ -1123,6 +1276,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Luluhia',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'lv' => [
             'name' => 'Latvian',
@@ -1130,6 +1284,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Latviešu',
             'regional' => 'lv_LV',
+            'flag' => '🇱🇻'
         ],
 
         // M
@@ -1140,6 +1295,7 @@ return [
             'dir' => 'ltr',
             'native' => 'मैथिली',
             'regional' => 'mai_IN',
+            'flag' => '🇮🇳'
         ],
         'mas' => [
             'name' => 'Masai',
@@ -1147,6 +1303,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ɔl-Maa',
             'regional' => '',
+            'flag' => '🇹🇿'
         ],
         'mer' => [
             'name' => 'Kimîîru',
@@ -1154,6 +1311,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kĩmĩrũ',
             'regional' => '',
+            'flag' => '🇰🇪'
         ],
         'mfe' => [
             'name' => 'Morisyen',
@@ -1161,6 +1319,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kreol morisien',
             'regional' => '',
+            'flag' => '🇲🇺'
         ],
         'mg' => [
             'name' => 'Malagasy',
@@ -1168,6 +1327,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Malagasy',
             'regional' => 'mg_MG',
+            'flag' => '🇲🇬'
         ],
         'mgh' => [
             'name' => 'Makhuwa-Meetto',
@@ -1175,6 +1335,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Makua',
             'regional' => '',
+            'flag' => '🇲🇿'
         ],
         'mh' => [
             'name' => 'Marshallese',
@@ -1182,6 +1343,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kajin M̧ajeļ',
             'regional' => 'mh_MH',
+            'flag' => '🇲🇭'
         ],
         'mi' => [
             'name' => 'Māori',
@@ -1189,6 +1351,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Māori',
             'regional' => 'mi_NZ',
+            'flag' => '🇳🇿'
         ],
         'mk' => [
             'name' => 'Macedonian',
@@ -1196,6 +1359,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Македонски',
             'regional' => 'mk_MK',
+            'flag' => '🇲🇰'
         ],
         'ml' => [
             'name' => 'Malayalam',
@@ -1203,6 +1367,7 @@ return [
             'dir' => 'ltr',
             'native' => 'മലയാളം',
             'regional' => 'ml_IN',
+            'flag' => '🇮🇳'
         ],
         'mn' => [
             'name' => 'Mongolian (Cyrillic)',
@@ -1210,6 +1375,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Монгол',
             'regional' => 'mn_MN',
+            'flag' => '🇲🇳'
         ],
         'mn-Mong' => [
             'name' => 'Mongolian (Mongolian)',
@@ -1217,6 +1383,7 @@ return [
             'dir' => 'rtl',
             'native' => 'ᠮᠣᠨᠭᠭᠣᠯ ᠬᠡᠯᠡ',
             'regional' => 'mn_MN',
+            'flag' => '🇲🇳'
         ],
         'mni' => [
             'name' => 'Manipuri',
@@ -1224,6 +1391,7 @@ return [
             'dir' => 'ltr',
             'native' => 'মৈতৈ',
             'regional' => 'mni_IN',
+            'flag' => '🇮🇳'
         ],
         'mr' => [
             'name' => 'Marathi',
@@ -1231,6 +1399,7 @@ return [
             'dir' => 'ltr',
             'native' => 'मराठी',
             'regional' => 'mr_IN',
+            'flag' => '🇮🇳'
         ],
         'ms' => [
             'name' => 'Malay',
@@ -1238,6 +1407,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Bahasa Melayu',
             'regional' => 'ms_MY',
+            'flag' => '🇲🇾'
         ],
         'mt' => [
             'name' => 'Maltese',
@@ -1245,6 +1415,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Malti',
             'regional' => 'mt_MT',
+            'flag' => '🇲🇹'
         ],
         'mtr' => [
             'name' => 'Mewari',
@@ -1252,6 +1423,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Mewari',
             'regional' => '',
+            'flag' => '🇮🇳'
         ],
         'mua' => [
             'name' => 'Mundang',
@@ -1259,6 +1431,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Mundang',
             'regional' => '',
+            'flag' => '🇨🇲'
         ],
         'my' => [
             'name' => 'Burmese',
@@ -1266,6 +1439,7 @@ return [
             'dir' => 'ltr',
             'native' => 'မြန်မာဘာသာ',
             'regional' => 'my_MM',
+            'flag' => '🇲🇲'
         ],
 
         // N
@@ -1276,6 +1450,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ekakairũ Naoero',
             'regional' => '',
+            'flag' => '🇳🇷'
         ],
         'naq' => [
             'name' => 'Nama',
@@ -1283,6 +1458,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Khoekhoegowab',
             'regional' => '',
+            'flag' => '🇳🇦'
         ],
         'nb' => [
             'name' => 'Norwegian Bokmål',
@@ -1290,6 +1466,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Bokmål',
             'regional' => 'nb_NO',
+            'flag' => '🇳🇴'
         ],
         'nd' => [
             'name' => 'North Ndebele',
@@ -1297,6 +1474,7 @@ return [
             'dir' => 'ltr',
             'native' => 'IsiNdebele',
             'regional' => '',
+            'flag' => '🇿🇼'
         ],
         'nds' => [
             'name' => 'Low German',
@@ -1304,6 +1482,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Plattdüütsch',
             'regional' => 'nds_DE',
+            'flag' => '🇩🇪'
         ],
         'ne' => [
             'name' => 'Nepali',
@@ -1311,6 +1490,7 @@ return [
             'dir' => 'ltr',
             'native' => 'नेपाली',
             'regional' => '',
+            'flag' => '🇳🇵'
         ],
         'ng' => [
             'name' => 'Ndonga',
@@ -1318,6 +1498,7 @@ return [
             'dir' => 'ltr',
             'native' => 'OshiNdonga',
             'regional' => '',
+            'flag' => '🇳🇦'
         ],
         'nl' => [
             'name' => 'Dutch',
@@ -1325,6 +1506,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Nederlands',
             'regional' => 'nl_NL',
+            'flag' => '🇳🇱'
         ],
         'nmg' => [
             'name' => 'Kwasio',
@@ -1332,6 +1514,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ngumba',
             'regional' => '',
+            'flag' => '🇨🇲'
         ],
         'nn' => [
             'name' => 'Norwegian Nynorsk',
@@ -1339,6 +1522,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Nynorsk',
             'regional' => 'nn_NO',
+            'flag' => '🇳🇴'
         ],
         'nr' => [
             'name' => 'South Ndebele',
@@ -1346,6 +1530,7 @@ return [
             'dir' => 'ltr',
             'native' => 'IsiNdebele',
             'regional' => 'nr_ZA',
+            'flag' => '🇿🇦'
         ],
         'nso' => [
             'name' => 'Northern Sotho',
@@ -1353,6 +1538,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Sesotho sa Leboa',
             'regional' => 'nso_ZA',
+            'flag' => '🇿🇦'
         ],
         'nus' => [
             'name' => 'Nuer',
@@ -1360,6 +1546,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Thok Nath',
             'regional' => '',
+            'flag' => '🇸🇸'
         ],
         'nv' => [
             'name' => 'Navajo',
@@ -1367,6 +1554,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Diné bizaad',
             'regional' => '',
+            'flag' => '🇺🇸'
         ],
         'ny' => [
             'name' => 'Chewa',
@@ -1374,6 +1562,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ChiCheŵa',
             'regional' => '',
+            'flag' => '🇲🇼'
         ],
         'nyn' => [
             'name' => 'Nyankole',
@@ -1381,6 +1570,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Runyankore',
             'regional' => '',
+            'flag' => '🇺🇬'
         ],
 
         // O
@@ -1391,6 +1581,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Occitan',
             'regional' => 'oc_FR',
+            'flag' => '🇫🇷'
         ],
         'oj' => [
             'name' => 'Ojibwa',
@@ -1398,6 +1589,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ᐊᓂᔑᓈᐯᒧᐎᓐ',
             'regional' => '',
+            'flag' => '🇨🇦'
         ],
         'om' => [
             'name' => 'Oromo',
@@ -1405,6 +1597,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Oromoo',
             'regional' => 'om_ET',
+            'flag' => '🇪🇹'
         ],
         'or' => [
             'name' => 'Oriya',
@@ -1412,6 +1605,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ଓଡ଼ିଆ',
             'regional' => 'or_IN',
+            'flag' => '🇮🇳'
         ],
         'os' => [
             'name' => 'Ossetic',
@@ -1419,6 +1613,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ирон',
             'regional' => 'os_RU',
+            'flag' => '🇷🇺'
         ],
 
         // P
@@ -1429,6 +1624,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ਪੰਜਾਬੀ',
             'regional' => 'pa_IN',
+            'flag' => '🇮🇳'
         ],
         'pa-Arab' => [
             'name' => 'Punjabi (Arabic)',
@@ -1436,6 +1632,7 @@ return [
             'dir' => 'rtl',
             'native' => 'پنجاب',
             'regional' => 'pa_IN',
+            'flag' => '🇮🇳'
         ],
         'pi' => [
             'name' => 'Pahari-Potwari',
@@ -1443,6 +1640,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Pāli',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'pl' => [
             'name' => 'Polish',
@@ -1450,6 +1648,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Polski',
             'regional' => 'pl_PL',
+            'flag' => '🇵🇱',
         ],
         'pra' => [
             'name' => 'Prakrit',
@@ -1457,6 +1656,7 @@ return [
             'dir' => 'ltr',
             'native' => 'प्राकृत',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'ps' => [
             'name' => 'Pashto',
@@ -1464,6 +1664,7 @@ return [
             'dir' => 'rtl',
             'native' => 'پښتو',
             'regional' => 'ps_AF',
+            'flag' => '🇦🇫'
         ],
         'pt' => [
             'name' => 'Portuguese',
@@ -1471,6 +1672,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Português',
             'regional' => 'pt_PT',
+            'flag' => '🇵🇹'
         ],
         'pt-BR' => [
             'name' => 'Brazilian Portuguese',
@@ -1478,6 +1680,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Português do Brasil',
             'regional' => 'pt_BR',
+            'flag' => '🇧🇷'
         ],
 
         // Q
@@ -1488,6 +1691,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Runa Simi',
             'regional' => '',
+            'flag' => '🏳'
         ],
 
         // R
@@ -1498,6 +1702,7 @@ return [
             'dir' => 'ltr',
             'native' => 'राजस्थानी',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'ro' => [
             'name' => 'Romanian',
@@ -1505,6 +1710,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Română',
             'regional' => 'ro_RO',
+            'flag' => '🇷🇴'
         ],
         'rof' => [
             'name' => 'Rombo',
@@ -1512,6 +1718,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kihorombo',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'rm' => [
             'name' => 'Romansh',
@@ -1519,6 +1726,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Rumantsch',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'rn' => [
             'name' => 'Rundi',
@@ -1526,6 +1734,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ikirundi',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'ru' => [
             'name' => 'Russian',
@@ -1533,6 +1742,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Русский',
             'regional' => 'ru_RU',
+            'flag' => '🇷🇺',
         ],
         'rw' => [
             'name' => 'Kinyarwanda',
@@ -1540,6 +1750,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kinyarwanda',
             'regional' => 'rw_RW',
+            'flag' => '🇷🇼'
         ],
         'rwk' => [
             'name' => 'Rwa',
@@ -1547,6 +1758,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kiruwa',
             'regional' => '',
+            'flag' => '🏳'
         ],
 
         // S
@@ -1557,6 +1769,7 @@ return [
             'dir' => 'ltr',
             'native' => 'संस्कृतम्',
             'regional' => 'sa_IN',
+            'flag' => '🇮🇳'
         ],
         'sah' => [
             'name' => 'Yakut',
@@ -1564,6 +1777,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Саха тыла',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'saq' => [
             'name' => 'Samburu',
@@ -1571,6 +1785,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kisampur',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'sbp' => [
             'name' => 'Sileibi',
@@ -1578,6 +1793,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ishisangu',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'sc' => [
             'name' => 'Sardinian',
@@ -1585,6 +1801,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Sardu',
             'regional' => 'sc_IT',
+            'flag' => '🇮🇹'
         ],
         'sd' => [
             'name' => 'Sindhi',
@@ -1592,6 +1809,7 @@ return [
             'dir' => 'rtl',
             'native' => 'سنڌي',
             'regional' => 'sd_IN',
+            'flag' => '🇮🇳'
         ],
         'se' => [
             'name' => 'Northern Sami',
@@ -1599,6 +1817,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Davvisámegiella',
             'regional' => 'se_NO',
+            'flag' => '🇳🇴'
         ],
         'seh' => [
             'name' => 'Sena',
@@ -1606,6 +1825,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Sena',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'ses' => [
             'name' => 'Songhay',
@@ -1613,6 +1833,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Koyraboro senni',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'sg' => [
             'name' => 'Sango',
@@ -1620,6 +1841,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Sängö',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'sh' => [
             'name' => 'Serbo-Croatian',
@@ -1627,6 +1849,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Srpskohrvatski',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'shi' => [
             'name' => 'Tachelhit (Latin)',
@@ -1634,6 +1857,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tashelhit',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'shi-Tfng' => [
             'name' => 'Tachelhit (Tifinagh)',
@@ -1641,6 +1865,7 @@ return [
             'dir' => 'rtl',
             'native' => 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'si' => [
             'name' => 'Sinhala',
@@ -1648,6 +1873,7 @@ return [
             'dir' => 'ltr',
             'native' => 'සිංහල',
             'regional' => 'si_LK',
+            'flag' => '🇱🇰'
         ],
         'sid' => [
             'name' => 'Sidamo',
@@ -1655,6 +1881,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Sidaamu Afo',
             'regional' => 'sid_ET',
+            'flag' => '🇪🇹'
         ],
         'sk' => [
             'name' => 'Slovak',
@@ -1662,6 +1889,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Slovenčina',
             'regional' => 'sk_SK',
+            'flag' => '🇸🇰'
         ],
         'sl' => [
             'name' => 'Slovene',
@@ -1669,6 +1897,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Slovenščina',
             'regional' => 'sl_SI',
+            'flag' => '🇸🇮'
         ],
         'sm' => [
             'name' => 'Samoan',
@@ -1676,6 +1905,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Gagana fa’a Sāmoa',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'sn' => [
             'name' => 'Shona',
@@ -1683,6 +1913,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ChiShona',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'so' => [
             'name' => 'Somali',
@@ -1690,6 +1921,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Soomaali',
             'regional' => 'so_SO',
+            'flag' => '🇸🇴'
         ],
         'sq' => [
             'name' => 'Albanian',
@@ -1697,6 +1929,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Shqip',
             'regional' => 'sq_AL',
+            'flag' => '🇦🇱'
         ],
         'sr' => [
             'name' => 'Serbian (Cyrillic)',
@@ -1704,6 +1937,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Српски',
             'regional' => 'sr_RS',
+            'flag' => '🇷🇸'
         ],
         'sr-Latin' => [
             'name' => 'Serbian (Latin)',
@@ -1711,6 +1945,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Srpski',
             'regional' => 'sr_RS',
+            'flag' => '🇷🇸'
         ],
         'ss' => [
             'name' => 'Swati',
@@ -1718,6 +1953,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Siswati',
             'regional' => 'ss_ZA',
+            'flag' => '🇸🇿'
         ],
         'ssy' => [
             'name' => 'Saho',
@@ -1725,6 +1961,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Saho',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'st' => [
             'name' => 'Southern Sotho',
@@ -1732,6 +1969,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Sesotho',
             'regional' => 'st_ZA',
+            'flag' => '🇿🇦'
         ],
         'su' => [
             'name' => 'Sundanese',
@@ -1739,6 +1977,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Basa Sunda',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'sv' => [
             'name' => 'Swedish',
@@ -1746,6 +1985,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Svenska',
             'regional' => 'sv_SE',
+            'flag' => '🇸🇪'
         ],
         'sw' => [
             'name' => 'Swahili',
@@ -1753,6 +1993,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kiswahili',
             'regional' => 'sw_KE',
+            'flag' => '🇰🇪'
         ],
         'swc' => [
             'name' => 'Congo Swahili',
@@ -1760,6 +2001,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kiswahili ya Kongo',
             'regional' => '',
+            'flag' => '🏳'
         ],
 
         // T
@@ -1770,6 +2012,7 @@ return [
             'dir' => 'ltr',
             'native' => 'தமிழ்',
             'regional' => 'ta_IN',
+            'flag' => '🇮🇳'
         ],
         'te' => [
             'name' => 'Telugu',
@@ -1777,6 +2020,7 @@ return [
             'dir' => 'ltr',
             'native' => 'తెలుగు',
             'regional' => 'te_IN',
+            'flag' => '🇮🇳'
         ],
         'teo' => [
             'name' => 'Teso',
@@ -1784,6 +2028,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Kiteso',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'tg' => [
             'name' => 'Tajik (Cyrillic)',
@@ -1791,6 +2036,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Тоҷикӣ',
             'regional' => 'tg_TJ',
+            'flag' => '🇹🇯'
         ],
         'tg-Arab' => [
             'name' => 'Tajik (Arabic)',
@@ -1798,6 +2044,7 @@ return [
             'dir' => 'rtl',
             'native' => 'تاجیکی',
             'regional' => 'tg_TJ',
+            'flag' => '🇹🇯'
         ],
         'tg-Latin' => [
             'name' => 'Tajik (Latin)',
@@ -1805,6 +2052,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tojikī',
             'regional' => 'tg_TJ',
+            'flag' => '🇹🇯'
         ],
         'th' => [
             'name' => 'Thai',
@@ -1812,6 +2060,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ไทย',
             'regional' => 'th_TH',
+            'flag' => '🇹🇭'
         ],
         'ti' => [
             'name' => 'Tigrinya',
@@ -1819,6 +2068,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ትግርኛ',
             'regional' => 'ti_ET',
+            'flag' => '🇪🇹'
         ],
         'tig' => [
             'name' => 'Tigre',
@@ -1826,6 +2076,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ትግረ',
             'regional' => 'tig_ER',
+            'flag' => '🇪🇷'
         ],
         'tk' => [
             'name' => 'Turkmen',
@@ -1833,6 +2084,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Түркменче',
             'regional' => 'tk_TM',
+            'flag' => '🇹🇲'
         ],
         'tl' => [
             'name' => 'Tagalog',
@@ -1840,6 +2092,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tagalog',
             'regional' => 'tl_PH',
+            'flag' => '🇵🇭'
         ],
         'tn' => [
             'name' => 'Tswana',
@@ -1847,6 +2100,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Setswana',
             'regional' => 'tn_ZA',
+            'flag' => '🇿🇦'
         ],
         'to' => [
             'name' => 'Tongan',
@@ -1854,6 +2108,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Lea fakatonga',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'tr' => [
             'name' => 'Turkish',
@@ -1861,6 +2116,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Türkçe',
             'regional' => 'tr_TR',
+            'flag' => '🇹🇷'
         ],
         'trv' => [
             'name' => 'Taroko',
@@ -1868,6 +2124,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Seediq',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'ts' => [
             'name' => 'Tsonga',
@@ -1875,6 +2132,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Xitsonga',
             'regional' => 'ts_ZA',
+            'flag' => '🇿🇦'
         ],
         'tt' => [
             'name' => 'Tatar',
@@ -1882,6 +2140,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Татар теле',
             'regional' => 'tt_RU',
+            'flag' => '🇷🇺'
         ],
         'tw' => [
             'name' => 'Twi',
@@ -1889,6 +2148,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Twi',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'twq' => [
             'name' => 'Tasawaq',
@@ -1896,6 +2156,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tasawaq senni',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'ty' => [
             'name' => 'Tahitian',
@@ -1903,6 +2164,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Reo Māohi',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'tzm' => [
             'name' => 'Central Atlas Tamazight (Tifinagh)',
@@ -1910,6 +2172,7 @@ return [
             'dir' => 'rtl',
             'native' => 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'tzm-Latin' => [
             'name' => 'Central Atlas Tamazight (Latin)',
@@ -1917,6 +2180,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tamazight',
             'regional' => '',
+            'flag' => '🏳'
         ],
 
         // U
@@ -1927,6 +2191,7 @@ return [
             'dir' => 'rtl',
             'native' => 'ئۇيغۇرچە',
             'regional' => 'ug_CN',
+            'flag' => '🇨🇳'
         ],
         'uk' => [
             'name' => 'Ukrainian',
@@ -1934,6 +2199,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Українська',
             'regional' => 'uk_UA',
+            'flag' => '🇺🇦',
         ],
         'ur' => [
             'name' => 'Urdu',
@@ -1941,6 +2207,7 @@ return [
             'dir' => 'rtl',
             'native' => 'اردو',
             'regional' => 'ur_PK',
+            'flag' => '🇵🇰'
         ],
         'uz' => [
             'name' => 'Uzbek (Cyrillic)',
@@ -1948,6 +2215,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Ўзбек',
             'regional' => 'uz_UZ',
+            'flag' => '🇺🇿'
         ],
         'uz-Arab' => [
             'name' => 'Uzbek (Arabic)',
@@ -1955,6 +2223,7 @@ return [
             'dir' => 'rtl',
             'native' => 'اۉزبېک',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'uz-Latin' => [
             'name' => 'Uzbek (Latin)',
@@ -1962,6 +2231,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Oʼzbekcha',
             'regional' => 'uz_UZ',
+            'flag' => '🇺🇿'
         ],
 
         // V
@@ -1972,6 +2242,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ꕙꔤ',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'vai-Latin' => [
             'name' => 'Vai (Latin)',
@@ -1979,6 +2250,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Viyamíĩ',
             'regional' => '',
+            'flag' => '🏳'
         ],
         've' => [
             'name' => 'Venda',
@@ -1986,6 +2258,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tshivenḓa',
             'regional' => 've_ZA',
+            'flag' => '🇿🇦'
         ],
         'vi' => [
             'name' => 'Vietnamese',
@@ -1993,6 +2266,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Tiếng Việt',
             'regional' => 'vi_VN',
+            'flag' => '🇻🇳'
         ],
         'vo' => [
             'name' => 'Volapük',
@@ -2000,6 +2274,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Volapük',
             'regional' => '',
+            'flag' => '🏳'
         ],
 
         // W
@@ -2010,6 +2285,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Walon',
             'regional' => 'wa_BE',
+            'flag' => '🇧🇪'
         ],
         'wae' => [
             'name' => 'Walser',
@@ -2017,6 +2293,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Walser',
             'regional' => 'wae_CH',
+            'flag' => '🇨🇭'
         ],
         'wal' => [
             'name' => 'Wolaytta',
@@ -2024,6 +2301,7 @@ return [
             'dir' => 'ltr',
             'native' => 'ወላይታቱ',
             'regional' => 'wal_ET',
+            'flag' => '🇪🇹'
         ],
         'wen' => [
             'name' => 'Sorbian',
@@ -2031,6 +2309,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Wendic',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'wo' => [
             'name' => 'Wolof',
@@ -2038,6 +2317,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Wolof',
             'regional' => 'wo_SN',
+            'flag' => '🇸🇳'
         ],
 
         // X
@@ -2048,6 +2328,7 @@ return [
             'dir' => 'ltr',
             'native' => 'IsiXhosa',
             'regional' => 'xh_ZA',
+            'flag' => '🇿🇦'
         ],
         'xog' => [
             'name' => 'Soga',
@@ -2055,6 +2336,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Olusoga',
             'regional' => '',
+            'flag' => '🏳'
         ],
 
         // Y
@@ -2065,6 +2347,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Nuasue',
             'regional' => '',
+            'flag' => '🏳'
         ],
         'yi' => [
             'name' => 'Yiddish',
@@ -2072,6 +2355,7 @@ return [
             'dir' => 'rtl',
             'native' => 'ייִדיש',
             'regional' => 'yi_US',
+            'flag' => '🇺🇸'
         ],
         'yo' => [
             'name' => 'Yoruba',
@@ -2079,6 +2363,7 @@ return [
             'dir' => 'ltr',
             'native' => 'Èdè Yorùbá',
             'regional' => 'yo_NG',
+            'flag' => '🇳🇬'
         ],
         'yue' => [
             'name' => 'Yue',
@@ -2086,6 +2371,7 @@ return [
             'dir' => 'ltr',
             'native' => '廣州話',
             'regional' => 'yue_HK',
+            'flag' => '🇭🇰'
         ],
 
         // Z
@@ -2096,6 +2382,7 @@ return [
             'dir' => 'ltr',
             'native' => '简体中文',
             'regional' => 'zh_CN',
+            'flag' => '🇨🇳'
         ],
         'zh-Hant' => [
             'name' => 'Chinese (Traditional)',
@@ -2103,6 +2390,7 @@ return [
             'dir' => 'ltr',
             'native' => '繁體中文',
             'regional' => 'zh_CN',
+            'flag' => '🇨🇳'
         ],
         'zu' => [
             'name' => 'Zulu',
@@ -2110,6 +2398,7 @@ return [
             'dir' => 'ltr',
             'native' => 'IsiZulu',
             'regional' => 'zu_ZA',
+            'flag' => '🇿🇦'
         ],
     ],
 ];
