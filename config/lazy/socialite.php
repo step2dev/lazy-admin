@@ -39,5 +39,5 @@ return [
             'client_secret' => env('APPLE_CLIENT_SECRET'),
             'redirect' => env('APPLE_REDIRECT'),
         ],
-    ]
+    ],
 ];
