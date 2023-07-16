@@ -4,14 +4,11 @@ namespace Step2dev\LazyAdmin\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LazyAdminMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @return mixed
      */
     public function handle(Request $request, Closure $next): mixed
     {
