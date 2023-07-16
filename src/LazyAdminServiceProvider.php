@@ -20,7 +20,11 @@ class LazyAdminServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('lazy-admin')
-            ->hasConfigFile('lazy/admin')
+            ->hasConfigFile([
+                'lazy/admin',
+                'lazy/localization',
+                'lazy/socialite',
+            ])
             ->hasViews('lazy')
             ->hasTranslations()
             ->hasMigrations([
