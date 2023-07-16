@@ -9,5 +9,5 @@ return [
         'delete' => 'Delete',
         'save' => 'Save',
     ],
-    'copyright' => 'Copyright © 2022 - All right reserved',
+    'copyright' => 'Copyright © :year - All right reserved',
 ];

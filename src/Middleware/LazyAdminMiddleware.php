@@ -12,6 +12,7 @@ class LazyAdminMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
+        /** @phpstan-ignore-next-line */
         if (auth()->user()?->hasAnyRole(config('lazy.admin.roles')) ?? false) {
             return $next($request);
         }

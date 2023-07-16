@@ -5,6 +5,7 @@ namespace Step2dev\LazyAdmin;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\ThemeSwitcher;
@@ -52,6 +53,9 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
             ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')
             ->sharesDataWithAllViews('githubUrl', 'https://github.com/step2dev/lazy-admin')
-            ->hasCommand(LazyAdminCommand::class);
+            ->hasCommands([
+                LazyAdminCommand::class,
+                DbOptimize::class,
+            ]);
     }
 }

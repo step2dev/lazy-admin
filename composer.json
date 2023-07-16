@@ -13,6 +13,11 @@
             "name": "Step2dev",
             "email": "package@step2.dev",
             "role": "Developer"
+        },
+        {
+            "name": "CrazyBoy49z",
+            "email": "yura.finiv@gmail.com",
+            "role": "Developer"
         }
     ],
     "repositories": [
