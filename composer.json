@@ -31,6 +31,7 @@
         "illuminate/contracts": "^10.17.0",
         "laravel/socialite": "^5.8",
         "lazy-adm/lazy-component": "dev-main",
+        "livewire/livewire": "^3.0@beta",
         "spatie/laravel-package-tools": "^1.14.0",
         "spatie/laravel-permission": "^5.10"
     },
