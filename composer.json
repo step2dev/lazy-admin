@@ -28,7 +28,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/contracts": "^10.17.0",
+        "illuminate/contracts": "^10.17",
         "laravel/socialite": "^5.8",
         "lazy-adm/lazy-component": "dev-main",
         "livewire/livewire": "^2.12|^3.0@beta",
