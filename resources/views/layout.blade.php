@@ -4,6 +4,7 @@
     'title' => '',
     'action' => '',
     'breadcrumb' => '',
+    'footer' => '',
 ])
 
     <!DOCTYPE html>
@@ -13,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title }} | {{ config('app.name', 'Laravel') }}</title>
 
     {{ $styles ?? '' }}
 </head>
@@ -22,7 +23,20 @@
     @if ($wrapper)
         {{ $wrapper }}
     @else
+        @if($header)
+            <header class="navbar bg-base-200">
+                {{ $header }}
+            </header>
+        @endif
         {{ $slot }}
+        @if($footer)
+            <footer
+                class="footer bg-base-200 items-center p-4">
+                {{ $footer }}
+            </footer>
+        @else
+            <x-lazy-footer/>
+        @endif
     @endif
 </div>
 {{ $scripts ?? '' }}
