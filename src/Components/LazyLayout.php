@@ -14,6 +14,7 @@ class LazyLayout extends LazyComponent
     {
         $this->routes = GenerateRoute::make()->generateRoutes();
     }
+
     public function render(): \Closure|View
     {
         return function (array $data) {
