@@ -24,6 +24,4 @@ class RouteServiceProvider extends ServiceProvider
     {
 
     }
-
-
 }
