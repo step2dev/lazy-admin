@@ -20,20 +20,14 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/step2dev/lazy-component-ui.git"
-        }
-    ],
     "require": {
         "php": "^8.1",
         "illuminate/contracts": "^10.17",
         "laravel/socialite": "^5.8",
-        "lazy-adm/lazy-component": "dev-main",
         "livewire/livewire": "^2.12|^3.0@beta",
         "spatie/laravel-package-tools": "^1.14.0",
-        "spatie/laravel-permission": "^5.10"
+        "spatie/laravel-permission": "^5.10",
+        "step2dev/lazy-ui": "dev-main"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",

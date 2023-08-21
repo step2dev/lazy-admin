@@ -31,7 +31,9 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 'create_settings_table',
             ])
-//            ->hasAssets()
+            ->runsMigrations()
+            // ->publishesServiceProvider('LazyRouteServiceProvider')
+            //            ->hasAssets()
             ->hasRoute('admin')
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
@@ -58,5 +60,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 LazyAdminCommand::class,
                 DbOptimize::class,
             ]);
+
     }
 }
