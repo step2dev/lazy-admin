@@ -4,7 +4,7 @@ namespace Step2dev\LazyAdmin\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Lazyadm\LazyComponent\LazyComponent;
+use Step2dev\LazyUI\LazyComponent;
 
 class Footer extends LazyComponent
 {
