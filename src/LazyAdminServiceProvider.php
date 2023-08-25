@@ -68,15 +68,14 @@ class LazyAdminServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         if (class_exists('Livewire\Livewire')) {
-            \Livewire\Component::macro('notify', function (string $type = 'success', string $message = '', string $title = '',) {
+            \Livewire\Component::macro('notify', function (string $type = 'success', string $message = '', string $title = '') {
                 $this->dispatchBrowserEvent('notify', compact('message', 'title', 'type'));
             });
 
-            \Livewire\Component::macro('notifyFlash', function (string $type = 'success', string $message = '', string $title = '',) {
+            \Livewire\Component::macro('notifyFlash', function (string $type = 'success', string $message = '', string $title = '') {
                 session()->flash('notify-flash', compact('message', 'title', 'type'));
             });
         }
-
 
     }
 }
