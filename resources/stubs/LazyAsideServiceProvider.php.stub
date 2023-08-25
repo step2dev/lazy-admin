@@ -1,0 +1,19 @@
+<?php
+
+
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Step2dev\LazyAdmin\Helpers\Menu;
+
+class LazyAsideServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        if (request()->is('*admin*')) {
+            $this->app->bind('lazyMenu', function () {
+                return [
+                    //
+                ];
+            });
+        }
+    }
+}
