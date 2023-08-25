@@ -32,7 +32,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 'create_settings_table',
             ])
             ->runsMigrations()
-            ->publishesServiceProvider('LazyAsideServiceProvider')
+            // ->publishesServiceProvider('LazyAsideServiceProvider')
             ->publishesServiceProvider('LazyRouteServiceProvider')
             //            ->hasAssets()
             ->hasRoute('admin')
@@ -44,6 +44,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
+                    ->publish('lazy-admin', 'lazy')
 //                    ->publishAssets()
                     ->askToStarRepoOnGitHub('step2dev/lazy-admin')
                     ->endWith(static function (InstallCommand $installCommand) {
@@ -61,6 +62,21 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 LazyAdminCommand::class,
                 DbOptimize::class,
             ]);
+
+    }
+
+    public function packageRegistered(): void
+    {
+        if (class_exists('Livewire\Livewire')) {
+            \Livewire\Component::macro('notify', function (string $type = 'success', string $message = '', string $title = '',) {
+                $this->dispatchBrowserEvent('notify', compact('message', 'title', 'type'));
+            });
+
+            \Livewire\Component::macro('notifyFlash', function (string $type = 'success', string $message = '', string $title = '',) {
+                session()->flash('notify-flash', compact('message', 'title', 'type'));
+            });
+        }
+
 
     }
 }

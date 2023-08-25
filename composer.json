@@ -24,7 +24,7 @@
         "php": "^8.1",
         "illuminate/contracts": "^10.17",
         "laravel/socialite": "^5.8",
-        "livewire/livewire": "^2.12|^3.0@beta",
+        "livewire/livewire": "^2.12|^3.0",
         "spatie/laravel-package-tools": "^1.14.0",
         "spatie/laravel-permission": "^5.10",
         "step2dev/lazy-ui": "dev-main"
