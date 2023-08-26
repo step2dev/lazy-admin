@@ -51,7 +51,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     });
             })
             ->hasViewComponents('lazy',
-                ThemeSwitcher::class,
                 Footer::class,
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
