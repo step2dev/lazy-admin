@@ -8,7 +8,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
-use Step2dev\LazyAdmin\Components\ThemeSwitcher;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
