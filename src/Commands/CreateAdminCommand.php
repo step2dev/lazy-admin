@@ -4,8 +4,8 @@ namespace Step2dev\LazyAdmin\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+
 use function Laravel\Prompts\text;
-use function Laravel\Prompts\password;
 
 class CreateAdminCommand extends Command
 {
@@ -28,13 +28,13 @@ class CreateAdminCommand extends Command
      */
     public function handle(): int
     {
-        $email =  text(
+        $email = text(
             label: 'What is your email?',
             placeholder: 'E.g. admin@admin.com',
             default: $this->option('email') ?? 'admin@admin.com',
             required: true,
             validate: fn (string $value) => match (true) {
-                !filter_var($value, FILTER_VALIDATE_EMAIL) => 'The email must be a valid email address.',
+                ! filter_var($value, FILTER_VALIDATE_EMAIL) => 'The email must be a valid email address.',
                 User::where('email', $value)->exists() => 'The email has already been taken.',
                 default => null
             },
