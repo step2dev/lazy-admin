@@ -5,6 +5,7 @@ namespace Step2dev\LazyAdmin;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Step2dev\LazyAdmin\Commands\CreateAdminCommand;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
@@ -39,6 +40,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 $command
                     ->startWith(static function (InstallCommand $installCommand) {
                         $installCommand->info('Installing Lazy Admin...');
+                        $installCommand->call('php artisan lazy-ui:install');
+                        $installCommand->call('php artisan make:admin');
                     })
                     ->publishConfigFile()
                     ->publishMigrations()
@@ -59,6 +62,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 LazyAdminCommand::class,
                 DbOptimize::class,
+                CreateAdminCommand::class,
             ]);
 
     }
