@@ -6,17 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-         Schema::create('settings', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('namespace', 40)->default('core');
-            $table->string('key', 50)->index();
-            $table->text('value')->nullable();
-            $table->string('type', 75)->default('string');
-            $table->string('area', 190)->index();
-            $table->unique(['namespace', 'key']);
+            $table->string('group')->default('default')->index();
+            $table->string('key')->index();
+            $table->string('type', 75)->default('string')->index();
+            $table->mediumText('value')->nullable();
+            $table->unique(['group', 'key']);
             $table->timestamps();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('settings');
     }
 };
