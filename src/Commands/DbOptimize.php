@@ -46,8 +46,8 @@ final class DbOptimize extends BaseCommand
     {
         $this->info('Starting Optimization.');
         $this->getTables()
-            ->tap(fn($collection) => $this->progress = $this->output->createProgressBar($collection->count()))
-            ->each(fn($table) => $this->optimize($table));
+            ->tap(fn ($collection) => $this->progress = $this->output->createProgressBar($collection->count()))
+            ->each(fn ($table) => $this->optimize($table));
         $this->info(PHP_EOL.'Optimization Completed');
     }
 
@@ -113,11 +113,11 @@ final class DbOptimize extends BaseCommand
     private function existsTables(Collection $tables): bool
     {
         return $this->db
-                ->newQuery()
-                ->from('INFORMATION_SCHEMA.TABLES')
-                ->where('TABLE_SCHEMA', $this->getDatabase())
-                ->whereIn('TABLE_NAME', $tables)
-                ->count() === $tables->count();
+            ->newQuery()
+            ->from('INFORMATION_SCHEMA.TABLES')
+            ->where('TABLE_SCHEMA', $this->getDatabase())
+            ->whereIn('TABLE_NAME', $tables)
+            ->count() === $tables->count();
     }
 
     /**
