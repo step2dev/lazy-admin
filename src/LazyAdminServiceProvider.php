@@ -9,6 +9,7 @@ use Step2dev\LazyAdmin\Commands\CreateAdminCommand;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
+use Step2dev\LazyAdmin\Components\Header;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -55,6 +56,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             })
             ->hasViewComponents('lazy',
                 Footer::class,
+                Header::class,
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
             ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')

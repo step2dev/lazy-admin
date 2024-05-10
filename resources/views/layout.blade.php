@@ -27,6 +27,8 @@
             <header class="navbar bg-base-200">
                 {{ $header }}
             </header>
+        @else
+            <x-lazy-header/>
         @endif
         {{ $slot }}
         @if($footer)
