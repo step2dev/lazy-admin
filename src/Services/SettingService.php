@@ -11,6 +11,7 @@ use Throwable;
 class SettingService
 {
     public const CACHE_KEY = 'cache-settings';
+
     private Collection $settings;
 
     public function __construct()
@@ -21,7 +22,7 @@ class SettingService
     public function init(): static
     {
         if ($this->settings->isEmpty()) {
-            $this->settings = cache()->rememberForever(self::CACHE_KEY, fn() => Setting::get());
+            $this->settings = cache()->rememberForever(self::CACHE_KEY, fn () => Setting::get());
         }
 
         return $this;
@@ -34,6 +35,7 @@ class SettingService
 
     /**
      * @throws Throwable
+     *
      * @noinspection MethodVisibilityInspection
      */
     protected function getKeyAndGroup(string $key): array
@@ -51,12 +53,12 @@ class SettingService
         return compact('key', 'group');
     }
 
-    public function get(string $key, mixed $default = null): string|null
+    public function get(string $key, mixed $default = null): ?string
     {
         return $this->getConfig($key)?->value ?? $default;
     }
 
-    public function getConfig(string $key): Setting|null
+    public function getConfig(string $key): ?Setting
     {
         try {
             ['group' => $group, 'key' => $key] = $this->getKeyAndGroup($key);
@@ -74,7 +76,7 @@ class SettingService
     /**
      * @throws Throwable
      */
-    public function set(string $key, mixed $data, string|null $type = null): Setting
+    public function set(string $key, mixed $data, ?string $type = null): Setting
     {
         if ($setting = $this->getConfig($key)) {
             $this->update($setting, $data);
@@ -97,10 +99,10 @@ class SettingService
     /**
      * @throws Throwable
      */
-    public function createIfNotExists(string $key, mixed $data, string|null $type = null): Setting
+    public function createIfNotExists(string $key, mixed $data, ?string $type = null): Setting
     {
         $setting = Setting::firstOrCreate($this->getKeyAndGroup($key), [
-            'type'  => $type ?? 'string',
+            'type' => $type ?? 'string',
             'value' => $data,
         ]);
 
@@ -112,11 +114,11 @@ class SettingService
     /**
      * @throws Throwable
      */
-    public function create(string $key, array $data, string|null $type = null): Setting
+    public function create(string $key, array $data, ?string $type = null): Setting
     {
         $setting = Setting::create([
             ...$this->getKeyAndGroup($key),
-            'type'  => $type ?? 'string',
+            'type' => $type ?? 'string',
             'value' => $data,
         ]);
 
