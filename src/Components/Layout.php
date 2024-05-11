@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Step2dev\LazyAdmin\Services\GenerateRoute;
 use Step2dev\LazyUI\LazyComponent;
 
-class LazyLayout extends LazyComponent
+class Layout extends LazyComponent
 {
     public array $routes = [];
 
