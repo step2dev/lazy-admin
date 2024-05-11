@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  */
 class LazyAdmin extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return \Step2dev\LazyAdmin\LazyAdmin::class;
     }

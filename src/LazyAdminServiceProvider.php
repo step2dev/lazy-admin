@@ -10,7 +10,7 @@ use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
-use Step2dev\LazyAdmin\Components\LazyLayout;
+use Step2dev\LazyAdmin\Components\Layout;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -42,8 +42,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 $command
                     ->startWith(static function (InstallCommand $installCommand) {
                         $installCommand->info('Installing Lazy Admin...');
-                        $installCommand->call('php artisan lazy-ui:install');
-                        $installCommand->call('php artisan make:admin');
+                        $installCommand->call('lazy-ui:install');
                     })
                     ->publishConfigFile()
                     ->publishMigrations()
@@ -52,13 +51,15 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 //                    ->publishAssets()
                     ->askToStarRepoOnGitHub('step2dev/lazy-admin')
                     ->endWith(static function (InstallCommand $installCommand) {
+                        $installCommand->call('make:admin');
+                        $installCommand->call('config:clear');
                         $installCommand->info('Lazy Admin installed successfully. Enjoy!');
                     });
             })
             ->hasViewComponents('lazy',
                 Footer::class,
                 Header::class,
-                LazyLayout::class
+                Layout::class
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
             ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')
