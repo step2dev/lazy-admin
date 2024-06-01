@@ -65,6 +65,8 @@ return [
      */
     'domain' => env('LAZY_DOMAIN'),
 
+    'route_path' => 'routes/admin.php',
+
     /*
      * This is the prefix for the admin panel's route names.
      * Change this to whatever you want.

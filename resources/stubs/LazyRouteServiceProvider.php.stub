@@ -14,9 +14,9 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::name('admin.')
                 ->domain(config('lazy.admin.domain'))
-                ->middleware(config('lazy.admin.middleware'))
-                ->prefix(config('lazy.admin.prefix'))
-                ->group(base_path('routes/admin.php'));
+                ->middleware(config('lazy.admin.middleware', ['web', 'auth']))
+                ->prefix(config('lazy.admin.prefix', 'admin'))
+                ->group(base_path(config('lazy.admin.route_path', 'routes/admin.php')));
         });
     }
 
