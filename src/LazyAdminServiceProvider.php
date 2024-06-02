@@ -93,5 +93,4 @@ class LazyAdminServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
     }
-
 }
