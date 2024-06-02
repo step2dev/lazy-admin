@@ -60,6 +60,7 @@ return [
         'middleware' => [
             'web',
             'auth',
+            'verified',
             LazyAdminMiddleware::class,
         ],
         'path' => 'routes/admin.php',
