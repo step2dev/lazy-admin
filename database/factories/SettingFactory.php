@@ -4,7 +4,8 @@ namespace Step2dev\LazyAdmin\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SettingFactory extends Factory{
+class SettingFactory extends Factory
+{
     public function definition(): array
     {
         return [
