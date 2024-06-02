@@ -9,5 +9,5 @@ Route::singletons([
     'except' => [
         'show',
         'destroy',
-    ]
+    ],
 ]);
