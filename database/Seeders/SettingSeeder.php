@@ -14,27 +14,27 @@ class SettingSeeder extends Seeder
     {
         $settings = [
             [
-                'group'     => 'admin',
-                'key'       => 'name',
-                'type'      => 'text',
-                'value'     => 'Lazy Admin',
+                'group' => 'admin',
+                'key' => 'name',
+                'type' => 'text',
+                'value' => 'Lazy Admin',
                 'deletable' => 0,
                 'is_encrypted' => 0,
                 'is_protected' => 0,
             ],
             [
-                'group'     => 'admin',
-                'key'       => 'description',
-                'type'      => 'textarea',
-                'value'     => 'Lazy Admin is a Laravel Admin Panel for lazy developers',
+                'group' => 'admin',
+                'key' => 'description',
+                'type' => 'textarea',
+                'value' => 'Lazy Admin is a Laravel Admin Panel for lazy developers',
                 'deletable' => 0,
             ],
             [
-                'group'        => 'admin',
-                'key'          => 'logo',
-                'type'         => 'image',
-                'value'        => '/images/logo.png',
-                'deletable'    => 0,
+                'group' => 'admin',
+                'key' => 'logo',
+                'type' => 'image',
+                'value' => '/images/logo.png',
+                'deletable' => 0,
             ],
         ];
 
