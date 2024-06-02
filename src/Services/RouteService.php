@@ -9,27 +9,27 @@ class RouteService
 {
     public static function getRoutePrefixName(): string
     {
-        return config('lazy.admin.route_prefix', 'admin.');
+        return config('lazy.admin.route_settings.name', 'admin.');
     }
 
     public static function getRouteDomain(): string
     {
-        return config('lazy.admin.domain', '');
+        return config('lazy.admin.route_settings.domain', '');
     }
 
     public static function getRouteMiddleware(): array
     {
-        return config('lazy.admin.middleware', ['web', 'auth']);
+        return config('lazy.admin.route_settings.middleware', ['web', 'auth']);
     }
 
     public static function getRoutePrefix(): string
     {
-        return config('lazy.admin.prefix', 'admin');
+        return config('lazy.admin.route_settings.prefix', 'admin');
     }
 
     public static function getRoutePath(): string
     {
-        return base_path(config('lazy.admin.route_path', 'routes/admin.php'));
+        return base_path(config('lazy.admin.route_settings.path', 'routes/admin.php'));
     }
 
     public static function routes(): RouteRegistrar

@@ -8,12 +8,12 @@ return [
      * This type of toggle will be used for the theme switcher.
      * Available options: multiple, single, toggle
      */
-    'theme-toggle' => 'multiple',
+    'theme-toggle'  => 'multiple',
     /*
      * This is the list of themes that will be available for the theme switcher.
      * You can add your own themes here.
      */
-    'themes' => [
+    'themes'        => [
         'light',
         'dark',
         'acid',
@@ -53,28 +53,16 @@ return [
         'dark',
     ],
 
-    /*
-     * This is the path where the admin panel will be accessible from.
-     * Change this to whatever you want.
-     */
-    'prefix' => env('LAZY_PATH', 'admin'),
-
-    /*
-     * This is the domain where the admin panel will be accessible from.
-     * Change this to whatever you want.
-     */
-    'domain' => env('LAZY_DOMAIN'),
-
-    'route_path' => 'routes/admin.php',
-
-    /*
-     * This is the prefix for the admin panel's route names.
-     * Change this to whatever you want.
-     */
-    'middleware' => [
-        'web',
-        'auth',
-        LazyAdminMiddleware::class,
+    'route_settings' => [
+        'name'   => env('LAZY_ROUTE_NAME', 'admin.'),
+        'prefix' => env('LAZY_ROUTE_PREFIX', 'admin'),
+        'domain' => env('LAZY_ROUTE_DOMAIN'),
+        'middleware' => [
+            'web',
+            'auth',
+            LazyAdminMiddleware::class,
+        ],
+        'path'   => 'routes/admin.php',
     ],
 
     'roles' => [
@@ -82,5 +70,5 @@ return [
         'admin',
         'manager',
         'moderator',
-    ],
+    ]
 ];
