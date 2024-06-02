@@ -14,7 +14,7 @@ class RouteService
 
     public static function getRouteDomain(): string
     {
-        return config('lazy.admin.route_settings.domain', '');
+        return (string) config('lazy.admin.route_settings.domain', '');
     }
 
     public static function getRouteMiddleware(): array
