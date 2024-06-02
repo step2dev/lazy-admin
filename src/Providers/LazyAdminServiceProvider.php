@@ -3,17 +3,17 @@
 namespace Step2dev\LazyAdmin\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route as RouteFacade;
 use ReflectionException;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
-use Illuminate\Support\Facades\Route as RouteFacade;
 use Step2dev\LazyAdmin\Services\SettingService;
 
 class LazyAdminServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
+     *
      * @throws ReflectionException
      */
     public function register(): void
@@ -21,12 +21,11 @@ class LazyAdminServiceProvider extends ServiceProvider
         $this->app->singleton('settings', fn ($app) => new SettingService());
         parent::register();
 
-
     }
 
     public function boot(): void
     {
-        /** @var  Router $router */
+        /** @var Router $router */
         $router = $this->app['router'];
 
         $router
@@ -39,12 +38,9 @@ class LazyAdminServiceProvider extends ServiceProvider
 
             $this->configureRateLimiting();
 
-
         });
 
-
-
-//
+        //
     }
 
     private function configureRateLimiting(): void

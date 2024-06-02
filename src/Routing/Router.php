@@ -16,12 +16,12 @@ class Router
 {
     public function admin(): Closure
     {
-        return function(Closure $callback, array $attributes = []) {
+        return function (Closure $callback, array $attributes = []) {
             $attributes = array_merge($attributes, [
-                'prefix'     => AdminRouter::getRoutePrefix(),
+                'prefix' => AdminRouter::getRoutePrefix(),
                 'middleware' => AdminRouter::getRouteMiddleware(),
-                'name'       => AdminRouter::getRoutePrefixName(),
-                'domain'     => AdminRouter::getRouteDomain(),
+                'name' => AdminRouter::getRoutePrefixName(),
+                'domain' => AdminRouter::getRouteDomain(),
             ]);
 
             $this
@@ -31,7 +31,7 @@ class Router
 
     public static function getRoutePrefixName(): string
     {
-        return trim(config('lazy.admin.route_settings.name', 'admin.'),'.').'.';
+        return trim(config('lazy.admin.route_settings.name', 'admin.'), '.').'.';
     }
 
     public static function getRouteDomain(): string
@@ -68,5 +68,4 @@ class Router
     {
         return base_path(config('lazy.admin.route_settings.path', 'routes/admin.php'));
     }
-
 }
