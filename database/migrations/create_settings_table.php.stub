@@ -21,6 +21,9 @@ return new class extends Migration
             $table->boolean('is_protected')
                 ->comment('This setting is protected and cannot be changed by the user.')
                 ->default(false);
+            $table->boolean('is_encrypted')
+                ->comment('This setting is encrypted. The value is stored in the database as an encrypted string.')
+                ->default(false);
             $table->boolean('deletable')
                 ->comment('This setting can be deleted by the user.')
                 ->default(false);
