@@ -6,14 +6,15 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Step2dev\LazyAdmin\Services\RouteService;
 use Step2dev\LazyAdmin\Services\SettingService;
 
-class LazyAdminServiceProvider extends ServiceProvider {
+class LazyAdminServiceProvider extends ServiceProvider
+{
     /**
      * Register services.
      */
     public function register(): void
     {
         parent::register();
-        $this->app->singleton('settings', fn($app) => new SettingService());
+        $this->app->singleton('settings', fn ($app) => new SettingService());
     }
 
     public function boot(): void

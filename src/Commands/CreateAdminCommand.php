@@ -44,8 +44,8 @@ class CreateAdminCommand extends Command
             required: true,
             validate: fn (string $value) => match (true) {
                 ! filter_var($value, FILTER_VALIDATE_EMAIL) => 'The email must be a valid email address.',
-                User::where('email', $value)->exists()      => 'The email has already been taken.',
-                default                                     => null
+                User::where('email', $value)->exists() => 'The email has already been taken.',
+                default => null
             },
             hint: 'Login email for admin user'
         );
@@ -57,14 +57,14 @@ class CreateAdminCommand extends Command
             required: true,
             validate: fn (string $value) => match (true) {
                 strlen($value) < 8 => 'The password must be at least 8 characters.',
-                default            => null
+                default => null
             },
             hint: 'Minimum 8 characters.'
         );
 
         User::create([
-            'name'     => 'Admin',
-            'email'    => $email,
+            'name' => 'Admin',
+            'email' => $email,
             'password' => bcrypt($password),
         ]);
 
