@@ -14,5 +14,18 @@ class Setting extends Model
         'key',
         'type',
         'value',
+        'is_protected',
+        'is_encrypted',
+        'deletable',
     ];
+
+    public function getDescriptionAttribute(): string
+    {
+        return __('settings.'.$this->settingKey.'.desc');
+    }
+
+    public function getSettingKeyAttribute(): string
+    {
+        return $this->group.'.'.$this->key;
+    }
 }
