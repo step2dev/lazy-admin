@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Providers;
+
+use Step2dev\LazyAdmin\Providers\LazyAdminServiceProvider as BaseLazyAdminServiceProvider;
+
+class LazyAdminServiceProvider extends BaseLazyAdminServiceProvider
+{
+}

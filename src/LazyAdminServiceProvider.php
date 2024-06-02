@@ -35,7 +35,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ])
             ->runsMigrations()
             // ->publishesServiceProvider('LazyAsideServiceProvider')
-            ->publishesServiceProvider('LazyRouteServiceProvider')
+            ->publishesServiceProvider('LazyAdminServiceProvider')
             //            ->hasAssets()
             ->hasRoute('admin')
             ->hasInstallCommand(static function (InstallCommand $command) {
@@ -48,6 +48,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->publishMigrations()
                     ->askToRunMigrations()
                     ->publish('lazy-admin', 'lazy')
+                    ->copyAndRegisterServiceProviderInApp()
 //                    ->publishAssets()
                     ->askToStarRepoOnGitHub('step2dev/lazy-admin')
                     ->endWith(static function (InstallCommand $installCommand) {
