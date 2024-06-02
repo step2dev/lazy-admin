@@ -8,6 +8,6 @@ class SettingController extends Controller
 {
     public function index()
     {
-        return 'Hello World';
+        return view('lazy::settings.index');
     }
 }

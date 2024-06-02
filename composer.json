@@ -47,7 +47,10 @@
         "psr-4": {
             "Step2dev\\LazyAdmin\\": "src/",
             "Step2dev\\LazyAdmin\\Database\\Factories\\": "database/factories/"
-        }
+        },
+        "files": [
+            "src/Helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
