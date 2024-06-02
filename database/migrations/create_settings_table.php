@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('type', 75)->default('string')->index();
             $table->mediumText('value')->nullable();
             $table->unique(['group', 'key']);
+            $table->boolean('is_protected')
+                ->comment('This setting is protected and cannot be changed by the user.')
+                ->default(false);
             $table->timestamps();
         });
     }
