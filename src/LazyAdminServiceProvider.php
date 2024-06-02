@@ -77,7 +77,21 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     }
 
+    public function registeringPackage(): void
+    {
+    }
+
     public function packageRegistered(): void
     {
     }
+
+    public function bootingPackage(): void
+    {
+
+    }
+
+    public function packageBooted(): void
+    {
+    }
+
 }

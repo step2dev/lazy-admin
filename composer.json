@@ -46,7 +46,8 @@
     "autoload": {
         "psr-4": {
             "Step2dev\\LazyAdmin\\": "src/",
-            "Step2dev\\LazyAdmin\\Database\\Factories\\": "database/factories/"
+            "Step2dev\\LazyAdmin\\Database\\Factories\\": "database/factories/",
+            "Step2dev\\LazyAdmin\\Database\\Seeders\\": "database/Seeders/"
         },
         "files": [
             "src/Helpers/helpers.php"
