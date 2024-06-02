@@ -11,6 +11,7 @@ use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\Layout;
+use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -53,6 +54,9 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->askToStarRepoOnGitHub('step2dev/lazy-admin')
                     ->endWith(static function (InstallCommand $installCommand) {
                         $installCommand->call('make:admin');
+                        $installCommand->call('db:seed', [
+                            '--class' => DatabaseSeeder::class,
+                        ]);
                         $installCommand->call('config:clear');
                         $installCommand->info('Lazy Admin installed successfully. Enjoy!');
                     });
