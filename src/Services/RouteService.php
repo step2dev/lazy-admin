@@ -32,7 +32,7 @@ class RouteService
         return base_path(config('lazy.admin.route_path', 'routes/admin.php'));
     }
 
-    public static function generateRoutes(): RouteRegistrar
+    public static function routes(): RouteRegistrar
     {
         return Route::name(self::getRoutePrefixName())
             ->domain(self::getRouteDomain())

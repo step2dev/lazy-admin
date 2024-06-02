@@ -21,7 +21,7 @@ class LazyAdminServiceProvider extends ServiceProvider {
         $this->routes(function () {
             $this->configureRateLimiting();
 
-            RouteService::generateRoutes();
+            RouteService::routes();
         });
     }
 
