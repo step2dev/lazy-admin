@@ -53,7 +53,7 @@ return [
         'dark',
     ],
 
-    'route_settings' => [
+    'route' => [
         'name' => env('LAZY_ROUTE_NAME', 'admin.'),
         'prefix' => env('LAZY_ROUTE_PREFIX', 'admin'),
         'domain' => env('LAZY_ROUTE_DOMAIN'),
