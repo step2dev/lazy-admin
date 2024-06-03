@@ -3,6 +3,7 @@
 namespace Step2dev\LazyAdmin\Routing;
 
 use Closure;
+use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 
 /**
@@ -20,8 +21,8 @@ class Router
             $attributes = array_merge($attributes, [
                 'prefix' => AdminRouter::getRoutePrefix(),
                 'middleware' => AdminRouter::getRouteMiddleware(),
-                'as' => AdminRouter::getRoutePrefixName(),
-                'domain' => AdminRouter::getRouteDomain(),
+                'as'         => AdminRouter::getRoutePrefixName(),
+                'domain'     => AdminRouter::getRouteDomain(),
             ]);
 
             $this
@@ -49,24 +50,18 @@ class Router
 
     public static function getRoutePrefix(): string
     {
-        $prefix = config('lazy.admin.route_settings.prefix', 'admin');
-        $prefix = trim($prefix, '/');
+        $prefix = trim(config('lazy.admin.route_settings.prefix', 'admin'), '/');
 
-        if (config('lazy.localization.multi_language')) {
-            if (class_exists('\Arcanedev\Localization\Localization')) {
-                $prefix = localization()->setLocale().'/'.$prefix;
-            }
-
-            if (class_exists('\Mcamara\LaravelLocalization\LaravelLocalization')) {
-                $prefix = \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale().'/'.$prefix;
-            }
-        }
-
-        return $prefix;
+        return app(LocalizationInterface::class)->setRouteLocale($prefix);
     }
 
     public static function getRoutePath(): string
     {
         return base_path(config('lazy.admin.route_settings.path', 'routes/admin.php'));
+    }
+
+    public static function exceptRegexWhere(): string
+    {
+        return '^(?!.*\b'.config('lazy/admin.route_settings.prefix').'\b).*';
     }
 }
