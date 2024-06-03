@@ -9,7 +9,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         return config('lazy/localization.multi_language');
     }
 
-    public function setLocale(string|null $locale = null): string|null
+    public function setLocale(?string $locale = null): ?string
     {
         if ($this->isMultiLanguage()) {
             if (class_exists('\Arcanedev\Localization\Localization')) {
@@ -50,7 +50,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         return [];
     }
 
-    public function setRouteLocale(string $prefix = '', string|null $locale = null): string
+    public function setRouteLocale(string $prefix = '', ?string $locale = null): string
     {
         $locale = $this->setLocale($locale);
 
