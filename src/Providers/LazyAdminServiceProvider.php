@@ -12,15 +12,6 @@ use Step2dev\LazyAdmin\Services\SettingService;
 
 class LazyAdminServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
-    public function register(): void
-    {
-        $this->app->singleton('settings', fn ($app) => new SettingService());
-
-        parent::register();
-    }
 
     /**
      * @throws ReflectionException
@@ -28,7 +19,6 @@ class LazyAdminServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        $this->app->bind(LocalizationInterface::class, config('lazy/localization.localizationManager'));
         /** @var Router $router */
         $router = $this->app['router'];
         $router?->mixin(new AdminRouter);

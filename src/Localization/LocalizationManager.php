@@ -4,33 +4,41 @@ namespace Step2dev\LazyAdmin\Localization;
 
 class LocalizationManager implements Contracts\LocalizationInterface
 {
-    private function isMultiLanguage(): bool
+    private bool $isMultiLanguage = false;
+    private bool $isArcanedevLocalization = false;
+    private bool $isMcamaraLocalization = false;
+
+    public function __construct()
     {
-        return config('lazy/localization.multi_language');
+        $this->isMultiLanguage = config('lazy.localization.multi_language');
+        $this->isArcanedevLocalization = class_exists('\Arcanedev\Localization\Localization');
+        $this->isMcamaraLocalization = class_exists('\Mcamara\LaravelLocalization\LaravelLocalization');
     }
 
     public function setLocale(?string $locale = null): ?string
     {
-        if ($this->isMultiLanguage()) {
-            if (class_exists('\Arcanedev\Localization\Localization')) {
-                return localization()->setLocale($locale);
-            }
-
-            if (class_exists('\Mcamara\LaravelLocalization\LaravelLocalization')) {
-                return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale($locale);
-            }
+        if (! $this->isMultiLanguage) {
+            return null;
         }
 
-        return null;
+        if ($this->isArcanedevLocalization) {
+            return localization()->setLocale($locale);
+        }
+
+        if ($this->isMcamaraLocalization) {
+            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale($locale);
+        }
+
+        trigger_error('No localization package found', E_USER_WARNING);
     }
 
     public function getLocale(): string
     {
-        if (class_exists('\Arcanedev\Localization\Localization')) {
+        if ($this->isArcanedevLocalization) {
             return localization()->getCurrentLocale();
         }
 
-        if (class_exists('\Mcamara\LaravelLocalization\LaravelLocalization')) {
+        if ($this->isMcamaraLocalization) {
             return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale();
         }
 
@@ -39,11 +47,11 @@ class LocalizationManager implements Contracts\LocalizationInterface
 
     public function getSupportedLocales(): array
     {
-        if (class_exists('\Arcanedev\Localization\Localization')) {
+        if ($this->isArcanedevLocalization) {
             return localization()->getSupportedLocales();
         }
 
-        if (class_exists('\Mcamara\LaravelLocalization\LaravelLocalization')) {
+        if ($this->isMcamaraLocalization) {
             return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales();
         }
 

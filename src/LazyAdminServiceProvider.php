@@ -12,6 +12,8 @@ use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
+use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
+use Step2dev\LazyAdmin\Services\SettingService;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -74,20 +76,21 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 DbOptimize::class,
                 CreateAdminCommand::class,
             ]);
-
     }
 
     public function registeringPackage(): void
     {
+        $this->app->singleton('settings', fn ($app) => new SettingService());
+        $this->app->bind(LocalizationInterface::class, config('lazy.localization.localizationManager'));
     }
 
     public function packageRegistered(): void
     {
+
     }
 
     public function bootingPackage(): void
     {
-
     }
 
     public function packageBooted(): void
