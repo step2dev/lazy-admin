@@ -4,11 +4,11 @@ namespace Step2dev\LazyAdmin\Localization;
 
 class LocalizationManager implements Contracts\LocalizationInterface
 {
-    private bool $isMultiLanguage = false;
+    private bool $isMultiLanguage;
 
-    private bool $isArcanedevLocalization = false;
+    private bool $isArcanedevLocalization;
 
-    private bool $isMcamaraLocalization = false;
+    private bool $isMcamaraLocalization;
 
     public function __construct()
     {
