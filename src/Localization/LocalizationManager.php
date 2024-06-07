@@ -32,6 +32,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         trigger_error('No localization package found', E_USER_WARNING);
+        return null;
     }
 
     public function getLocale(): string
