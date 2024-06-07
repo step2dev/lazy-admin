@@ -6,13 +6,10 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use ReflectionException;
-use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
-use Step2dev\LazyAdmin\Services\SettingService;
 
 class LazyAdminServiceProvider extends ServiceProvider
 {
-
     /**
      * @throws ReflectionException
      */

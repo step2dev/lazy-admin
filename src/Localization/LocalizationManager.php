@@ -5,7 +5,9 @@ namespace Step2dev\LazyAdmin\Localization;
 class LocalizationManager implements Contracts\LocalizationInterface
 {
     private bool $isMultiLanguage = false;
+
     private bool $isArcanedevLocalization = false;
+
     private bool $isMcamaraLocalization = false;
 
     public function __construct()
