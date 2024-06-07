@@ -3,9 +3,6 @@
 return [
     'multi_language' => false,
     'localizationManager' => \Step2dev\LazyAdmin\Localization\LocalizationManager::class,
-    'supported_locales' => [
-        'en',
-    ],
     /* -----------------------------------------------------------------
      |  Locales
      | -----------------------------------------------------------------
