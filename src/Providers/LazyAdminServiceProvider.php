@@ -3,7 +3,6 @@
 namespace Step2dev\LazyAdmin\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use ReflectionException;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
