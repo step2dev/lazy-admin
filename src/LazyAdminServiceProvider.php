@@ -2,6 +2,7 @@
 
 namespace Step2dev\LazyAdmin;
 
+use Illuminate\Routing\Router;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -13,6 +14,7 @@ use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
+use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2dev\LazyAdmin\Services\SettingService;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
@@ -91,6 +93,10 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function bootingPackage(): void
     {
+        /** @var Router $router */
+        $router = $this->app['router'];
+        $router?->mixin(new AdminRouter);
+
     }
 
     public function packageBooted(): void

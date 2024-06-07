@@ -15,11 +15,6 @@ class LazyAdminServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        /** @var Router $router */
-        $router = $this->app['router'];
-        $router?->mixin(new AdminRouter);
-
         $this->routes(function () {
             $this->configureRateLimiting();
 
