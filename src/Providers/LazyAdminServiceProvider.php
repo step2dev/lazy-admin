@@ -18,7 +18,6 @@ class LazyAdminServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('settings', fn ($app) => new SettingService());
-        $this->app->bind(LocalizationInterface::class, config('lazy/localization.localizationManager'));
 
         parent::register();
     }
