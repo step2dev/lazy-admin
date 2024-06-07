@@ -3,8 +3,6 @@
 namespace Step2dev\LazyAdmin\Routing;
 
 use Closure;
-use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
-use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 
 /**
  * Class     Router
@@ -17,7 +15,8 @@ class Router
 {
     private $configProvider;
 
-    public function __construct(ConfigProvider $configProvider) {
+    public function __construct(ConfigProvider $configProvider)
+    {
         $this->configProvider = $configProvider;
     }
 
