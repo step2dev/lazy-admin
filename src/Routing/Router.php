@@ -21,8 +21,8 @@ class Router
             $attributes = array_merge($attributes, [
                 'prefix' => AdminRouter::getRoutePrefix(),
                 'middleware' => AdminRouter::getRouteMiddleware(),
-                'as'         => AdminRouter::getRoutePrefixName(),
-                'domain'     => AdminRouter::getRouteDomain(),
+                'as' => AdminRouter::getRoutePrefixName(),
+                'domain' => AdminRouter::getRouteDomain(),
             ]);
 
             $this
