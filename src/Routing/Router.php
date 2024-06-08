@@ -3,6 +3,7 @@
 namespace Step2dev\LazyAdmin\Routing;
 
 use Closure;
+
 /**
  * Class     Router
  *
@@ -24,7 +25,7 @@ class Router
         $adminAttributes = self::$configProvider->getAdminRouteAttributes();
 
         return function (Closure $callback, array $attributes = []) use ($adminAttributes) {
-            $attributes = array_merge($attributes,  $adminAttributes);
+            $attributes = array_merge($attributes, $adminAttributes);
 
             $this->group(array_filter($attributes), $callback);
         };

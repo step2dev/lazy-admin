@@ -24,8 +24,6 @@ if (! function_exists('settings')) {
 if (! function_exists('lazyLocalization')) {
     /**
      * Get the available container instance.
-     *
-     * @return mixed
      */
     function lazyLocalization(): mixed
     {
