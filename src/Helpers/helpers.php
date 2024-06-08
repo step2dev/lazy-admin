@@ -1,6 +1,7 @@
 <?php
 
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
+use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Services\SettingService;
 
 if (! function_exists('settings')) {
@@ -27,7 +28,7 @@ if (! function_exists('lazyLocalization')) {
      *
      * @return mixed
      */
-    function lazyLocalization(): mixed
+    function lazyLocalization(): LocalizationManager
     {
         return app(LocalizationInterface::class);
     }

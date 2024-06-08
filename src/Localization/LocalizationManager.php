@@ -52,7 +52,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
     public function getSupportedLocales(): array
     {
         if ($this->isArcanedevLocalization) {
-            return localization()->getSupportedLocales();
+            return localization()->getSupportedLocales()->keys()->toArray();
         }
 
         if ($this->isMcamaraLocalization) {

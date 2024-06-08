@@ -10,4 +10,9 @@ class SettingController extends Controller
     {
         return view('lazy::settings.index');
     }
+
+    public function show()
+    {
+        return view('lazy::settings.show');
+    }
 }
