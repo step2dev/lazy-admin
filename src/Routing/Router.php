@@ -3,7 +3,6 @@
 namespace Step2dev\LazyAdmin\Routing;
 
 use Closure;
-
 /**
  * Class     Router
  *
@@ -13,24 +12,36 @@ use Closure;
  */
 class Router
 {
-    private $configProvider;
+    public static ConfigProvider $configProvider;
 
-    public function __construct(ConfigProvider $configProvider)
+    public function __construct()
     {
-        $this->configProvider = $configProvider;
+        self::$configProvider = new ConfigProvider();
     }
 
     public function admin(): Closure
     {
-        return function (Closure $callback, array $attributes = []) {
-            $attributes = array_merge($attributes, $this->configProvider->getAdminRouteAttributes());
+        $adminAttributes = self::$configProvider->getAdminRouteAttributes();
+
+        return function (Closure $callback, array $attributes = []) use ($adminAttributes) {
+            $attributes = array_merge($attributes,  $adminAttributes);
 
             $this->group(array_filter($attributes), $callback);
         };
     }
 
+    public static function configProvider(): ConfigProvider
+    {
+        return self::$configProvider;
+    }
+
     public static function getRoutePath(): string
     {
-        return base_path(config('lazy.admin.route_settings.path', 'routes/admin.php'));
+        return self::$configProvider->getRoutePath();
+    }
+
+    public static function exceptRegexWhere(): string
+    {
+        return self::$configProvider->exceptRegexWhere();
     }
 }
