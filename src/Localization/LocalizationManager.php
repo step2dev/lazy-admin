@@ -77,7 +77,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         return collect($this->getSupportedLocales())->mapWithKeys(fn ($locale) => [
             $locale => [
                 ...config('lazy.localization.locales.'.$locale),
-                'url'  => $this->getLocalizedURL($locale),
+                'url' => $this->getLocalizedURL($locale),
             ],
         ])->toArray();
     }

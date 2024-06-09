@@ -2,16 +2,15 @@
 
 namespace Step2dev\LazyAdmin\Components;
 
-use App\Models\Country;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class LanguageSwitcher extends Component
 {
     protected array $locales;
+
     protected mixed $flags;
 
     public function __construct()
@@ -40,7 +39,7 @@ class LanguageSwitcher extends Component
     {
         return view('lazy::language-switcher', [
             'supportedLocales' => $this->locales,
-            'flags'            => $this->flags,
+            'flags' => $this->flags,
         ]);
     }
 }
