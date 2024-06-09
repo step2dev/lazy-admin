@@ -17,9 +17,14 @@ class LocalizationManager implements Contracts\LocalizationInterface
         $this->isMcamaraLocalization = class_exists('\Mcamara\LaravelLocalization\LaravelLocalization');
     }
 
+    public function hasLocalization(): bool
+    {
+        return $this->isArcanedevLocalization || $this->isMcamaraLocalization;
+    }
+
     public function isMultiLanguage(): bool
     {
-        return $this->isMultiLanguage && ($this->isArcanedevLocalization || $this->isMcamaraLocalization);
+        return $this->isMultiLanguage && $this->hasLocalization();
     }
 
     public function setLocale(?string $locale = null): ?string
