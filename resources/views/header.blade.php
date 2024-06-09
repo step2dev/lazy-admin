@@ -47,6 +47,7 @@
                 </span>
             </div>
         </button>
+        <x-lazy-language-switcher/>
         <x-lazy-theme-switcher/>
     </div>
     <div class="dropdown dropdown-end">

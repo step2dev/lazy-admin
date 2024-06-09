@@ -11,6 +11,7 @@ use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
+use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
@@ -69,7 +70,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasViewComponents('lazy',
                 Footer::class,
                 Header::class,
-                Layout::class
+                Layout::class,
+                LanguageSwitcher::class
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
             ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')

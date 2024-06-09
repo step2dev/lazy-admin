@@ -62,6 +62,16 @@ class LocalizationManager implements Contracts\LocalizationInterface
         return [];
     }
 
+    public function getSupportedLocalesInfo(): array
+    {
+        return collect($this->getSupportedLocales())->mapWithKeys(fn ($locale) => [
+            $locale => [
+                ...config('lazy.localization.locales.'.$locale),
+                'url'  => $this->getLocalizedURL($locale),
+            ],
+        ])->toArray();
+    }
+
     public function setRouteLocale(string $prefix = '', ?string $locale = null): string
     {
         $locale = $this->setLocale($locale);
@@ -71,5 +81,18 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         return $prefix;
+    }
+
+    public function getLocalizedURL(string $code): string
+    {
+        if ($this->isArcanedevLocalization) {
+            return localization()->getLocalizedURL($code);
+        }
+
+        if ($this->isMcamaraLocalization) {
+            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($code);
+        }
+
+        return $code;
     }
 }
