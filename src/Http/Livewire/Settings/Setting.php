@@ -12,6 +12,7 @@ class Setting extends Component
      * @var mixed|SettingService
      */
     public mixed $settings;
+
     /**
      * @var mixed|SettingService
      */
