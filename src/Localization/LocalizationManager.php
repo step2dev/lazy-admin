@@ -12,7 +12,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
 
     public function __construct()
     {
-        $this->isMultiLanguage = config('lazy.localization.multi_language');
+        $this->isMultiLanguage = config('lazy.localization.multi_language', false);
         $this->isArcanedevLocalization = class_exists('\Arcanedev\Localization\Localization');
         $this->isMcamaraLocalization = class_exists('\Mcamara\LaravelLocalization\LaravelLocalization');
     }

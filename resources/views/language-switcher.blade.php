@@ -1,4 +1,4 @@
-@if(config('lazy.localization.multi_language'))
+@if(config('lazy.localization.multi_language', false))
     <div title="Change Language" class="dropdown dropdown-end z-[9999]">
         <div tabindex="0" class="btn btn-ghost gap-1 normal-case">
             <svg class="inline-block h-4 w-4 fill-current md:h-5 md:w-5" xmlns="http://www.w3.org/2000/svg" width="20"
