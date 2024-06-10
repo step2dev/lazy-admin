@@ -5,7 +5,7 @@ use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
 
 return [
     'scripts' => [
-        'resources/lazy/js/lazy.js'
+        'resources/lazy/js/lazy.js',
     ],
     'styles' => [
         'resources/lazy/scss/lazy.scss',

@@ -11,5 +11,4 @@ class Setting extends Component
     {
         return view('lazy::pages.settings.settings');
     }
-
 }
