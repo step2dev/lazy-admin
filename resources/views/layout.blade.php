@@ -20,7 +20,11 @@
 
     <title>{{ $title ? $title.' | '.config('app.name', 'Laravel'): config('app.name', 'Laravel') }} | Admin Panel</title>
     {{ $meta ?? '' }}
-    {{ $styles ?? '' }}
+    @if($styles)
+        {{ $styles }}
+    @else
+        @vite(config('lazy.admin.styles'))
+    @endif
 </head>
 <body class="min-h-screen bg-gray-100 font-sans antialiased">
 {{ $noscript ?? ''}}
@@ -46,6 +50,10 @@
         @endif
     @endif
 </div>
-{{ $scripts ?? '' }}
+@if($scripts)
+    {{ $scripts }}
+@else
+    @vite(config('lazy.admin.scripts'))
+@endif
 </body>
 </html>
