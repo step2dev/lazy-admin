@@ -87,6 +87,11 @@ class SettingService
         return $setting;
     }
 
+    public function all(): Collection
+    {
+        return $this->getSettings();
+    }
+
     public function update(Setting $setting, mixed $data): Setting
     {
         $setting->update(['value' => $data]);
