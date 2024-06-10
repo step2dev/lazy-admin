@@ -3,11 +3,5 @@
         <x-lazy-tab :title="__('lazy-admin::settings.general')" active/>
         <x-lazy-tab :title="__('lazy-admin::settings.other')"/>
     </x-lazy-tabs>
-
-    @foreach(lazyLocalization()->getSupportedLocales() as $locale)
-        @dump($locale)
-    @endforeach
-    @foreach(setting() as $setting)
-        @dump($setting)
-    @endforeach
+    <livewire:settings.setting/>
 </x-lazy-layout>

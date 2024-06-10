@@ -3,6 +3,7 @@
 namespace Step2dev\LazyAdmin;
 
 use Illuminate\Routing\Router;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -14,6 +15,7 @@ use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
+use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Routing\ConfigProvider;
@@ -92,12 +94,11 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-
+        Livewire::component('settings.setting', Setting::class);
     }
 
     public function bootingPackage(): void
     {
-
     }
 
     public function packageBooted(): void
@@ -105,5 +106,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         /** @var Router $router */
         $router = $this->app['router'];
         $router?->mixin(new AdminRouter(new ConfigProvider()));
+
     }
 }
