@@ -55,5 +55,6 @@
 @else
     @vite(config('lazy.admin.scripts'))
 @endif
+<x-lazy-toast/>
 </body>
 </html>

@@ -59,7 +59,7 @@
             </div>
             <label class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
-                    <img src="{{ auth()->user()->avatar ?? '/img/admin.png' }}"/>
+                    <img src="{{ auth()->user()->avatar ?? '/img/admin.png' }}" alt="{{ auth()->user()->name }}"/>
                 </div>
             </label>
         </div>
