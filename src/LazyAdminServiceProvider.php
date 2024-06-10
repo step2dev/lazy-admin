@@ -15,6 +15,7 @@ use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
+use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Routing\ConfigProvider;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2dev\LazyAdmin\Services\SettingService;
@@ -86,7 +87,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
     public function registeringPackage(): void
     {
         $this->app->singleton('settings', fn ($app) => new SettingService());
-        $this->app->bind(LocalizationInterface::class, config('lazy.localization.localizationManager'));
+        $this->app->bind(LocalizationInterface::class, config('lazy.localization.localizationManager', LocalizationManager::class));
     }
 
     public function packageRegistered(): void
