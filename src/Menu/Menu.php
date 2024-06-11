@@ -1,6 +1,6 @@
 <?php
 
-namespace Step2dev\LazyAdmin\Helpers;
+namespace Step2dev\LazyAdmin\Menu;
 
 class Menu
 {
