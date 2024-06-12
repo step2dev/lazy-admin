@@ -12,4 +12,9 @@ class BreadcrumbManager extends Collection
 
         return $this;
     }
+
+    public function render()
+    {
+        dump($this->all());
+    }
 }

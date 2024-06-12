@@ -6,7 +6,6 @@
     'scripts' => '',
     'noscript' => '',
 ])
-
     <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -22,6 +21,7 @@
     @else
         @vite(config('lazy.admin.styles'))
     @endif
+    @livewireStyles
 </head>
 <body class="min-h-screen bg-gray-100 font-sans antialiased">
 {{ $noscript ?? ''}}
