@@ -26,10 +26,11 @@ class MenuManager extends Collection
         $children ??= [];
 
         if ($children) {
-            $children = collect( $children)->map(function ($child) {
+            $children = collect($children)->map(function ($child) {
                 if ($child instanceof Menu) {
                     return $child->toArray()[0] ?? $child->toArray();
                 }
+
                 return $child;
             })->toArray();
         }
