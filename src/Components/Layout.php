@@ -3,8 +3,6 @@
 namespace Step2dev\LazyAdmin\Components;
 
 use Illuminate\Contracts\View\View;
-use Step2dev\LazyAdmin\Services\GenerateRoute;
-use Step2dev\LazyUI\LazyComponent;
 
 class Layout extends BaseLayout
 {
