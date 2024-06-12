@@ -91,9 +91,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
     {
         $this->app->singleton('settings', fn ($app) => new SettingService());
         $this->app->bind(LocalizationInterface::class, config('lazy.localization.localizationManager', LocalizationManager::class));
-        $this->app->bind('Menu', function ($app) {
-            return $app->make(Menu::class);
-        });
     }
 
     public function packageRegistered(): void
