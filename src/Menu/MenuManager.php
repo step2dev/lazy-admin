@@ -2,10 +2,8 @@
 
 namespace Step2dev\LazyAdmin\Menu;
 
-use ArrayAccess;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Traits\EnumeratesValues;
 
 class MenuManager extends Collection
 {
@@ -48,7 +46,7 @@ class MenuManager extends Collection
         return $this;
     }
 
-    public function filter(callable $callback = null): static
+    public function filter(?callable $callback = null): static
     {
         if ($callback) {
             return new static(new Menu, Arr::where($this->items, $callback));

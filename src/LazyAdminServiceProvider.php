@@ -15,7 +15,6 @@ use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
-use Step2dev\LazyAdmin\Facades\Menu;
 use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
