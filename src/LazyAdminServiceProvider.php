@@ -10,6 +10,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Step2dev\LazyAdmin\Commands\CreateAdminCommand;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
+use Step2dev\LazyAdmin\Components\BaseLayout;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\LanguageSwitcher;
@@ -74,6 +75,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 Footer::class,
                 Header::class,
                 Layout::class,
+                BaseLayout::class,
                 LanguageSwitcher::class
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')

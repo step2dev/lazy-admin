@@ -6,15 +6,8 @@ use Illuminate\Contracts\View\View;
 use Step2dev\LazyAdmin\Services\GenerateRoute;
 use Step2dev\LazyUI\LazyComponent;
 
-class Layout extends LazyComponent
+class Layout extends BaseLayout
 {
-    public array $routes = [];
-
-    public function __construct(array $routes = [])
-    {
-        $this->routes = GenerateRoute::make()->generateRoutes();
-    }
-
     public function render(): \Closure|View
     {
         return function (array $data) {

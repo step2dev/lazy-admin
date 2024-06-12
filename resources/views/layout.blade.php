@@ -11,50 +11,21 @@
     'noscript' => '',
 ])
 
-    <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ $title ? $title.' | '.config('app.name', 'Laravel'): config('app.name', 'Laravel') }} | Admin Panel</title>
-    {{ $meta ?? '' }}
-    @if($styles)
-        {{ $styles }}
+<x-lazy-base-layout>
+    @if($header)
+        <header class="navbar bg-base-200">
+            {{ $header }}
+        </header>
     @else
-        @vite(config('lazy.admin.styles'))
+        <x-lazy-header/>
     @endif
-</head>
-<body class="min-h-screen bg-gray-100 font-sans antialiased">
-{{ $noscript ?? ''}}
-<div class="flex flex-col">
-    @if ($wrapper)
-        {{ $wrapper }}
+    {{ $slot }}
+    @if($footer)
+        <footer
+            class="footer bg-base-200 items-center p-4">
+            {{ $footer }}
+        </footer>
     @else
-        @if($header)
-            <header class="navbar bg-base-200">
-                {{ $header }}
-            </header>
-        @else
-            <x-lazy-header/>
-        @endif
-        {{ $slot }}
-        @if($footer)
-            <footer
-                class="footer bg-base-200 items-center p-4">
-                {{ $footer }}
-            </footer>
-        @else
-            <x-lazy-footer/>
-        @endif
+        <x-lazy-footer/>
     @endif
-</div>
-@if($scripts)
-    {{ $scripts }}
-@else
-    @vite(config('lazy.admin.scripts'))
-@endif
-<x-lazy-toast/>
-</body>
-</html>
+</x-lazy-base-layout>
