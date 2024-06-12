@@ -9,8 +9,10 @@
     'styles' => '',
     'scripts' => '',
     'noscript' => '',
+    'menu' => '',
 ])
 @use('Step2dev\LazyAdmin\Facades\Breadcrumb')
+@use('Step2dev\LazyAdmin\Facades\Menu')
 <x-lazy-base-layout>
     @if($header)
         <header class="navbar bg-base-200">
@@ -23,7 +25,11 @@
         <aside
             class="sidebar-menu border-primary bg-base-200 border-y-2 py-4 transform transition-all"
             aria-label="Sidebar">
-
+            @if($menu)
+                {{ $menu }}
+            @else
+                {!! Menu::render() !!}
+            @endif
         </aside>
         <div class="bg-base-100 min-h-full w-full overflow-x-auto transition-all">
             <!-- Page Heading -->
