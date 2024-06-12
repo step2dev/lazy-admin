@@ -1,6 +1,6 @@
 <?php
 
-namespace Step2dev\LazyAdmin\Menu;
+namespace Step2dev\LazyAdmin\Navigation\Menu;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
