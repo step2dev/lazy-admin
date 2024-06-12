@@ -12,6 +12,4 @@ class BreadcrumbManager extends Collection
 
         return $this;
     }
-
-
 }
