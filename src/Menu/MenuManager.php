@@ -4,6 +4,8 @@ namespace Step2dev\LazyAdmin\Menu;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\EnumeratesValues;
+use Throwable;
 
 class MenuManager extends Collection
 {
@@ -32,10 +34,10 @@ class MenuManager extends Collection
         return $this->menu->make($url, $label);
     }
 
-    public function toArray(): array
-    {
-        return $this->items;
-    }
+//    public function toArray(): array
+//    {
+//        return $this->items;
+//    }
 
     public function push(...$values): static
     {
@@ -53,5 +55,15 @@ class MenuManager extends Collection
         }
 
         return new static(new Menu,array_filter($this->items));
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function generate()
+    {
+        return view('lazy::menu-generator', [
+            'menuItems' => $this->items,
+        ])->render();
     }
 }
