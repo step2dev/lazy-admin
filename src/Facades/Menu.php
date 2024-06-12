@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Step2dev\LazyAdmin\Menu\MenuManager;
 
 /**
- * @method static MenuManager addItem(string $key, string $title, string $icon = null, string $route = null, string $permission = null, string $parent = null, int $order = 0)
+ * @method static MenuManager addItem(string $route, string $label, ?string $icon = null, ?array $children = null, ?string $permission = null)
  */
 class Menu extends Facade
 {

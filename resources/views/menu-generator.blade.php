@@ -1,10 +1,14 @@
-<ul>
+<ul class="menu bg-base-200 w-56 rounded-box">
     @foreach($menuItems as $menu)
         <li>
-            <a href="{{ $menu['route'] }}">{{ $menu['label']}}</a>
+            <a href="{{ $menu['url'] ?? $menu['route'] ?? '#' }}">{{ $menu['label']}}</a>
             @if(count($menu['children'] ?? []))
                 <ul>
-                    @include('menu-generator', ['menuItems' => $menu->children])
+                    @foreach($menu['children'] as $child)
+                        <li>
+                            <a href="{{ $child['url'] ?? $child['route'] ?? '#' }}">{{ $child['label']}}</a>
+                        </li>
+                    @endforeach
                 </ul>
             @endif
         </li>

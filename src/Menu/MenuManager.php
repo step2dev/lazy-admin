@@ -25,6 +25,15 @@ class MenuManager extends Collection
     ): static {
         $children ??= [];
 
+        if ($children) {
+            $children = collect( $children)->map(function ($child) {
+                if ($child instanceof Menu) {
+                    return $child->toArray()[0] ?? $child->toArray();
+                }
+                return $child;
+            })->toArray();
+        }
+
         return $this->push(compact('route', 'label', 'icon', 'permission', 'children'));
     }
 
@@ -33,10 +42,10 @@ class MenuManager extends Collection
         return $this->menu->make($url, $label);
     }
 
-    //    public function toArray(): array
-    //    {
-    //        return $this->items;
-    //    }
+    public function toArray(): array
+    {
+        return $this->items;
+    }
 
     public function push(...$values): static
     {
