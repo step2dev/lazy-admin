@@ -51,12 +51,12 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->hasRoute('admin')
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
+                    ->publishConfigFile()
+                    ->publishMigrations()
                     ->startWith(static function (InstallCommand $installCommand) {
                         $installCommand->info('Installing Lazy Admin...');
                         $installCommand->call('lazy-ui:install');
                     })
-                    ->publishConfigFile()
-                    ->publishMigrations()
                     ->publish('lazy-admin', 'lazy')
                     ->askToRunMigrations()
                     ->copyAndRegisterServiceProviderInApp()
