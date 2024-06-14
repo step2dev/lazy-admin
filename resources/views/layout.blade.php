@@ -43,7 +43,7 @@
                             @if($breadcrumb)
                                 {{ $breadcrumb }}
                             @else
-                                {{ Breadcrumb::render() }}
+                                <x-lazy-breadcrumbs>{{ Breadcrumb::render() }}</x-lazy-breadcrumbs>
                             @endif
                         </div>
                         <div class="col-span-3 lg:col-span-1 flex justify-end flex-wrap lg:mt-0 lg:ml-4 ">
