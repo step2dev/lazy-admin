@@ -19,6 +19,16 @@ class Setting extends Model
         'deletable',
     ];
 
+    protected $casts = [
+        'group' => 'string',
+        'key' => 'string',
+        'type' => 'string',
+        'value' => 'string',
+        'is_protected' => 'boolean',
+        'is_encrypted' => 'boolean',
+        'deletable' => 'boolean',
+    ];
+
     public function getDescriptionAttribute(): string
     {
         return __('settings.'.$this->settingKey.'.desc');
