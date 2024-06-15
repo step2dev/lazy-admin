@@ -99,7 +99,7 @@ final class DbOptimize extends BaseCommand
      */
     private function existsDatabase(string &$databaseName): bool
     {
-        return $this->db
+        return (bool) $this->db
             ->newQuery()
             ->selectRaw('SCHEMA_NAME')
             ->fromRaw('INFORMATION_SCHEMA.SCHEMATA')
