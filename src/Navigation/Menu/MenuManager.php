@@ -69,7 +69,7 @@ class MenuManager extends Collection
     /**
      * @throws Throwable
      */
-    public function render()
+    public function render(): string
     {
         return view('lazy::menu-generator', [
             'menuItems' => $this->items,
