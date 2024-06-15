@@ -34,11 +34,11 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         if ($this->isArcanedevLocalization) {
-            return localization()->setLocale($locale);// @phpstan-ignore-line
+            return localization()->setLocale($locale); // @phpstan-ignore-line
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale($locale);// @phpstan-ignore-line
+            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale($locale); // @phpstan-ignore-line
         }
 
         trigger_error('No localization package found', E_USER_WARNING);
@@ -49,11 +49,11 @@ class LocalizationManager implements Contracts\LocalizationInterface
     public function getLocale(): string
     {
         if ($this->isArcanedevLocalization) {
-            return localization()->getCurrentLocale();// @phpstan-ignore-line
+            return localization()->getCurrentLocale(); // @phpstan-ignore-line
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale();// @phpstan-ignore-line
+            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale(); // @phpstan-ignore-line
         }
 
         return app()->getLocale();
@@ -62,11 +62,11 @@ class LocalizationManager implements Contracts\LocalizationInterface
     public function getSupportedLocales(): array
     {
         if ($this->isArcanedevLocalization) {
-            return localization()->getSupportedLocales()->keys()->toArray();// @phpstan-ignore-line
+            return localization()->getSupportedLocales()->keys()->toArray(); // @phpstan-ignore-line
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales();// @phpstan-ignore-line
+            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales(); // @phpstan-ignore-line
         }
 
         return [];
@@ -96,11 +96,11 @@ class LocalizationManager implements Contracts\LocalizationInterface
     public function getLocalizedURL(string $code): string
     {
         if ($this->isArcanedevLocalization) {
-            return localization()->getLocalizedURL($code);// @phpstan-ignore-line
+            return localization()->getLocalizedURL($code); // @phpstan-ignore-line
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($code);// @phpstan-ignore-line
+            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($code); // @phpstan-ignore-line
         }
 
         return $code;
