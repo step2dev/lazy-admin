@@ -34,10 +34,12 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         if ($this->isArcanedevLocalization) {
+            // @phpstan-ignore missingType.iterableValue
             return localization()->setLocale($locale);
         }
 
         if ($this->isMcamaraLocalization) {
+            // @phpstan-ignore missingType.iterableValue
             return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale($locale);
         }
 
