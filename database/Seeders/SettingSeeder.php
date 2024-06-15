@@ -9,6 +9,7 @@ class SettingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * @throws \Throwable
      */
     public function run(): void
     {
@@ -39,10 +40,7 @@ class SettingSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            Setting::firstOrCreate([
-                'group' => $setting['group'],
-                'key' => $setting['key'],
-            ], $setting);
+            setting()->set($setting['group'].'.'.$setting['key'], $setting);
         }
 
     }
