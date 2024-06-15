@@ -12,5 +12,8 @@ parameters:
     checkModelAppends: true
     checkModelProperties: true
     ignoreErrors:
-        -
-            identifier: missingType.iterableValue
+        - '#Unsafe usage of new static\(\).#'
+        - '#Call to static method where\(\) on an unknown class App\\Models\\User.#'
+        - '#Call to static method create\(\) on an unknown class App\\Models\\User.#'
+        #-
+        #    identifier: missingType.iterableValue

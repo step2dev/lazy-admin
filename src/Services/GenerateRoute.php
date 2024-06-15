@@ -120,6 +120,6 @@ class GenerateRoute
 
     public function getRouteParameters(): ?array
     {
-        return request()?->route()?->parameters();
+        return request()->route()?->parameters();
     }
 }
