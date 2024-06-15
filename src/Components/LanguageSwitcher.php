@@ -24,7 +24,7 @@ class LanguageSwitcher extends Component
                 ->upper()
                 ->split('//u')
                 ->filter()
-                ->map(fn ($code) => mb_convert_encoding('&#'.ord($code) + 0x1F1A5 .';', 'UTF-8',
+                ->map(fn ($code) => mb_convert_encoding('&#'.(ord($code) + 0x1F1A5) .';', 'UTF-8',
                     'HTML-ENTITIES'))
                 ->implode('')
             )

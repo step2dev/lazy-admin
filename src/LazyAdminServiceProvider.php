@@ -108,7 +108,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
     {
         /** @var Router $router */
         $router = $this->app['router'];
-        $router?->mixin(new AdminRouter(new ConfigProvider()));
+        $router->mixin(new AdminRouter(new ConfigProvider()));
 
     }
 }
