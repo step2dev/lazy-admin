@@ -3,12 +3,12 @@
 namespace Step2dev\LazyAdmin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Step2dev\LazyAdmin\Models\Setting;
 
 class SettingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
      * @throws \Throwable
      */
     public function run(): void
