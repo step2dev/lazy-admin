@@ -49,4 +49,13 @@ class ConfigProvider
     {
         return '^(?!.*\b'.config('lazy.admin.route.prefix').'\b).*';
     }
+
+    public function getRouteName(string $name): string
+    {
+        if (str_starts_with($name, $this->getRoutePrefixName())) {
+            return $name;
+        }
+
+        return $this->getRoutePrefixName().$name;
+    }
 }
