@@ -94,7 +94,7 @@ class SettingService
 
     public function update(Setting $setting, mixed $data): Setting
     {
-        $setting->update(['value' => $data]);
+        $setting->update($this->formatData($data, $setting->type));
 
         $this->clearCache();
 
