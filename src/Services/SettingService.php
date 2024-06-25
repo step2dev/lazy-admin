@@ -106,14 +106,33 @@ class SettingService
      */
     public function createIfNotExists(string $key, mixed $data, ?string $type = null): Setting
     {
-        $setting = Setting::firstOrCreate($this->getKeyAndGroup($key), [
-            'type' => $type ?? 'string',
-            'value' => $data,
-        ]);
+        $setting = Setting::firstOrCreate($this->getKeyAndGroup($key), $this->formatData($data, $type));
 
         $this->clearCache();
 
         return $setting;
+    }
+
+    final protected function formatData(array|string $data, string|null $type = null): array
+    {
+        $type = $type ?? 'string';
+        $result = compact('type');
+
+        if (! is_array($data)) {
+            return [...$result, 'value' => $data];
+        }
+
+        if (! isset($data['value'])) {
+            return $result;
+        }
+
+        $result = [...$result, ...$data];
+
+        if (is_array($data['value'])) {
+            $result['value'] = json_encode($data['value']);
+        }
+
+        return $result;
     }
 
     /**
