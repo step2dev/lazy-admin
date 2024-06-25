@@ -102,10 +102,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         Livewire::component('settings.setting', Setting::class);
     }
 
-    public function bootingPackage(): void
-    {
-
-    }
+    public function bootingPackage(): void {}
 
     public function packageBooted(): void
     {

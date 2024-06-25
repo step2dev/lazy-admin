@@ -2,6 +2,4 @@
 
 namespace Step2dev\LazyAdmin;
 
-class LazyAdmin
-{
-}
+class LazyAdmin {}

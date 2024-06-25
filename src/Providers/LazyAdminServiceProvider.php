@@ -23,8 +23,5 @@ class LazyAdminServiceProvider extends ServiceProvider
         });
     }
 
-    private function configureRateLimiting(): void
-    {
-
-    }
+    private function configureRateLimiting(): void {}
 }

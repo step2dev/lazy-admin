@@ -18,6 +18,7 @@ class LogUserActionsMiddleware
                 'ip' => $request->ip(),
             ]);
         }
+
         return $next($request);
     }
 }

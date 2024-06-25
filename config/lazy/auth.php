@@ -3,8 +3,8 @@
 return [
     'login_fields' => [
         'email',
-//        'username',
-//        'phone'
+        //        'username',
+        //        'phone'
     ],
     'providers' => [
         'users' => [
