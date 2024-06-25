@@ -33,7 +33,6 @@ class Setting extends Model
         'group' => 'string',
         'key' => 'string',
         'type' => 'string',
-        'value' => 'string',
         'is_protected' => 'boolean',
         'is_encrypted' => 'boolean',
         'deletable' => 'boolean',
