@@ -113,7 +113,7 @@ class SettingService
         return $setting;
     }
 
-    final protected function formatData(array|string $data, string|null $type = null): array
+    final protected function formatData(array|string $data, ?string $type = null): array
     {
         $type = $type ?? 'string';
         $result = compact('type');
