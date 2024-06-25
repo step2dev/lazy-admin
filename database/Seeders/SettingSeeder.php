@@ -40,7 +40,7 @@ class SettingSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            setting()->set($setting['group'].'.'.$setting['key'], $setting);
+            setting()->set($setting['group'].'.'.$setting['key'], $setting, $setting['type']);
         }
 
     }
