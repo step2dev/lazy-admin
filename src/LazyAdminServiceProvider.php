@@ -93,7 +93,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             $this->app->register(\Livewire\LivewireServiceProvider::class);
         }
 
-//        $this->app->singleton('settings', fn ($app) => new SettingService());
+        //        $this->app->singleton('settings', fn ($app) => new SettingService());
         $this->app->bind(LocalizationInterface::class, config('lazy.localization.localizationManager', LocalizationManager::class));
     }
 
