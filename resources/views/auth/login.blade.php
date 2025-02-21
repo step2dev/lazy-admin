@@ -27,7 +27,7 @@
 
                         <p class="mt-3 text-gray-500 dark:text-gray-300">Sign in to access your account</p>
                     </div>
-                    <x-validation-errors class="mb-4"/>
+                    <x-lazy-alert class="mb-4"/>
 
                     @if (session('status'))
                         <div class="mb-4 text-sm font-medium text-green-600">
