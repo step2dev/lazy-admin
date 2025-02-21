@@ -17,7 +17,7 @@ class Router
 
     public function __construct()
     {
-        self::$configProvider = new ConfigProvider();
+        self::$configProvider = new ConfigProvider;
     }
 
     public function admin(): Closure

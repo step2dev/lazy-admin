@@ -8,7 +8,7 @@ class Menu
 
     public static function make(string $url, string $label): static
     {
-        $menu = new static();
+        $menu = new static;
         $menu->addItem($url, $label);
 
         return $menu;
@@ -16,7 +16,7 @@ class Menu
 
     public function children(callable $callback): static
     {
-        $submenu = new static();
+        $submenu = new static;
         $callback($submenu);
 
         $this->items[count($this->items) - 1]['submenu'] = $submenu;
