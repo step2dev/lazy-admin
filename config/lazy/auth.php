@@ -8,7 +8,7 @@ return [
     ],
     'providers' => [
         'users' => [
-            'model' => \App\Models\User::class,
+            'model' => \App\Models\User::class,// @phpstan-ignore-line
         ],
     ],
     'password_timeout' => 10800,
