@@ -83,7 +83,7 @@
                                 </button>
                             </div>
 {{--                                                        <x-lazy-divider class="text-indigo-500" :text="__('auth.or_sign_in_with_email')"/>--}}
-                            @if (Route::has('auth.social.login'))
+                            @if (app('router')->has('auth.social.login'))
                                 <div class="mt-5 flex justify-around">
                                     <a href="{{ route('auth.social.login', ['driver' => 'google']) }}"
                                        title="{{ trans('auth.sign_in_with_google') }}">
