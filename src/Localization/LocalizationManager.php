@@ -93,16 +93,21 @@ class LocalizationManager implements Contracts\LocalizationInterface
         return $prefix;
     }
 
-    public function getLocalizedURL(string $code): string
+    public function getLocalizedURL(string|null $code = null, string|null $url = null): string
     {
         if ($this->isArcanedevLocalization) {
-            return localization()->getLocalizedURL($code); // @phpstan-ignore-line
+            return localization()->getLocalizedURL($code, $url); // @phpstan-ignore-line
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($code); // @phpstan-ignore-line
+            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($code, $url); // @phpstan-ignore-line
         }
 
-        return $code;
+        return "/$code/$url";
+    }
+
+    public function localizeURL(string|null $url = null, string|null $locale = null): string
+    {
+        return $this->getLocalizedURL($locale, $url);
     }
 }

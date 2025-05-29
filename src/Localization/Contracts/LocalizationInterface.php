@@ -11,4 +11,8 @@ interface LocalizationInterface
     public function getSupportedLocales(): array;
 
     public function setRouteLocale(string $prefix = '', ?string $locale = null): string;
+
+    public function getLocalizedURL(string|null $code,string|null $url = null): string;
+
+    public function localizeURL(string|null $url = null, string|null $locale = null): string;
 }
