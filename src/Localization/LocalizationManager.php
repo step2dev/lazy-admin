@@ -93,7 +93,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         return $prefix;
     }
 
-    public function getLocalizedURL(string|null $locale = null, string|null $url = null): string
+    public function getLocalizedURL(?string $locale = null, ?string $url = null): string
     {
         if ($this->isArcanedevLocalization) {
             return localization()->getLocalizedURL($locale, $url); // @phpstan-ignore-line
@@ -106,7 +106,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         return "/$locale/$url";
     }
 
-    public function localizeURL(string|null $url = null, string|null $locale = null): string
+    public function localizeURL(?string $url = null, ?string $locale = null): string
     {
         return $this->getLocalizedURL($locale, $url);
     }
