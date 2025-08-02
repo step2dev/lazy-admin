@@ -52,7 +52,7 @@ final class DbOptimize extends BaseCommand
     }
 
     /**
-     * Get all the tables that need to the optimized
+     * Get all the tables that need to the optimize
      */
     private function getTables(): Collection
     {
@@ -76,7 +76,7 @@ final class DbOptimize extends BaseCommand
     }
 
     /**
-     * Get database which need optimization
+     * Get database that needs optimization
      */
     protected function getDatabase(): string
     {
