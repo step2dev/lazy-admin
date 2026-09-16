@@ -1,11 +1,9 @@
 includes:
-#    - vendor/larastan/larastan/extension.neon
     - phpstan-baseline.neon
 parameters:
     level: 5
     paths:
         - src
-        - config
         - database
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
@@ -15,5 +13,3 @@ parameters:
         - '#Unsafe usage of new static\(\).#'
         - '#Call to static method where\(\) on an unknown class App\\Models\\User.#'
         - '#Call to static method create\(\) on an unknown class App\\Models\\User.#'
-        #-
-        #    identifier: missingType.iterableValue

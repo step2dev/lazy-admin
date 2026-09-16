@@ -12,7 +12,7 @@ final class DbOptimize extends BaseCommand
     /**
      * The console command description.
      *
-     * @var string|null
+     * @var string
      */
     protected $description = 'Optimize table/s of the database';
 
@@ -56,8 +56,9 @@ final class DbOptimize extends BaseCommand
      */
     private function getTables(): Collection
     {
-        $tableList = collect($this->option('table'));
-        if ($tableList->isEmpty()) {
+        $tables = $this->option('table');
+
+        if (! is_array($tables) || $tables === []) {
             return $this->db
                 ->newQuery()
                 ->selectRaw('TABLE_NAME')
@@ -68,10 +69,13 @@ final class DbOptimize extends BaseCommand
                 ->whereRaw("TABLE_NAME NOT LIKE 'pma%'")
                 ->pluck('TABLE_NAME');
         }
-        // Check if the table exists
+
+        $tableList = collect($tables);
+
         if ($this->existsTables($tableList)) {
             return $tableList;
         }
+
         throw new RuntimeException("One or more tables provided doesn't exists.");
     }
 

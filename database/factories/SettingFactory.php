@@ -3,7 +3,7 @@
 namespace Step2dev\LazyAdmin\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Step2dev\LazyAdmin\Models\Setting;
+use Step2Dev\LazySetting\Models\Setting;
 
 class SettingFactory extends Factory
 {
