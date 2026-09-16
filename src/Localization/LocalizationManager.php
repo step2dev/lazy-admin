@@ -2,6 +2,8 @@
 
 namespace Step2dev\LazyAdmin\Localization;
 
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 class LocalizationManager implements Contracts\LocalizationInterface
 {
     private bool $isMultiLanguage;
@@ -38,7 +40,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::setLocale($locale); // @phpstan-ignore-line
+            return LaravelLocalization::setLocale($locale); // @phpstan-ignore-line
         }
 
         trigger_error('No localization package found', E_USER_WARNING);
@@ -53,7 +55,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale(); // @phpstan-ignore-line
+            return LaravelLocalization::getCurrentLocale(); // @phpstan-ignore-line
         }
 
         return app()->getLocale();
@@ -66,7 +68,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales(); // @phpstan-ignore-line
+            return LaravelLocalization::getSupportedLocales(); // @phpstan-ignore-line
         }
 
         return [];
@@ -100,7 +102,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         if ($this->isMcamaraLocalization) {
-            return \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($locale, $url); // @phpstan-ignore-line
+            return LaravelLocalization::getLocalizedURL($locale, $url); // @phpstan-ignore-line
         }
 
         return "/$locale/$url";

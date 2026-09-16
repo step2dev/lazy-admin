@@ -4,6 +4,7 @@ namespace Step2dev\LazyAdmin;
 
 use Illuminate\Routing\Router;
 use Livewire\Livewire;
+use Livewire\LivewireServiceProvider;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -20,7 +21,6 @@ use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
-use Step2dev\LazyAdmin\Services\SettingService;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -90,7 +90,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
     public function registeringPackage(): void
     {
         if ($this->app->runningInConsole() && $this->app->environment('testing')) {
-            $this->app->register(\Livewire\LivewireServiceProvider::class);
+            $this->app->register(LivewireServiceProvider::class);
         }
 
         $this->app->alias('setting', 'settings');

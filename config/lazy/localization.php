@@ -1,8 +1,10 @@
 <?php
 
+use Step2dev\LazyAdmin\Localization\LocalizationManager;
+
 return [
     'multi_language' => false,
-    'localizationManager' => \Step2dev\LazyAdmin\Localization\LocalizationManager::class,
+    'localizationManager' => LocalizationManager::class,
     /* -----------------------------------------------------------------
      |  Locales
      | -----------------------------------------------------------------
