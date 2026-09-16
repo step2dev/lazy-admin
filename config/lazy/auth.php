@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
     'login_fields' => [
         'email',
@@ -8,7 +10,7 @@ return [
     ],
     'providers' => [
         'users' => [
-            'model' => \App\Models\User::class, // @phpstan-ignore-line
+            'model' => User::class, // @phpstan-ignore-line
         ],
     ],
     'password_timeout' => 10800,

@@ -2,18 +2,17 @@
 
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
-use Step2dev\LazyAdmin\Services\SettingService;
+use Step2Dev\LazySetting\LazySetting;
 
-if (! function_exists('settings')) {
+if (! function_exists('setting')) {
     /**
-     * Get the available container instance.
-     *
-     * @return mixed|SettingService
+     * Get the settings service or a setting value.
      */
     function setting(?string $key = null, mixed $default = null): mixed
     {
-        /** @var SettingService $settings */
-        $settings = app('settings');
+        /** @var LazySetting $settings */
+        $settings = app('setting');
+
         if ($key === null) {
             return $settings;
         }
