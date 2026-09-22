@@ -21,6 +21,10 @@ return [
             LazyAdminMiddleware::class,
         ],
         'path' => 'routes/admin.php',
+        'login' => [
+            'prefix' => env('LAZY_LOGIN_PREFIX', ''),
+            'uri' => env('LAZY_LOGIN_URI', 'login'),
+        ],
     ],
 
     'roles' => [
