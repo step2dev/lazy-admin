@@ -1,27 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Step2dev\LazyAdmin\Providers\LazyAdminServiceProvider as AdminRouteServiceProvider;
-use Step2dev\LazyAdmin\Tests\TestCase;
 
-uses(
-    new class extends TestCase
-    {
-        protected function getPackageProviders($app): array
-        {
-            return [
-                ...parent::getPackageProviders($app),
-                AdminRouteServiceProvider::class,
-            ];
-        }
-    }
-);
+it('allows a guest login route with a web session', function (): void {
+    Route::admin(function (): void {
+        Route::get('/login-test', fn () => csrf_token())->name('login-test');
+    }, [
+        'prefix' => '',
+        'as' => '',
+        'middleware' => ['web', 'guest'],
+    ]);
 
-it('registers the login route with a web session and without authentication', function (): void {
-    $login = Route::getRoutes()->getByName('login');
+    $route = Route::getRoutes()->getByName('login-test');
 
-    expect($login)->not->toBeNull()
-        ->and($login->uri())->toBe('login')
-        ->and($login->gatherMiddleware())->toContain('web', 'guest')
+    expect($route)->not->toBeNull()
+        ->and($route->uri())->toBe('login-test')
+        ->and($route->gatherMiddleware())->toContain('web', 'guest')
         ->not->toContain('auth');
+
+    $response = $this->get('/login-test');
+
+    $response->assertOk();
+    expect($response->getContent())->toMatch('/^[A-Za-z0-9]{40}$/');
 });
