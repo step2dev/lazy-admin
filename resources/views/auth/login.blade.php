@@ -35,7 +35,7 @@
                         </div>
                     @endif
                     <div class="mt-8">
-                        <form class="row g-3" method="POST" action="{{ route('login') }}">
+                        <form class="row g-3" method="POST" action="{{ route('login.store') }}">
                             @csrf
                             <div>
                                 <x-lazy::label for="email" label="{{ __('Email') }}"
