@@ -58,7 +58,7 @@ final class DbOptimize extends BaseCommand
     {
         $tables = $this->option('table');
 
-        if (! is_array($tables) || $tables === []) {
+        if ($tables === []) {
             return $this->db
                 ->newQuery()
                 ->selectRaw('TABLE_NAME')
