@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 it('allows a guest login route with a web session', function (): void {
+    config()->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
+
     Route::admin(function (): void {
         Route::get('/login-test', fn () => csrf_token())->name('login-test');
     }, [
