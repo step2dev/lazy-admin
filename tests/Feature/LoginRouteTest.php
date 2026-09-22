@@ -11,6 +11,8 @@ it('allows a guest login route with a web session', function (): void {
         'middleware' => ['web', 'guest'],
     ]);
 
+    Route::getRoutes()->refreshNameLookups();
+
     $route = Route::getRoutes()->getByName('login-test');
 
     expect($route)->not->toBeNull()
