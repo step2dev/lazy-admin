@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Route;
 use ReflectionException;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
+use Step2dev\LazyAdmin\Controllers\LoginController;
 
 class LazyAdminServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,14 @@ class LazyAdminServiceProvider extends ServiceProvider
     {
         $this->routes(function () {
             $this->configureRateLimiting();
+
+            Route::admin(function () {
+                Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+            }, [
+                'prefix' => '',
+                'as' => '',
+                'middleware' => ['web', 'guest'],
+            ]);
 
             Route::admin(function () {
                 require AdminRouter::getRoutePath();
