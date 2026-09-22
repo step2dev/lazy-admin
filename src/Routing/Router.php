@@ -25,7 +25,7 @@ class Router
         $adminAttributes = self::$configProvider->getAdminRouteAttributes();
 
         return function (Closure $callback, array $attributes = []) use ($adminAttributes) {
-            $attributes = array_merge($attributes, $adminAttributes);
+            $attributes = array_merge($adminAttributes, $attributes);
 
             $this->group(array_filter($attributes), $callback);
         };

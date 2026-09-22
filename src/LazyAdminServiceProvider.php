@@ -47,7 +47,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             // ->publishesServiceProvider('LazyAsideServiceProvider')
             ->publishesServiceProvider('LazyAdminServiceProvider')
             //            ->hasAssets()
-            ->hasRoute('admin')
             ->hasInstallCommand(static function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
