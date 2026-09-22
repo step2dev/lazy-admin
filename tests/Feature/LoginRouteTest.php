@@ -25,3 +25,22 @@ it('allows a guest login route with a web session', function (): void {
     $response->assertOk();
     expect($response->getContent())->toMatch('/^[A-Za-z0-9]{40}$/');
 });
+
+it('honors custom paths and names passed to Route::admin', function (): void {
+    Route::admin(function (): void {
+        Route::get('/overview', fn () => 'ok')->name('overview');
+    }, [
+        'prefix' => 'uk/custom-admin',
+        'as' => 'custom.',
+        'middleware' => ['web'],
+    ]);
+
+    Route::getRoutes()->refreshNameLookups();
+
+    $route = Route::getRoutes()->getByName('custom.overview');
+
+    expect($route)->not->toBeNull()
+        ->and($route->uri())->toBe('uk/custom-admin/overview')
+        ->and($route->gatherMiddleware())->toContain('web')
+        ->not->toContain('auth');
+});
