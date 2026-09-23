@@ -68,7 +68,7 @@ class LocalizationManager implements Contracts\LocalizationInterface
         }
 
         if ($this->isMcamaraLocalization) {
-            return LaravelLocalization::getSupportedLocales(); // @phpstan-ignore-line
+            return array_keys(LaravelLocalization::getSupportedLocales()); // @phpstan-ignore-line
         }
 
         return [];
