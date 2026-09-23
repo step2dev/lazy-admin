@@ -12,7 +12,7 @@
     'menu' => '',
 ])
 @use('Step2dev\LazyAdmin\Facades\Breadcrumb')
-@use('Step2dev\LazyAdmin\Facades\Menu')
+@use('Step2dev\LazyMenu\Facades\Menu')
 <x-lazy-base-layout>
     @if($header)
         <header class="navbar bg-base-200">

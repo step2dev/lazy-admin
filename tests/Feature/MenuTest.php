@@ -5,12 +5,10 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
-use Step2dev\LazyAdmin\Facades\Menu as MenuFacade;
-use Step2dev\LazyAdmin\Navigation\Menu\Menu;
-use Step2dev\LazyAdmin\Navigation\Menu\MenuManager;
-use Step2dev\LazyAdmin\Navigation\Menu\MenuRegistry;
-use Step2dev\LazyMenu\Facades\Menu as PackageMenuFacade;
-use Step2dev\LazyMenu\Navigation\Menu\MenuManager as PackageMenuManager;
+use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
+use Step2dev\LazyMenu\Navigation\Menu\Menu;
+use Step2dev\LazyMenu\Navigation\Menu\MenuManager;
+use Step2dev\LazyMenu\Navigation\Menu\MenuRegistry;
 
 it('builds the step2dev menu lazily once and filters permissions', function (): void {
     Route::get('/admin', fn () => 'dashboard')->name('admin');
@@ -219,14 +217,12 @@ it('rejects cyclic menu positioning', function (): void {
     expect(fn () => $registry->contributors())->toThrow(LogicException::class);
 });
 
-it('shares the menu instance between lazy-admin and lazy-menu facades', function (): void {
-    $legacy = app(MenuManager::class);
+it('uses the lazy-menu facade directly', function (): void {
+    $menu = app(MenuManager::class);
 
-    expect(app(PackageMenuManager::class))->toBe($legacy)
-        ->and(MenuFacade::getFacadeRoot())->toBe($legacy)
-        ->and(PackageMenuFacade::getFacadeRoot())->toBe($legacy);
+    expect(MenuFacade::getFacadeRoot())->toBe($menu);
 
-    PackageMenuFacade::register(function (PackageMenuManager $menu): void {
+    MenuFacade::register(function (MenuManager $menu): void {
         $menu->addItem('/module', 'Installed module');
     }, id: 'installed-module');
 
@@ -237,7 +233,7 @@ it('renders the admin theme by default and keeps the package template selectable
     MenuFacade::addItem('/admin', 'Dashboard', badge: 'New');
 
     $admin = MenuFacade::render();
-    $standalone = PackageMenuFacade::render('lazy-menu::menu-generator');
+    $standalone = MenuFacade::render('lazy-menu::menu-generator');
 
     expect($admin)->toContain('menu bg-base-200 w-56 rounded-box', 'class="badge"')
         ->not->toContain('bg-slate-900');
@@ -252,7 +248,7 @@ it('keeps the original menu item fluent API available', function (): void {
         ->badge('New')
         ->children(fn (Menu $children) => $children->group('Blog'));
 
-    expect($item)->toBeInstanceOf(Step2dev\LazyMenu\Navigation\Menu\Menu::class)
+    expect($item)->toBeInstanceOf(Menu::class)
         ->and($item->toArray()[0]['label'])->toBe('Dashboard')
         ->and($item->toArray()[0]['badge'])->toBe('New')
         ->and($item->toArray()[0]['submenu'])->toBeInstanceOf(Menu::class);

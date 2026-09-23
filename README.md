@@ -20,7 +20,7 @@ The installer publishes configuration and registers the application's `LazyAdmin
 
 The navigation engine lives in `step2dev/lazy-menu`; lazy-admin keeps its own DaisyUI menu templates. Until a tagged release is available, this branch installs the public package from Git through its VCS repository and the `dev-main` constraint. Composer and CI do not need a separate token for lazy-menu.
 
-Existing `Step2dev\\LazyAdmin\\Facades\\Menu`, `Step2dev\\LazyAdmin\\Navigation\\Menu\\MenuManager` and `Menu` classes are supported entry points backed by lazy-menu; existing application imports keep working. New modules can use `Step2dev\\LazyMenu\\Facades\\Menu` and `Step2dev\\LazyMenu\\Navigation\\Menu\\MenuManager`.
+Lazy Admin uses the `step2dev/lazy-menu` classes directly. Use `Step2dev\\LazyMenu\\Facades\\Menu`, `Step2dev\\LazyMenu\\Navigation\\Menu\\MenuManager`, `Menu`, and `MenuRegistry`; the former Lazy Admin menu wrappers are removed.
 
 The admin layout renders its own DaisyUI templates under `lazy::menu-generator`, `lazy::menu-item` and `lazy::menu-label`. Override the corresponding files in `resources/views/vendor/lazy/`, or select your own view in a provider with `Menu::useView('admin.navigation.menu')`. For a single render, pass a view to `Menu::render('admin.navigation.menu')`. The standalone lazy-menu package uses a Tailwind template. No menu config needs publishing. See the [lazy-menu documentation](https://github.com/step2dev/lazy-menu) for template variables.
 
@@ -61,8 +61,8 @@ namespace Step2dev\LazyBlog;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Step2dev\LazyAdmin\Facades\Menu;
-use Step2dev\LazyAdmin\Navigation\Menu\MenuManager;
+use Step2dev\LazyMenu\Facades\Menu;
+use Step2dev\LazyMenu\Navigation\Menu\MenuManager;
 
 class LazyBlogServiceProvider extends ServiceProvider
 {
@@ -92,8 +92,8 @@ Each application or package module may call `Menu::register(...)` in its service
 use App\Models\BlogCategory;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Cache;
-use Step2dev\LazyAdmin\Facades\Menu;
-use Step2dev\LazyAdmin\Navigation\Menu\MenuManager;
+use Step2dev\LazyMenu\Facades\Menu;
+use Step2dev\LazyMenu\Navigation\Menu\MenuManager;
 
 Menu::register(function (MenuManager $menu): void {
     $menu->push(['group' => 'Blog']);
