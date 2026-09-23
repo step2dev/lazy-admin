@@ -4,6 +4,10 @@
 use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
 
 return [
+    'home' => env('LAZY_ADMIN_HOME', '/'),
+    'logo' => env('LAZY_ADMIN_LOGO', '/main.svg'),
+    'avatar' => env('LAZY_ADMIN_AVATAR', '/img/admin.png'),
+
     'scripts' => [
         'resources/lazy/js/lazy.js',
     ],
