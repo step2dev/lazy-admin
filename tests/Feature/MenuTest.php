@@ -248,7 +248,7 @@ it('keeps the original menu item fluent API available', function (): void {
         ->badge('New')
         ->children(fn (Menu $children) => $children->group('Blog'));
 
-    expect($item)->toBeInstanceOf(Step2dev\LazyMenu\Navigation\Menu\Menu::class)
+    expect($item)->toBeInstanceOf(Menu::class)
         ->and($item->toArray()[0]['label'])->toBe('Dashboard')
         ->and($item->toArray()[0]['badge'])->toBe('New')
         ->and($item->toArray()[0]['submenu'])->toBeInstanceOf(Menu::class);
