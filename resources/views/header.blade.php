@@ -1,6 +1,6 @@
 <header class="navbar bg-base-200">
     <div class="flex-auto items-center justify-start px-4">
-        <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-2">
+        <a href="{{ Route::has('admin.dashboard') ? route('admin.dashboard') : url(config('lazy.admin.home', '/')) }}" class="flex items-center space-x-2">
             <img
                 src="{{ config('lazy.admin.logo', '/main.svg') }}"
                 alt="{{ config('app.name') }}"
@@ -90,7 +90,7 @@
 
         <x-lazy-theme-switcher/>
 
-        @if(config('lazy.admin.multi_language', false))
+        @if(config('lazy.localization.multi_language', false))
             <x-lazy-language-switcher/>
         @endif
 
