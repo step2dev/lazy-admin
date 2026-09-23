@@ -47,7 +47,6 @@ it('honors custom paths and names passed to Route::admin', function (): void {
         ->not->toContain('auth');
 });
 
-
 it('renders the packaged login view with current lazy ui components', function (): void {
     config()->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
 
