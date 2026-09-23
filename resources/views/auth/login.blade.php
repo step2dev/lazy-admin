@@ -38,16 +38,16 @@
                         <form class="row g-3" method="POST" action="{{ Route::has('login.store') ? route('login.store') : route('login') }}">
                             @csrf
                             <div>
-                                <x-lazy::label for="email" label="{{ __('Email') }}"
+                                <x-lazy-label for="email" label="{{ __('Email') }}"
                                                class="mb-2 text-sm text-gray-600 dark:text-gray-200"/>
-                                <x-lazy::input-native id="email" type="email" name="email" :value="old('email')"
+                                <x-lazy-input id="email" type="email" name="email" :value="old('email')"
                                                       required autofocus placeholder="{{ __('Email') }}" hr
                                                       class="mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400"/>
                             </div>
 
                             <div class="mt-6">
                                 <div class="mb-2 flex justify-between">
-                                    <x-lazy::label for="password" label="{{ __('Password') }}" hr
+                                    <x-lazy-label for="password" label="{{ __('Password') }}" hr
                                                    class="mb-2 text-sm text-gray-600 dark:text-gray-200"/>
                                     @if (Route::has('password.request'))
                                         <a href="{{ route('password.request') }}"
@@ -64,7 +64,7 @@
                                         <i class='bx bx-hide'></i>
                                     </a>
                                 </div>--}}
-                                <x-lazy::input-native type="password" name="password" id="password"
+                                <x-lazy-input type="password" name="password" id="password"
                                                       placeholder="Your Password"
                                                       class="mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400"
                                 />
@@ -72,7 +72,7 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="remember_me" name="remember"
                                        checked>
-                                <x-lazy::label for="password" :value="__('Remember me')"
+                                <x-lazy-label for="password" :value="__('Remember me')"
                                                class="text-sm text-gray-600 dark:text-gray-200"/>
                             </div>
 
