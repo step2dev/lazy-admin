@@ -166,7 +166,7 @@ $menu->addItem('admin.blog.index', 'Articles', children: [
 
 `iconView` names an application Blade view such as `resources/views/icons/dashboard.blade.php` containing SVG. `icon` still accepts a CSS class; `badge` accepts static text or a lazy callback. Database icon identifiers must be mapped to trusted Blade views before being passed to `iconView`. Route names resolve to URLs; use `parameters` (or `->parameters([...])` for a child) for required route parameters. Literal URLs are also accepted. Parent sections expand when a descendant route is active. Links and badges are escaped.
 
-Existing calls such as `Menu::addItem('admin', 'Dashboard', 'home', [Menu::createMenu('admin2', 'Child')])` remain valid. The `<x-lazy::layout>` component renders the menu and accepts `title`, `menu`, `header`, `footer` and `action` slots. Views under the `lazy::` namespace can be overridden in the application.
+Existing calls such as `Menu::addItem('admin', 'Dashboard', 'home', [Menu::createMenu('admin2', 'Child')])` remain valid. The `<x-lazy-layout>` component renders the menu and accepts `title`, `menu`, `header`, `footer` and `action` slots. Views under the `lazy::` namespace can be overridden in the application.
 
 ## Access
 
