@@ -32,6 +32,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/step2dev/lazy-ui"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/step2dev/lazy-menu.git"
         }
     ],
     "require": {
@@ -43,7 +47,8 @@
         "spatie/laravel-permission": "^6.15.0",
         "step2dev/lazy-breadcrumb": "dev-main",
         "step2dev/lazy-setting": "dev-main",
-        "step2dev/lazy-ui": "dev-main"
+        "step2dev/lazy-ui": "dev-main",
+        "step2dev/lazy-menu": "dev-main"
     },
     "require-dev": {
         "larastan/larastan": "^2.0|^3.0",

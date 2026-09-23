@@ -12,6 +12,8 @@ permissions:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    env:
+      COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ github.token }}"}}'
     strategy:
       fail-fast: true
       matrix:

@@ -20,7 +20,13 @@ use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
+use Step2dev\LazyAdmin\Navigation\Menu\Menu;
+use Step2dev\LazyAdmin\Navigation\Menu\MenuManager;
+use Step2dev\LazyAdmin\Navigation\Menu\MenuRegistry;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
+use Step2dev\LazyMenu\LazyMenuServiceProvider;
+use Step2dev\LazyMenu\Navigation\Menu\MenuManager as BaseMenuManager;
+use Step2dev\LazyMenu\Navigation\Menu\MenuRegistry as BaseMenuRegistry;
 
 class LazyAdminServiceProvider extends PackageServiceProvider
 {
@@ -91,6 +97,17 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         if ($this->app->runningInConsole() && $this->app->environment('testing')) {
             $this->app->register(LivewireServiceProvider::class);
         }
+
+        $this->app->register(LazyMenuServiceProvider::class);
+        $this->app->singleton(BaseMenuRegistry::class, static function (): MenuRegistry {
+            $registry = new MenuRegistry;
+            $registry->useView('lazy::menu-generator');
+
+            return $registry;
+        });
+        $this->app->alias(BaseMenuRegistry::class, MenuRegistry::class);
+        $this->app->scoped(BaseMenuManager::class, fn () => new MenuManager(new Menu));
+        $this->app->alias(BaseMenuManager::class, MenuManager::class);
 
         $this->app->alias('setting', 'settings');
         $this->app->bind(LocalizationInterface::class, config('lazy.localization.localizationManager', LocalizationManager::class));
