@@ -5,6 +5,6 @@ it('renders the cloned step2.dev admin header for guests', function (): void {
 
     expect($html)
         ->toContain('menu-toggle')
-        ->toContain('placeholder="' . __('Search') . '"')
+        ->toContain('placeholder="'.__('Search').'"')
         ->toContain(config('lazy.admin.logo', '/main.svg'));
 });
