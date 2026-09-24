@@ -16,7 +16,12 @@
         $active = $item['active']
             ?? ($target && Route::has($target) && request()->routeIs($target));
         $label = __($item['label'] ?? '');
-        $external = is_string($href) && preg_match('/^https?:\/\//i', $href) === 1;
+        $isNamedRoute = is_string($target) && Route::has($target);
+        $external = ! $isNamedRoute
+            && is_string($target)
+            && preg_match('/^https?:\/\//i', $target) === 1
+            && parse_url($target, PHP_URL_HOST) !== request()->getHost();
+
         $linkTarget = $item['target'] ?? ($external ? '_blank' : null);
     @endphp
 
