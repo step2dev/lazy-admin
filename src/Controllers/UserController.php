@@ -19,6 +19,8 @@ class UserController extends Controller
 
     public function index(): View
     {
+        $this->authorizeUserAction('user_view');
+
         return view('lazy::users.index');
     }
 
