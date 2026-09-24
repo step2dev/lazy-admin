@@ -40,5 +40,51 @@ return [
 
     'permissions' => [
         'enforce' => env('LAZY_ADMIN_ENFORCE_PERMISSIONS', true),
+        'guard' => env('LAZY_ADMIN_PERMISSION_GUARD', env('LAZY_AUTH_GUARD', 'web')),
+        'super_admin_role' => env('LAZY_ADMIN_SUPER_ADMIN_ROLE', 'superadmin'),
+        'seed' => env('LAZY_ADMIN_SEED_PERMISSIONS', true),
+
+        'defaults' => [
+            'users.view',
+            'users.create',
+            'users.edit',
+            'users.delete',
+
+            'roles.view',
+            'roles.create',
+            'roles.edit',
+            'roles.delete',
+
+            'permissions.view',
+            'permissions.create',
+            'permissions.edit',
+            'permissions.delete',
+        ],
+
+        'role_permissions' => [
+            'superadmin' => ['*'],
+            'admin' => [
+                'users.view',
+                'users.create',
+                'users.edit',
+                'users.delete',
+                'roles.view',
+                'roles.create',
+                'roles.edit',
+                'permissions.view',
+                'permissions.create',
+                'permissions.edit',
+            ],
+            'manager' => [
+                'users.view',
+                'users.create',
+                'users.edit',
+                'roles.view',
+                'permissions.view',
+            ],
+            'moderator' => [
+                'users.view',
+            ],
+        ],
     ],
 ];

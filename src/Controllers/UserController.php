@@ -11,17 +11,22 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use RuntimeException;
+use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
 class UserController extends Controller
 {
+    public function __construct(private readonly AuthorizationManager $authorization) {}
+
     public function index(): View
     {
+        $this->authorizeUserAction('users.view');
+
         return view('lazy::users.index');
     }
 
     public function create(): View
     {
-        $this->authorizeUserAction('user_create');
+        $this->authorizeUserAction('users.create');
 
         $model = $this->newUserModel();
 
@@ -33,7 +38,7 @@ class UserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $this->authorizeUserAction('user_create');
+        $this->authorizeUserAction('users.create');
 
         $model = $this->newUserModel();
 
@@ -42,7 +47,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique($model->getTable(), 'email')],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'roles' => ['sometimes', 'array'],
-            'roles.*' => ['string'],
+            'roles.*' => $this->roleRules(),
         ]);
 
         $model->setAttribute('name', $validated['name']);
@@ -59,7 +64,7 @@ class UserController extends Controller
 
     public function show(string $user): View
     {
-        $this->authorizeUserAction('user_view');
+        $this->authorizeUserAction('users.view');
 
         return view('lazy::users.show', [
             'user' => $this->findUser($user),
@@ -68,7 +73,7 @@ class UserController extends Controller
 
     public function edit(string $user): View
     {
-        $this->authorizeUserAction('user_edit');
+        $this->authorizeUserAction('users.edit');
 
         $model = $this->findUser($user);
 
@@ -80,7 +85,7 @@ class UserController extends Controller
 
     public function update(Request $request, string $user): RedirectResponse
     {
-        $this->authorizeUserAction('user_edit');
+        $this->authorizeUserAction('users.edit');
 
         $model = $this->findUser($user);
 
@@ -95,7 +100,7 @@ class UserController extends Controller
             ],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'roles' => ['sometimes', 'array'],
-            'roles.*' => ['string'],
+            'roles.*' => $this->roleRules(),
         ]);
 
         $model->setAttribute('name', $validated['name']);
@@ -114,7 +119,7 @@ class UserController extends Controller
 
     public function destroy(Request $request, string $user): RedirectResponse
     {
-        $this->authorizeUserAction('user_delete');
+        $this->authorizeUserAction('users.delete');
 
         $model = $this->findUser($user);
         $authenticatedUser = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
@@ -160,23 +165,31 @@ class UserController extends Controller
             return [];
         }
 
-        $roleModel = config('permission.models.role');
-
-        if (! is_string($roleModel) || ! is_subclass_of($roleModel, Model::class)) {
-            return [];
-        }
-
-        return $roleModel::query()
-            ->orderBy('name')
+        return $this->authorization->roles()
             ->pluck('name')
             ->all();
     }
 
     protected function syncRoles(Model $user, array $roles): void
     {
+        if ($roles !== [] && ! method_exists($user, 'syncRoles')) {
+            abort(422, 'The configured user model must use HasLazyAdminPermissions or Spatie HasRoles.');
+        }
+
         if (method_exists($user, 'syncRoles')) {
             $user->syncRoles($roles);
         }
+    }
+
+    protected function roleRules(): array
+    {
+        $roleModel = $this->authorization->roleModel();
+
+        return [
+            'string',
+            Rule::exists((new $roleModel)->getTable(), 'name')
+                ->where('guard_name', $this->authorization->guard()),
+        ];
     }
 
     protected function authorizeUserAction(string $permission): void

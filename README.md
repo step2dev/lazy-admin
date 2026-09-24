@@ -193,3 +193,77 @@ Protected routes use `lazy.admin.route.middleware` (default `web`, `auth`, `veri
 composer test
 composer analyse
 ```
+
+
+## Roles and permissions
+
+Lazy Admin uses `spatie/laravel-permission` as its authorization layer.
+
+The installer publishes Spatie's official permission config and migration before asking to run migrations:
+
+```bash
+php artisan lazy-admin:install
+```
+
+For an existing application, publish and migrate once:
+
+```bash
+php artisan vendor:publish --tag=permission-config
+php artisan vendor:publish --tag=permission-migrations
+php artisan migrate
+```
+
+The host application's authenticatable model must use either the Lazy Admin wrapper trait:
+
+```php
+use Step2dev\LazyAdmin\Authorization\HasLazyAdminPermissions;
+
+class User extends Authenticatable
+{
+    use HasLazyAdminPermissions;
+}
+```
+
+or Spatie's `HasRoles` trait directly.
+
+Lazy Admin seeds these roles by default:
+
+- `superadmin`
+- `admin`
+- `manager`
+- `moderator`
+
+The default permissions are:
+
+- `users.view`, `users.create`, `users.edit`, `users.delete`
+- `roles.view`, `roles.create`, `roles.edit`, `roles.delete`
+- `permissions.view`, `permissions.create`, `permissions.edit`, `permissions.delete`
+
+The role-to-permission mapping is configurable in `config/lazy/admin.php`. The `superadmin` role is granted every Gate ability through `Gate::before()`.
+
+Roles and permissions are managed together in one access-management screen:
+
+```text
+/admin/access
+```
+
+The left side manages roles and their permission matrix. The permissions section manages reusable permission names. Role and permission write endpoints remain separate internally, while the UI and navigation use a single Access entry point.
+
+The users CRUD can assign roles and validates every selected role against the configured Spatie guard.
+
+Environment controls:
+
+```env
+LAZY_ADMIN_ENFORCE_PERMISSIONS=true
+LAZY_ADMIN_PERMISSION_GUARD=web
+LAZY_ADMIN_SUPER_ADMIN_ROLE=superadmin
+LAZY_ADMIN_SEED_PERMISSIONS=true
+```
+
+To create a first super administrator:
+
+```bash
+php artisan make:admin
+```
+
+The command resolves the configured authentication user model, requires `HasLazyAdminPermissions` / `HasRoles`, seeds the default authorization data idempotently, and assigns the configured super-admin role.

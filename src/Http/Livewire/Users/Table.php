@@ -102,7 +102,12 @@ class Table extends Component
         $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
 
         abort_unless(
-            $user && method_exists($user, 'hasAnyRole') && $user->hasAnyRole(config('lazy.admin.roles', [])),
+            $user && (
+                config('lazy.admin.permissions.enforce', true)
+                    ? $user->can('users.view')
+                    : method_exists($user, 'hasAnyRole')
+                        && $user->hasAnyRole((array) config('lazy.admin.roles', []))
+            ),
             403
         );
 
@@ -115,10 +120,10 @@ class Table extends Component
 
         return view('lazy::pages.users.table', [
             'users' => $this->usersQuery()->paginate($perPage),
-            'showRoute' => Route::has($showRoute) && $this->canManageUsers($user, 'user_view') ? $showRoute : null,
-            'editRoute' => Route::has($editRoute) && $this->canManageUsers($user, 'user_edit') ? $editRoute : null,
-            'createRoute' => Route::has($createRoute) && $this->canManageUsers($user, 'user_create') ? $createRoute : null,
-            'destroyRoute' => Route::has($destroyRoute) && $this->canManageUsers($user, 'user_delete') ? $destroyRoute : null,
+            'showRoute' => Route::has($showRoute) && $this->canManageUsers($user, 'users.view') ? $showRoute : null,
+            'editRoute' => Route::has($editRoute) && $this->canManageUsers($user, 'users.edit') ? $editRoute : null,
+            'createRoute' => Route::has($createRoute) && $this->canManageUsers($user, 'users.create') ? $createRoute : null,
+            'destroyRoute' => Route::has($destroyRoute) && $this->canManageUsers($user, 'users.delete') ? $destroyRoute : null,
         ]);
     }
 }

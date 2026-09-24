@@ -3,11 +3,14 @@
 namespace Step2dev\LazyAdmin;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 use Step2dev\LazyAdmin\Commands\CreateAdminCommand;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
@@ -21,8 +24,10 @@ use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
+use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
+use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
 use Step2dev\LazyMenu\LazyMenuServiceProvider;
 use Step2dev\LazyMenu\Navigation\Menu\Menu;
 use Step2dev\LazyMenu\Navigation\Menu\MenuManager;
@@ -61,6 +66,12 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->startWith(static function (InstallCommand $installCommand) {
                         $installCommand->info('Installing Lazy Admin...');
                         $installCommand->call('lazy-ui:install');
+                        $installCommand->call('vendor:publish', [
+                            '--tag' => 'permission-config',
+                        ]);
+                        $installCommand->call('vendor:publish', [
+                            '--tag' => 'permission-migrations',
+                        ]);
                     })
                     ->publish('lazy-admin', 'lazy', 'lazy-setting')
                     ->askToRunMigrations()
@@ -99,6 +110,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             $this->app->register(LivewireServiceProvider::class);
         }
 
+        $this->app->singleton(AuthorizationManager::class);
+
         $this->app->register(LazyMenuServiceProvider::class);
         $this->app->register(LazyBreadcrumbServiceProvider::class);
         $this->app->singleton(MenuRegistry::class, static function (): MenuRegistry {
@@ -115,11 +128,22 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        Livewire::addPersistentMiddleware([LazyAdminMiddleware::class]);
+
         Livewire::component('settings.setting', Setting::class);
         Livewire::component('lazy-admin.users.table', Table::class);
     }
 
-    public function bootingPackage(): void {}
+    public function bootingPackage(): void
+    {
+        Gate::before(static function ($user, string $ability): ?bool {
+            $superAdminRole = (string) config('lazy.admin.permissions.super_admin_role', 'superadmin');
+
+            return method_exists($user, 'hasRole') && $user->hasRole($superAdminRole)
+                ? true
+                : null;
+        });
+    }
 
     public function packageBooted(): void
     {
@@ -127,5 +151,22 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         $router = $this->app['router'];
         $router->mixin(new AdminRouter);
 
+        MenuFacade::register(function (MenuManager $menu): void {
+            $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+
+            if (
+                config('lazy.admin.permissions.enforce', true)
+                && ! ($user?->can('roles.view') || $user?->can('permissions.view'))
+            ) {
+                return;
+            }
+
+            $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
+
+            $menu->addItem(
+                $prefix.'.access.index',
+                __('Access'),
+            );
+        }, id: 'lazy-admin-access', priority: 80, group: __('Access'));
     }
 }
