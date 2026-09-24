@@ -4,19 +4,20 @@ namespace Step2dev\LazyAdmin\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class LazyAdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next): mixed
     {
-        /** @phpstan-ignore-next-line */
-        if (auth()->user()?->hasAnyRole(config('lazy.admin.roles')) ?? false) {
-            return $next($request);
-        }
+        $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
 
-        return redirect('/');
+        abort_unless(
+            $user && method_exists($user, 'hasAnyRole') && $user->hasAnyRole(config('lazy.admin.roles', [])),
+            Response::HTTP_FORBIDDEN
+        );
+
+        return $next($request);
     }
 }
