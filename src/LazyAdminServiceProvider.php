@@ -3,11 +3,13 @@
 namespace Step2dev\LazyAdmin;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 use Step2dev\LazyAdmin\Commands\CreateAdminCommand;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
@@ -61,6 +63,12 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->startWith(static function (InstallCommand $installCommand) {
                         $installCommand->info('Installing Lazy Admin...');
                         $installCommand->call('lazy-ui:install');
+                        $installCommand->call('vendor:publish', [
+                            '--tag' => 'permission-config',
+                        ]);
+                        $installCommand->call('vendor:publish', [
+                            '--tag' => 'permission-migrations',
+                        ]);
                     })
                     ->publish('lazy-admin', 'lazy', 'lazy-setting')
                     ->askToRunMigrations()
@@ -99,6 +107,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             $this->app->register(LivewireServiceProvider::class);
         }
 
+        $this->app->singleton(AuthorizationManager::class);
+
         $this->app->register(LazyMenuServiceProvider::class);
         $this->app->register(LazyBreadcrumbServiceProvider::class);
         $this->app->singleton(MenuRegistry::class, static function (): MenuRegistry {
@@ -119,7 +129,16 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         Livewire::component('lazy-admin.users.table', Table::class);
     }
 
-    public function bootingPackage(): void {}
+    public function bootingPackage(): void
+    {
+        Gate::before(static function ($user, string $ability): ?bool {
+            $superAdminRole = (string) config('lazy.admin.permissions.super_admin_role', 'superadmin');
+
+            return method_exists($user, 'hasRole') && $user->hasRole($superAdminRole)
+                ? true
+                : null;
+        });
+    }
 
     public function packageBooted(): void
     {
