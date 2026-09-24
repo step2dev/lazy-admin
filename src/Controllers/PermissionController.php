@@ -16,7 +16,7 @@ class PermissionController extends Controller
 
     public function index(): View
     {
-        $this->authorizeAction('permission_view');
+        $this->authorizeAction('permissions.view');
 
         return view('lazy::permissions.index', [
             'permissions' => $this->authorization->permissions(),
@@ -25,7 +25,7 @@ class PermissionController extends Controller
 
     public function create(): View
     {
-        $this->authorizeAction('permission_create');
+        $this->authorizeAction('permissions.create');
 
         return view('lazy::permissions.create', [
             'permission' => null,
@@ -34,7 +34,7 @@ class PermissionController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $this->authorizeAction('permission_create');
+        $this->authorizeAction('permissions.create');
 
         $permissionModel = $this->authorization->permissionModel();
         $guard = $this->authorization->guard();
@@ -58,7 +58,7 @@ class PermissionController extends Controller
 
     public function edit(string $permission): View
     {
-        $this->authorizeAction('permission_edit');
+        $this->authorizeAction('permissions.edit');
 
         return view('lazy::permissions.edit', [
             'permission' => $this->findPermission($permission),
@@ -67,7 +67,7 @@ class PermissionController extends Controller
 
     public function update(Request $request, string $permission): RedirectResponse
     {
-        $this->authorizeAction('permission_edit');
+        $this->authorizeAction('permissions.edit');
 
         $model = $this->findPermission($permission);
         $permissionModel = $this->authorization->permissionModel();
@@ -93,7 +93,7 @@ class PermissionController extends Controller
 
     public function destroy(string $permission): RedirectResponse
     {
-        $this->authorizeAction('permission_delete');
+        $this->authorizeAction('permissions.delete');
 
         $model = $this->findPermission($permission);
         $model->delete();
