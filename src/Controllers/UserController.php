@@ -16,6 +16,7 @@ use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 class UserController extends Controller
 {
     public function __construct(private readonly AuthorizationManager $authorization) {}
+
     public function index(): View
     {
         return view('lazy::users.index');
