@@ -2,7 +2,7 @@
 
 namespace Step2dev\LazyAdmin\Authorization;
 
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use RuntimeException;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
