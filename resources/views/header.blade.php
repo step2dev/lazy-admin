@@ -94,8 +94,10 @@
             <x-lazy-language-switcher/>
         @endif
 
-        @auth
-            @php($user = auth()->user())
+        @php($authGuard = (string) config('lazy.auth.guard', 'web'))
+
+        @auth($authGuard)
+            @php($user = auth($authGuard)->user())
 
             <div class="dropdown dropdown-end">
                 <div class="row flex cursor-pointer" tabindex="0" role="button">
