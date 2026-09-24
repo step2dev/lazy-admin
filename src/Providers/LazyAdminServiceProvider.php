@@ -6,9 +6,9 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Route;
 use ReflectionException;
 use Step2dev\LazyAdmin\Controllers\AccessController;
+use Step2dev\LazyAdmin\Controllers\LoginController;
 use Step2dev\LazyAdmin\Controllers\PermissionController;
 use Step2dev\LazyAdmin\Controllers\RoleController;
-use Step2dev\LazyAdmin\Controllers\LoginController;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 
