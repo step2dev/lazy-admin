@@ -12,7 +12,13 @@
     'menu' => '',
 ])
 @use('Step2dev\LazyMenu\Facades\Menu')
-<x-lazy-base-layout>
+<x-lazy-base-layout
+    :title="$title"
+    :meta="$meta"
+    :styles="$styles"
+    :scripts="$scripts"
+    :noscript="$noscript"
+>
     <div
         x-data="{
             sidebarCompact: localStorage.getItem('lazy-admin-sidebar-compact') === '1',
