@@ -16,6 +16,8 @@
         $active = $item['active']
             ?? ($target && Route::has($target) && request()->routeIs($target));
         $label = __($item['label'] ?? '');
+        $external = is_string($href) && preg_match('/^https?:\/\//i', $href) === 1;
+        $linkTarget = $item['target'] ?? ($external ? '_blank' : null);
     @endphp
 
     <li
@@ -35,8 +37,8 @@
                 @if($target)
                     <a
                         href="{{ $href }}"
-                        @if(! empty($item['target'])) target="{{ $item['target'] }}" @endif
-                        @if(($item['target'] ?? null) === '_blank') rel="noopener noreferrer" @endif
+                        @if($linkTarget) target="{{ $linkTarget }}" @endif
+                        @if($linkTarget === '_blank') rel="noopener noreferrer" @endif
                         title="{{ $label }}"
                         class="flex min-w-0 flex-1 items-center gap-2"
                     >
@@ -93,8 +95,8 @@
         @else
             <a
                 href="{{ $href }}"
-                @if(! empty($item['target'])) target="{{ $item['target'] }}" @endif
-                @if(($item['target'] ?? null) === '_blank') rel="noopener noreferrer" @endif
+                @if($linkTarget) target="{{ $linkTarget }}" @endif
+                @if($linkTarget === '_blank') rel="noopener noreferrer" @endif
                 title="{{ $label }}"
                 @class([
                     'nav-link flex gap-2 transition-all transform',
