@@ -7,30 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
 class PermissionController extends Controller
 {
     public function __construct(private readonly AuthorizationManager $authorization) {}
 
-    public function index(): View
-    {
-        $this->authorizeAction('permissions.view');
-
-        return view('lazy::permissions.index', [
-            'permissions' => $this->authorization->permissions(),
-        ]);
-    }
-
-    public function create(): View
-    {
-        $this->authorizeAction('permissions.create');
-
-        return view('lazy::permissions.create', [
-            'permission' => null,
-        ]);
-    }
 
     public function store(Request $request): RedirectResponse
     {
@@ -52,18 +34,10 @@ class PermissionController extends Controller
         $permission = $permissionModel::findOrCreate($validated['name'], $guard);
 
         return redirect()
-            ->route($this->routeName('permission.edit'), $permission)
+            ->route($this->routeName('access.index'))
             ->with('status', __('Permission created successfully.'));
     }
 
-    public function edit(string $permission): View
-    {
-        $this->authorizeAction('permissions.edit');
-
-        return view('lazy::permissions.edit', [
-            'permission' => $this->findPermission($permission),
-        ]);
-    }
 
     public function update(Request $request, string $permission): RedirectResponse
     {
@@ -88,7 +62,7 @@ class PermissionController extends Controller
         $model->name = $validated['name'];
         $model->save();
 
-        return back()->with('status', __('Permission updated successfully.'));
+        return redirect()->route($this->routeName('access.index'))->with('status', __('Permission updated successfully.'));
     }
 
     public function destroy(string $permission): RedirectResponse
@@ -99,7 +73,7 @@ class PermissionController extends Controller
         $model->delete();
 
         return redirect()
-            ->route($this->routeName('permission.index'))
+            ->route($this->routeName('access.index'))
             ->with('status', __('Permission deleted successfully.'));
     }
 
