@@ -4,6 +4,7 @@ namespace Step2dev\LazyAdmin\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 use RuntimeException;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
@@ -24,6 +25,19 @@ class CreateAdminCommand extends Command
             hint: 'This will create a super administrator with the provided email and password.'
         )) {
             return Command::SUCCESS;
+        }
+
+        $tables = (array) config('permission.table_names', []);
+
+        if (
+            empty($tables['roles'])
+            || empty($tables['permissions'])
+            || ! Schema::hasTable($tables['roles'])
+            || ! Schema::hasTable($tables['permissions'])
+        ) {
+            $this->error('Permission tables are not installed. Publish the permission migrations and run php artisan migrate first.');
+
+            return Command::FAILURE;
         }
 
         $modelClass = $this->userModel();
