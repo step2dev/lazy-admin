@@ -25,6 +25,7 @@ use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
+use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
 use Step2dev\LazyMenu\LazyMenuServiceProvider;
 use Step2dev\LazyMenu\Navigation\Menu\Menu;
 use Step2dev\LazyMenu\Navigation\Menu\MenuManager;
@@ -146,5 +147,20 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         $router = $this->app['router'];
         $router->mixin(new AdminRouter);
 
+        MenuFacade::register(function (MenuManager $menu): void {
+            $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
+
+            $menu->addItem(
+                $prefix.'.role.index',
+                __('Roles'),
+                permission: 'role_view',
+            );
+
+            $menu->addItem(
+                $prefix.'.permission.index',
+                __('Permissions'),
+                permission: 'permission_view',
+            );
+        }, id: 'lazy-admin-access', priority: 80, group: __('Access'));
     }
 }
