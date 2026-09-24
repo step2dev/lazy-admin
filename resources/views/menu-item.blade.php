@@ -1,5 +1,5 @@
 @if(isset($item['group']))
-    <li class="menu-title">{{ __($item['group']) }}</li>
+    <li class="menu-title" x-show="! sidebarCompact" x-transition.opacity>{{ __($item['group']) }}</li>
 @else
     <li>
         @php
@@ -9,7 +9,7 @@
             $active = $item['active'] ?? ($target && Route::has($target) && request()->routeIs($target));
         @endphp
         @if($hasChildren && $target)
-            <div class="flex items-center">
+            <div class="flex items-center relative">
                 <a href="{{ $href }}" @class(['active' => $active, 'flex-1' => true])>
                     @include('lazy::menu-label', ['item' => $item])
                 </a>
