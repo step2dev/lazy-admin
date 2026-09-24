@@ -41,7 +41,6 @@
     "require": {
         "php": "^8.2",
         "illuminate/contracts": "^10.17|^11.0|^12.0|^13.0",
-        "laravel/socialite": "^5.8",
         "livewire/livewire": "^3.0|^4.0",
         "spatie/laravel-package-tools": "^1.14.0",
         "spatie/laravel-permission": "^6.15.0",
@@ -103,5 +102,10 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "suggest": {
+        "laravel/fortify": "Optional headless authentication backend for applications using Lazy Admin.",
+        "laravel/socialite": "Optional social authentication integration for host applications.",
+        "laravel/sanctum": "Optional SPA, mobile, or API token authentication for host applications."
+    }
 }
