@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Step2dev\LazyAdmin\Controllers\SettingController;
+use Step2dev\LazyAdmin\Controllers\UserController;
 
-Route::view('user', 'lazy::users.index')->name('user.index');
+Route::resource('user', UserController::class)->except('show');
 
 Route::singletons([
     'setting' => SettingController::class,
