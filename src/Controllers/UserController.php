@@ -57,6 +57,15 @@ class UserController extends Controller
             ->with('status', __('User created successfully.'));
     }
 
+    public function show(string $user): View
+    {
+        $this->authorizeUserAction('user_view');
+
+        return view('lazy::users.show', [
+            'user' => $this->findUser($user),
+        ]);
+    }
+
     public function edit(string $user): View
     {
         $this->authorizeUserAction('user_edit');
