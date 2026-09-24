@@ -146,7 +146,9 @@
                             @endif
                         </form>
 
-                        <p class="mt-6 text-center text-sm text-gray-400">{!! __('blog.dont_have_an_account_yet', ['link' => '<a class="text-blue-500 hover:underline focus:underline focus:outline-none" href="'. route('register').'">Sign up here</a>']) !!}</p>
+                        @if (Route::has('register'))
+                            <p class="mt-6 text-center text-sm text-gray-400">{!! __('blog.dont_have_an_account_yet', ['link' => '<a class="text-blue-500 hover:underline focus:underline focus:outline-none" href="'.route('register').'">Sign up here</a>']) !!}</p>
+                        @endif
                     </div>
                 </div>
             </div>
