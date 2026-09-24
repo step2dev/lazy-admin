@@ -6,6 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Livewire\Mechanisms\PersistentMiddleware\PersistentMiddleware;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -183,4 +184,10 @@ it('rejects permissions from a different guard when assigning a role', function 
         ->assertSessionHasErrors('permissions.0');
 
     expect(Role::where('name', 'invalid-role')->exists())->toBeFalse();
+});
+
+
+it('persists Lazy Admin authorization across Livewire requests', function (): void {
+    expect(app(PersistentMiddleware::class)->getPersistentMiddleware())
+        ->toContain(LazyAdminMiddleware::class);
 });
