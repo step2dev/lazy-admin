@@ -2,9 +2,10 @@
 
 namespace Step2dev\LazyAdmin\Authorization;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use RuntimeException;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class AuthorizationManager
@@ -15,23 +16,35 @@ class AuthorizationManager
     }
 
     /**
-     * @return class-string<Model>
+     * @return class-string<Role>
      */
     public function roleModel(): string
     {
-        return $this->configuredModel('permission.models.role', 'role');
+        $model = config('permission.models.role');
+
+        if (! is_string($model) || ! is_subclass_of($model, Role::class, true)) {
+            throw new RuntimeException('Lazy Admin could not resolve the configured Spatie role model.');
+        }
+
+        return $model;
     }
 
     /**
-     * @return class-string<Model>
+     * @return class-string<Permission>
      */
     public function permissionModel(): string
     {
-        return $this->configuredModel('permission.models.permission', 'permission');
+        $model = config('permission.models.permission');
+
+        if (! is_string($model) || ! is_subclass_of($model, Permission::class, true)) {
+            throw new RuntimeException('Lazy Admin could not resolve the configured Spatie permission model.');
+        }
+
+        return $model;
     }
 
     /**
-     * @return Collection<int, Model>
+     * @return Collection<int, Role>
      */
     public function roles(): Collection
     {
@@ -44,7 +57,7 @@ class AuthorizationManager
     }
 
     /**
-     * @return Collection<int, Model>
+     * @return Collection<int, Permission>
      */
     public function permissions(): Collection
     {
@@ -94,14 +107,4 @@ class AuthorizationManager
         app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
-    private function configuredModel(string $key, string $label): string
-    {
-        $model = config($key);
-
-        if (! is_string($model) || ! is_subclass_of($model, Model::class)) {
-            throw new RuntimeException("Lazy Admin could not resolve the configured Spatie {$label} model.");
-        }
-
-        return $model;
-    }
 }
