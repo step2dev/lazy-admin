@@ -33,8 +33,8 @@
     @endif
     <div class="content flex flex-col md:flex-row">
         <aside
-            class="sidebar-menu border-primary bg-base-200 border-y-2 py-4 transform transition-all duration-200"
-            :class="sidebarCompact ? 'md:w-20' : 'md:w-56'"
+            class="sidebar-menu border-primary bg-base-200 shrink-0 border-y-2 py-4 transform transition-all duration-200"
+            :class="sidebarCompact ? 'md:w-20' : 'md:w-64'"
             aria-label="Sidebar"
             :aria-expanded="(! sidebarCompact).toString()">
             @if($menu)
