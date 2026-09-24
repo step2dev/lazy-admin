@@ -23,6 +23,7 @@ use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
+use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
 use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
@@ -126,6 +127,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        Livewire::addPersistentMiddleware([LazyAdminMiddleware::class]);
+
         Livewire::component('settings.setting', Setting::class);
         Livewire::component('lazy-admin.users.table', Table::class);
     }
