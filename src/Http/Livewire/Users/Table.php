@@ -4,10 +4,13 @@ namespace Step2dev\LazyAdmin\Http\Livewire\Users;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
+use RuntimeException;
 
 class Table extends Component
 {
@@ -49,7 +52,15 @@ class Table extends Component
 
     protected function usersQuery(): Builder
     {
-        $model = config('lazy.auth.providers.users.model', config('auth.providers.users.model'));
+        $guard = (string) config('lazy.auth.guard', 'web');
+        $provider = config('lazy.auth.provider')
+            ?: config("auth.guards.{$guard}.provider", 'users');
+        $model = config("auth.providers.{$provider}.model");
+
+        if (! is_string($model) || ! is_subclass_of($model, Model::class)) {
+            throw new RuntimeException('Lazy Admin could not resolve the configured authentication user model.');
+        }
+
         $query = $model::query();
 
         if (method_exists($query->getModel(), 'profile')) {
@@ -83,8 +94,12 @@ class Table extends Component
 
     public function render(): View
     {
-        $user = auth()->user();
-        abort_unless($user && method_exists($user, 'hasAnyRole') && $user->hasAnyRole(config('lazy.admin.roles', [])), 403);
+        $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+
+        abort_unless(
+            $user && method_exists($user, 'hasAnyRole') && $user->hasAnyRole(config('lazy.admin.roles', [])),
+            403
+        );
 
         $editRoute = trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.edit';
         $perPage = in_array($this->perPage, [10, 20, 30, 50, 100], true) ? $this->perPage : 20;
