@@ -22,7 +22,7 @@ class AuthorizationManager
     {
         $model = config('permission.models.role');
 
-        if (! is_string($model) || ! is_subclass_of($model, Role::class, true)) {
+        if (! is_string($model) || ($model !== Role::class && ! is_subclass_of($model, Role::class))) {
             throw new RuntimeException('Lazy Admin could not resolve the configured Spatie role model.');
         }
 
@@ -36,7 +36,7 @@ class AuthorizationManager
     {
         $model = config('permission.models.permission');
 
-        if (! is_string($model) || ! is_subclass_of($model, Permission::class, true)) {
+        if (! is_string($model) || ($model !== Permission::class && ! is_subclass_of($model, Permission::class))) {
             throw new RuntimeException('Lazy Admin could not resolve the configured Spatie permission model.');
         }
 
@@ -106,5 +106,4 @@ class AuthorizationManager
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
-
 }
