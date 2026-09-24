@@ -3,7 +3,10 @@
 @elseif(! empty($item['icon']))
     <i class="{{ $item['icon'] }}" aria-hidden="true"></i>
 @endif
-<span>{{ __($item['label'] ?? '') }}</span>
+<span x-show="! sidebarCompact" x-transition.opacity>{{ __($item['label'] ?? '') }}</span>
 @if(isset($item['badge']))
-    <span class="badge">{{ $item['badge'] }}</span>
+    <span
+        class="badge"
+        :class="sidebarCompact ? 'badge-xs absolute -right-1 -top-1' : ''"
+    >{{ $item['badge'] }}</span>
 @endif
