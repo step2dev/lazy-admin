@@ -41,6 +41,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ->name('lazy-admin')
             ->hasConfigFile([
                 'lazy/admin',
+                'lazy/auth',
                 'lazy/localization',
                 'lazy/socialite',
             ])
