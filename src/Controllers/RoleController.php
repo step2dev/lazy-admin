@@ -83,21 +83,24 @@ class RoleController extends Controller
 
         $model = $this->findRole($role);
         $roleModel = $this->authorization->roleModel();
+        $permissionModel = $this->authorization->permissionModel();
         $guard = $this->authorization->guard();
+        $roleTable = (new $roleModel)->getTable();
+        $permissionTable = (new $permissionModel)->getTable();
 
         $validated = $request->validate([
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique((new $roleModel)->getTable(), 'name')
+                Rule::unique($roleTable, 'name')
                     ->where('guard_name', $guard)
                     ->ignore($model->getKey()),
             ],
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => [
                 'string',
-                Rule::exists((new ($this->authorization->permissionModel()))->getTable(), 'name')
+                Rule::exists($permissionTable, 'name')
                     ->where('guard_name', $guard),
             ],
         ]);
