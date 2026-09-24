@@ -17,6 +17,8 @@ use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
 use Step2dev\LazyAdmin\Tests\Fixtures\User;
 
 beforeEach(function (): void {
+    $this->withoutVite();
+
     config()->set([
         'app.key' => 'base64:'.base64_encode(str_repeat('a', 32)),
         'database.connections.testing' => ['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => ''],
