@@ -2,6 +2,7 @@
 
 namespace Step2dev\LazyAdmin\Navigation\Breadcrumb;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 
 class BreadcrumbManager extends Collection
@@ -13,8 +14,13 @@ class BreadcrumbManager extends Collection
         return $this;
     }
 
-    public function render()
+    public function render(): View
     {
-        dump($this->all());
+        return view('lazy::breadcrumb-trail', [
+            'items' => $this->isEmpty() ? null : $this->map(fn (array $item): array => [
+                'title' => $item['label'],
+                'url' => $item['route'],
+            ])->all(),
+        ]);
     }
 }
