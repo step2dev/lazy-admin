@@ -53,7 +53,7 @@ it('builds the step2dev menu lazily once and filters permissions', function (): 
     expect($html)->toContain('href="http://localhost/admin"')
         ->toContain('href="http://localhost/admin/posts"')
         ->toContain('href="http://localhost/admin/categories/7"')
-        ->toContain('Dashboard', 'Nested', 'Posts', 'Category', '>5</span>', '<details', '<svg viewBox=')
+        ->toContain('Dashboard', 'Nested', 'Posts', 'Category', '>5</span>', 'x-data="{ open:', '<svg viewBox=')
         ->not->toContain('Restricted', '>99</span>');
     expect(substr_count($html, '<svg viewBox='))->toBe(3);
 });
@@ -124,8 +124,10 @@ it('composes module menus and reuses cached category and unread counts', functio
         ->and($active[1]['active'])->toBeTrue()
         ->and($active[2]['active'])->toBeFalse()
         ->and(DB::getQueryLog())->toHaveCount(0)
-        ->and($first)->toContain('href="http://localhost/uk/admin/categories/7"', 'News', 'Requests', '>1</span>')
-        ->and($second)->toContain('News', '>1</span>');
+        ->and($first)->toContain('href="http://localhost/uk/admin/categories/7"', 'News', 'Requests')
+        ->and($first)->toMatch('/<span[^>]*rounded-full bg-cyan-500[^>]*>\s*1\s*<\/span>/')
+        ->and($second)->toContain('News')
+        ->and($second)->toMatch('/<span[^>]*rounded-full bg-cyan-500[^>]*>\s*1\s*<\/span>/');
 
     DB::table('menu_contacts')->insert(['status' => 'unread']);
     $store->forget('unread-contacts');
@@ -134,7 +136,7 @@ it('composes module menus and reuses cached category and unread counts', functio
     $updated = $makeMenu()->render();
 
     expect(DB::getQueryLog())->toHaveCount(1)
-        ->and($updated)->toContain('>2</span>');
+        ->and($updated)->toMatch('/<span[^>]*rounded-full bg-cyan-500[^>]*>\s*2\s*<\/span>/');
 });
 
 it('keeps module contributors after request scoped services reset', function (): void {
@@ -236,7 +238,7 @@ it('renders the admin theme by default and keeps the package template selectable
     $standalone = MenuFacade::render('lazy-menu::menu-generator');
 
     expect($admin)
-        ->toContain('menu bg-base-200 rounded-box w-full overflow-visible p-2 transition-all duration-200')
+        ->toContain('menu bg-base-200 w-full overflow-visible transition-all duration-200 lg:menu-normal')
         ->toContain("sidebarCompact ? 'menu-compact' : ''")
         ->toContain('badge badge-accent')
         ->not->toContain('bg-slate-900');
