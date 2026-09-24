@@ -33,7 +33,7 @@ Route::get('/', DashboardController::class)->name('dashboard');
 Route::resource('posts', PostController::class);
 ```
 
-Default names include `admin.dashboard` and `admin.posts.index`; the prefix defaults to `/admin`. Explicit attributes passed to `Route::admin($callback, $attributes)` override configuration. Localized prefixes use the configured localization manager. The guest login route uses `lazy.admin.route.login.uri` and `lazy.admin.route.login.prefix`, with `web` and `guest` middleware. The host application supplies POST authentication.
+Default names include `admin.dashboard` and `admin.posts.index`; the prefix defaults to `/admin`. Explicit attributes passed to `Route::admin($callback, $attributes)` override configuration. Localized prefixes use the configured localization manager. Lazy Admin uses the host application's Laravel authentication by default. Set `LAZY_AUTH_LOGIN_ENABLED=true` only when the package should expose its own login/logout routes.
 
 ## Automatic module registration
 
@@ -167,6 +167,21 @@ $menu->addItem('admin.blog.index', 'Articles', children: [
 `iconView` names an application Blade view such as `resources/views/icons/dashboard.blade.php` containing SVG. `icon` still accepts a CSS class; `badge` accepts static text or a lazy callback. Database icon identifiers must be mapped to trusted Blade views before being passed to `iconView`. Route names resolve to URLs; use `parameters` (or `->parameters([...])` for a child) for required route parameters. Literal URLs are also accepted. Parent sections expand when a descendant route is active. Links and badges are escaped.
 
 Existing calls such as `Menu::addItem('admin', 'Dashboard', 'home', [Menu::createMenu('admin2', 'Child')])` remain valid. The `<x-lazy-layout>` component renders the menu and accepts `title`, `menu`, `header`, `footer` and `action` slots. Views under the `lazy::` namespace can be overridden in the application.
+
+## Authentication
+
+Lazy Admin is built on Laravel authentication and does not own the application's user model. By default it uses the `web` guard and resolves the user provider/model from the host application's `config/auth.php`.
+
+```env
+LAZY_AUTH_GUARD=web
+LAZY_AUTH_PROVIDER=users
+LAZY_AUTH_LOGIN_ENABLED=false
+LAZY_AUTH_REDIRECT_ROUTE=admin.dashboard
+```
+
+The package login screen is opt-in. When enabled, Lazy Admin registers guarded login, login submit and logout routes with session regeneration/invalidation. Applications that already use Fortify, a Laravel starter kit, Jetstream or custom authentication should keep `LAZY_AUTH_LOGIN_ENABLED=false`.
+
+`spatie/laravel-permission` remains the admin authorization layer. Fortify, Socialite and Sanctum are optional host-application integrations and are not required by Lazy Admin.
 
 ## Access
 
