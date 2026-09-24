@@ -68,7 +68,7 @@ it('seeds default roles and permissions idempotently', function (): void {
         ->toContain('superadmin', 'admin', 'manager', 'moderator')
         ->and(Permission::where('guard_name', 'web')->pluck('name')->all())
         ->toContain(
-            'admin_access',
+            'users.view',
             'users.view',
             'roles.view',
             'permissions.view',
@@ -90,7 +90,7 @@ it('grants superadmin every gate ability', function (): void {
     expect(Gate::allows('permission_that_does_not_exist'))->toBeTrue();
 });
 
-it('allows admins with admin_access through middleware', function (): void {
+it('allows configured admin roles through middleware', function (): void {
     $user = User::factory()->create();
     $user->assignRole('admin');
 
@@ -117,7 +117,7 @@ it('creates and updates roles with permissions', function (): void {
 
     $role = Role::findByName('support', 'web');
 
-    expect($role->hasPermissionTo('admin_access'))->toBeTrue()
+    expect($role->hasPermissionTo('users.view'))->toBeTrue()
         ->and($role->hasPermissionTo('users.view'))->toBeTrue();
 
     $this->put('/admin-test/role/'.$role->getKey(), [
@@ -128,7 +128,7 @@ it('creates and updates roles with permissions', function (): void {
     $role->refresh();
 
     expect($role->name)->toBe('support-team')
-        ->and($role->permissions()->pluck('name')->all())->toBe(['admin_access']);
+        ->and($role->permissions()->pluck('name')->all())->toBe(['users.view']);
 });
 
 it('creates updates and deletes permissions', function (): void {
