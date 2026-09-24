@@ -69,6 +69,8 @@
         @else
             <a
                 href="{{ $href }}"
+                @if(! empty($item['target'])) target="{{ $item['target'] }}" @endif
+                @if(($item['target'] ?? null) === '_blank') rel="noopener noreferrer" @endif
                 title="{{ $label }}"
                 @class(['active' => $active, 'relative'])
                 :class="sidebarCompact ? 'justify-center px-2' : ''"
