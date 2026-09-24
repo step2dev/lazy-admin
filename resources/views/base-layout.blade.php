@@ -28,6 +28,7 @@
 <div class="flex flex-col">
     {{ $slot }}
 </div>
+@livewireScriptConfig
 @if($scripts)
     {{ $scripts }}
 @else
