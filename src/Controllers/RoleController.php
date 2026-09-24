@@ -16,7 +16,7 @@ class RoleController extends Controller
 
     public function index(): View
     {
-        $this->authorizeAction('role_view');
+        $this->authorizeAction('roles.view');
 
         return view('lazy::roles.index', [
             'roles' => $this->authorization->roles(),
@@ -25,7 +25,7 @@ class RoleController extends Controller
 
     public function create(): View
     {
-        $this->authorizeAction('role_create');
+        $this->authorizeAction('roles.create');
 
         return view('lazy::roles.create', [
             'role' => null,
@@ -35,7 +35,7 @@ class RoleController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $this->authorizeAction('role_create');
+        $this->authorizeAction('roles.create');
 
         $roleModel = $this->authorization->roleModel();
         $permissionModel = $this->authorization->permissionModel();
@@ -69,7 +69,7 @@ class RoleController extends Controller
 
     public function edit(string $role): View
     {
-        $this->authorizeAction('role_edit');
+        $this->authorizeAction('roles.edit');
 
         return view('lazy::roles.edit', [
             'role' => $this->findRole($role),
@@ -79,7 +79,7 @@ class RoleController extends Controller
 
     public function update(Request $request, string $role): RedirectResponse
     {
-        $this->authorizeAction('role_edit');
+        $this->authorizeAction('roles.edit');
 
         $model = $this->findRole($role);
         $roleModel = $this->authorization->roleModel();
@@ -114,7 +114,7 @@ class RoleController extends Controller
 
     public function destroy(string $role): RedirectResponse
     {
-        $this->authorizeAction('role_delete');
+        $this->authorizeAction('roles.delete');
 
         $model = $this->findRole($role);
 
