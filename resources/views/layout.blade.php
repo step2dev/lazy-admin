@@ -13,6 +13,17 @@
 ])
 @use('Step2dev\LazyMenu\Facades\Menu')
 <x-lazy-base-layout>
+    <div
+        x-data="{
+            sidebarCompact: localStorage.getItem('lazy-admin-sidebar-compact') === '1',
+            toggleSidebar() {
+                this.sidebarCompact = ! this.sidebarCompact;
+                localStorage.setItem('lazy-admin-sidebar-compact', this.sidebarCompact ? '1' : '0');
+            }
+        }"
+        @lazy-sidebar-toggle.window="toggleSidebar()"
+        class="contents"
+    >
     @if($header)
         <header class="navbar bg-base-200">
             {{ $header }}
@@ -22,8 +33,10 @@
     @endif
     <div class="content flex flex-col md:flex-row">
         <aside
-            class="sidebar-menu border-primary bg-base-200 border-y-2 py-4 transform transition-all"
-            aria-label="Sidebar">
+            class="sidebar-menu border-primary bg-base-200 border-y-2 py-4 transform transition-all duration-200"
+            :class="sidebarCompact ? 'md:w-20' : 'md:w-56'"
+            aria-label="Sidebar"
+            :aria-expanded="(! sidebarCompact).toString()">
             @if($menu)
                 {{ $menu }}
             @else
@@ -99,4 +112,5 @@
     @else
         <x-lazy-footer/>
     @endif
+    </div>
 </x-lazy-base-layout>
