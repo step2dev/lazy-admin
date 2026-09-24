@@ -102,7 +102,7 @@ it('shows edit links only with permission', function (): void {
 
     Livewire::test(Table::class)->assertDontSee($url, false);
 
-    $this->admin->givePermissionTo(Permission::findOrCreate('user_edit', 'web'));
+    $this->admin->givePermissionTo(Permission::findOrCreate('users.edit', 'web'));
 
     Livewire::test(Table::class)->assertSee($url, false);
 });
