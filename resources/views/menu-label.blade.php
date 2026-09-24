@@ -10,14 +10,26 @@
         }
     }
 
-    $rawSvgIcon = is_string($icon) && str_starts_with(ltrim($icon), '<svg');
+    $svgIcon = null;
+
+    if (is_string($icon)) {
+        $normalizedIcon = ltrim($icon, "\xEF\xBB\xBF \t\n\r\0\x0B");
+        $normalizedIcon = preg_replace('/^<\?xml[^?]*\?>\s*/i', '', $normalizedIcon) ?? $normalizedIcon;
+        $normalizedIcon = preg_replace('/^<!DOCTYPE[^>]*>\s*/i', '', $normalizedIcon) ?? $normalizedIcon;
+
+        if (preg_match('/^<svg\b/i', $normalizedIcon) === 1) {
+            $svgIcon = $normalizedIcon;
+        }
+    }
+
+    $rawSvgIcon = $svgIcon !== null;
 @endphp
 
 <span class="relative inline-flex h-6 w-6 shrink-0 items-center justify-center" aria-hidden="true">
     @if(is_string($iconView) && view()->exists($iconView))
         <span class="[&>svg]:h-6 [&>svg]:w-6">@include($iconView)</span>
     @elseif($rawSvgIcon)
-        <span class="[&>svg]:h-6 [&>svg]:w-6">{!! $icon !!}</span>
+        <span class="[&>svg]:h-6 [&>svg]:w-6">{!! $svgIcon !!}</span>
     @elseif(filled($icon))
         <i class="{{ $icon }}"></i>
     @endif
