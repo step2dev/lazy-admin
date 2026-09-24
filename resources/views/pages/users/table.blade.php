@@ -65,9 +65,45 @@
                         </td>
                         <td>{{ $user->created_at?->format('d/m/Y H:i:s') ?? '—' }}</td>
                         <td>
-                            @if ($editRoute)
-                                <a class="btn btn-ghost btn-sm" href="{{ route($editRoute, $user) }}">{{ __('Edit') }}</a>
-                            @endif
+                            <div class="flex items-center gap-2">
+                                @if ($editRoute)
+                                    <a
+                                        class="btn btn-warning btn-sm btn-square"
+                                        href="{{ route($editRoute, $user) }}"
+                                        title="{{ __('Edit') }}"
+                                        aria-label="{{ __('Edit') }}"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </a>
+                                @endif
+
+                                @if ($destroyRoute)
+                                    <form method="POST" action="{{ route($destroyRoute, $user) }}"
+                                          onsubmit="return confirm('{{ __('Delete this user?') }}')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-error btn-sm btn-square"
+                                            title="{{ __('Delete') }}"
+                                            aria-label="{{ __('Delete') }}"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty
