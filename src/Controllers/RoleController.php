@@ -7,31 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
 class RoleController extends Controller
 {
     public function __construct(private readonly AuthorizationManager $authorization) {}
 
-    public function index(): View
-    {
-        $this->authorizeAction('roles.view');
-
-        return view('lazy::roles.index', [
-            'roles' => $this->authorization->roles(),
-        ]);
-    }
-
-    public function create(): View
-    {
-        $this->authorizeAction('roles.create');
-
-        return view('lazy::roles.create', [
-            'role' => null,
-            'permissions' => $this->authorization->permissions(),
-        ]);
-    }
 
     public function store(Request $request): RedirectResponse
     {
@@ -63,19 +44,10 @@ class RoleController extends Controller
         $role->syncPermissions($validated['permissions'] ?? []);
 
         return redirect()
-            ->route($this->routeName('role.edit'), $role)
+            ->route($this->routeName('access.index'))
             ->with('status', __('Role created successfully.'));
     }
 
-    public function edit(string $role): View
-    {
-        $this->authorizeAction('roles.edit');
-
-        return view('lazy::roles.edit', [
-            'role' => $this->findRole($role),
-            'permissions' => $this->authorization->permissions(),
-        ]);
-    }
 
     public function update(Request $request, string $role): RedirectResponse
     {
@@ -109,7 +81,7 @@ class RoleController extends Controller
         $model->save();
         $model->syncPermissions($validated['permissions'] ?? []);
 
-        return back()->with('status', __('Role updated successfully.'));
+        return redirect()->route($this->routeName('access.index'))->with('status', __('Role updated successfully.'));
     }
 
     public function destroy(string $role): RedirectResponse
@@ -127,7 +99,7 @@ class RoleController extends Controller
         $model->delete();
 
         return redirect()
-            ->route($this->routeName('role.index'))
+            ->route($this->routeName('access.index'))
             ->with('status', __('Role deleted successfully.'));
     }
 
