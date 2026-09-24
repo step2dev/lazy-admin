@@ -241,12 +241,13 @@ The default permissions are:
 
 The role-to-permission mapping is configurable in `config/lazy/admin.php`. The `superadmin` role is granted every Gate ability through `Gate::before()`.
 
-Roles and permissions are managed in the admin UI at the configured equivalents of:
+Roles and permissions are managed together in one access-management screen:
 
 ```text
-/admin/role
-/admin/permission
+/admin/access
 ```
+
+The left side manages roles and their permission matrix. The permissions section manages reusable permission names. Role and permission write endpoints remain separate internally, while the UI and navigation use a single Access entry point.
 
 The users CRUD can assign roles and validates every selected role against the configured Spatie guard.
 
