@@ -76,7 +76,6 @@ return [
                 'permissions.edit',
             ],
             'manager' => [
-                'admin_access',
                 'users.view',
                 'users.create',
                 'users.edit',
@@ -84,7 +83,6 @@ return [
                 'permissions.view',
             ],
             'moderator' => [
-                'admin_access',
                 'users.view',
             ],
         ],
