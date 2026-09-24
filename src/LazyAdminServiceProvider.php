@@ -3,6 +3,7 @@
 namespace Step2dev\LazyAdmin;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
@@ -151,6 +152,15 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         $router->mixin(new AdminRouter);
 
         MenuFacade::register(function (MenuManager $menu): void {
+            $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+
+            if (
+                config('lazy.admin.permissions.enforce', true)
+                && ! ($user?->can('roles.view') || $user?->can('permissions.view'))
+            ) {
+                return;
+            }
+
             $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
             $menu->addItem(
