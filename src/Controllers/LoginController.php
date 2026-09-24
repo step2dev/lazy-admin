@@ -2,9 +2,11 @@
 
 namespace Step2dev\LazyAdmin\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 class LoginController extends Controller
@@ -14,29 +16,45 @@ class LoginController extends Controller
         return view('lazy::auth.login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
-        $loginFields = config('lazy.auth.login_fields');
         $request->validate([
-            'login' => 'required|string',
-            'password' => 'required|string',
+            'email' => ['required', 'string'],
+            'password' => ['required', 'string'],
         ]);
 
+        $guard = Auth::guard((string) config('lazy.auth.guard', 'web'));
+        $loginFields = array_values(array_filter((array) config('lazy.auth.login_fields', ['email'])));
+
         foreach ($loginFields as $field) {
-            if (Auth::attempt([$field => $request->login, 'password' => $request->password])) {
-                return redirect()->route('dashboard');
+            if ($guard->attempt([
+                $field => $request->string('email')->toString(),
+                'password' => $request->string('password')->toString(),
+            ], $request->boolean('remember'))) {
+                $request->session()->regenerate();
+
+                $redirectRoute = (string) config('lazy.auth.login.redirect_route', 'admin.dashboard');
+
+                return Route::has($redirectRoute)
+                    ? redirect()->intended(route($redirectRoute))
+                    : redirect()->intended((string) config('lazy.admin.home', '/'));
             }
         }
 
-        return back()->withErrors([
-            'login' => 'The provided credentials do not match our records.',
-        ]);
+        return back()
+            ->withErrors(['email' => __('auth.failed')])
+            ->onlyInput('email');
     }
 
-    public function logout()
+    public function logout(Request $request): RedirectResponse
     {
-        Auth::logout();
+        Auth::guard((string) config('lazy.auth.guard', 'web'))->logout();
 
-        return redirect()->route('login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Route::has('login')
+            ? redirect()->route('login')
+            : redirect((string) config('lazy.admin.home', '/'));
     }
 }
