@@ -18,9 +18,11 @@ use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
+use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
+use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
 use Step2dev\LazyMenu\LazyMenuServiceProvider;
 use Step2dev\LazyMenu\Navigation\Menu\Menu;
 use Step2dev\LazyMenu\Navigation\Menu\MenuManager;
@@ -97,6 +99,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         }
 
         $this->app->register(LazyMenuServiceProvider::class);
+        $this->app->register(LazyBreadcrumbServiceProvider::class);
         $this->app->singleton(MenuRegistry::class, static function (): MenuRegistry {
             $registry = new MenuRegistry;
             $registry->useView('lazy::menu-generator');
@@ -112,6 +115,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         Livewire::component('settings.setting', Setting::class);
+        Livewire::component('lazy-admin.users.table', Table::class);
     }
 
     public function bootingPackage(): void {}

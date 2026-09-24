@@ -49,7 +49,9 @@ it('honors custom paths and names passed to Route::admin', function (): void {
 
 it('renders the packaged login view with current lazy ui components', function (): void {
     config()->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
+    $this->withoutVite();
 
+    Route::post('/login-test', fn () => 'login')->name('login.store');
     Route::get('/register-test', fn () => 'register')->name('register');
     Route::get('/lazy-admin-login-test', fn () => view('lazy::auth.login'))->name('lazy-admin-login-test');
 
@@ -57,6 +59,7 @@ it('renders the packaged login view with current lazy ui components', function (
 
     $this->get('/lazy-admin-login-test')
         ->assertOk()
+        ->assertSee('action="'.route('login.store').'"', false)
         ->assertSee('name="email"', false)
         ->assertSee('name="password"', false);
 });

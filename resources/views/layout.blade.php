@@ -11,7 +11,6 @@
     'noscript' => '',
     'menu' => '',
 ])
-@use('Step2dev\LazyAdmin\Facades\Breadcrumb')
 @use('Step2dev\LazyMenu\Facades\Menu')
 <x-lazy-base-layout>
     @if($header)
@@ -43,7 +42,7 @@
                             @if($breadcrumb)
                                 {{ $breadcrumb }}
                             @else
-                                <x-lazy-breadcrumbs>{{ Breadcrumb::render() }}</x-lazy-breadcrumbs>
+                                @include('lazy::breadcrumb-trail')
                             @endif
                         </div>
                         <div class="col-span-3 lg:col-span-1 flex justify-end flex-wrap lg:mt-0 lg:ml-4 ">

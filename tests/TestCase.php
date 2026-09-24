@@ -5,6 +5,7 @@ namespace Step2dev\LazyAdmin\Tests;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Step2dev\LazyAdmin\LazyAdminServiceProvider;
+use Step2dev\LazyUI\LazyUiServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -20,6 +21,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
+            LazyUiServiceProvider::class,
             LazyAdminServiceProvider::class,
         ];
     }
