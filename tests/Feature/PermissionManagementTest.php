@@ -125,7 +125,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->put('/admin-test/role/'.$role->getKey(), [
         'name' => 'support-team',
         'permissions' => ['users.view'],
-    ])->assertRedirect();
+    ])->assertRedirect('/admin-test/access');
 
     $role->refresh();
 
@@ -139,22 +139,22 @@ it('creates updates and deletes permissions', function (): void {
     $this->actingAs($admin);
 
     $this->post('/admin-test/permission', [
-        'name' => 'reports_view',
-    ])->assertRedirect();
+        'name' => 'reports.view',
+    ])->assertRedirect('/admin-test/access');
 
-    $permission = Permission::findByName('reports_view', 'web');
+    $permission = Permission::findByName('reports.view', 'web');
 
     $this->put('/admin-test/permission/'.$permission->getKey(), [
-        'name' => 'reports_manage',
+        'name' => 'reports.manage',
     ])->assertRedirect();
 
     $permission->refresh();
-    expect($permission->name)->toBe('reports_manage');
+    expect($permission->name)->toBe('reports.manage');
 
     $this->delete('/admin-test/permission/'.$permission->getKey())
         ->assertRedirect();
 
-    expect(Permission::where('name', 'reports_manage')->exists())->toBeFalse();
+    expect(Permission::where('name', 'reports.manage')->exists())->toBeFalse();
 });
 
 it('does not allow deleting the superadmin role', function (): void {
@@ -205,4 +205,29 @@ it('renders roles and permissions on one access page', function (): void {
         ->assertSee('Permissions')
         ->assertSee('admin')
         ->assertSee('users.view');
+});
+
+
+it('hides permission management without permissions.view', function (): void {
+    $user = User::factory()->create();
+    $user->assignRole('manager');
+    $user->syncPermissions(['roles.view']);
+    $this->actingAs($user);
+
+    $this->get('/admin-test/access')
+        ->assertOk()
+        ->assertSee('Roles')
+        ->assertDontSee('Permissions can be shared by Lazy Admin modules.');
+});
+
+it('hides role management without roles.view', function (): void {
+    $user = User::factory()->create();
+    $user->assignRole('manager');
+    $user->syncPermissions(['permissions.view']);
+    $this->actingAs($user);
+
+    $this->get('/admin-test/access')
+        ->assertOk()
+        ->assertSee('Permissions')
+        ->assertDontSee('Assign permissions to each admin role.');
 });
