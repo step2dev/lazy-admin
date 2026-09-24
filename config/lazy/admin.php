@@ -37,4 +37,8 @@ return [
         'manager',
         'moderator',
     ],
+
+    'permissions' => [
+        'enforce' => env('LAZY_ADMIN_ENFORCE_PERMISSIONS', true),
+    ],
 ];
