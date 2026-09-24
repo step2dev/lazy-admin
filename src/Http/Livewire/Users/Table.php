@@ -107,6 +107,7 @@ class Table extends Component
         );
 
         $routePrefix = trim(config('lazy.admin.route.name', 'admin.'), '.');
+        $showRoute = $routePrefix.'.user.show';
         $editRoute = $routePrefix.'.user.edit';
         $createRoute = $routePrefix.'.user.create';
         $destroyRoute = $routePrefix.'.user.destroy';
@@ -114,6 +115,7 @@ class Table extends Component
 
         return view('lazy::pages.users.table', [
             'users' => $this->usersQuery()->paginate($perPage),
+            'showRoute' => Route::has($showRoute) && $this->canManageUsers($user, 'user_view') ? $showRoute : null,
             'editRoute' => Route::has($editRoute) && $this->canManageUsers($user, 'user_edit') ? $editRoute : null,
             'createRoute' => Route::has($createRoute) && $this->canManageUsers($user, 'user_create') ? $createRoute : null,
             'destroyRoute' => Route::has($destroyRoute) && $this->canManageUsers($user, 'user_delete') ? $destroyRoute : null,
