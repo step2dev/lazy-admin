@@ -11,7 +11,7 @@
             :class="sidebarCompact
                 ? 'badge-xs absolute -right-3 -top-2 px-1'
                 : 'hidden'"
-        >{{ $item['badge'] }}</span>
+        >{{ is_numeric($item['badge']) && (int) $item['badge'] > 99 ? '99+' : $item['badge'] }}</span>
     @endif
 </span>
 
@@ -28,5 +28,5 @@
         class="badge badge-accent ml-auto"
         x-show="! sidebarCompact"
         x-transition.opacity
-    >{{ $item['badge'] }}</span>
+    >{{ is_numeric($item['badge']) && (int) $item['badge'] > 99 ? '99+' : $item['badge'] }}</span>
 @endif
