@@ -10,12 +10,14 @@
 
         <label
             aria-label="{{ __('Toggle sidebar') }}"
-            class="btn btn-ghost btn-circle swap swap-rotate menu-toggle swap-active hidden md:inline-grid"
+            class="btn btn-ghost btn-circle swap swap-rotate menu-toggle hidden md:inline-grid"
+            :class="{ 'swap-active': ! sidebarCompact }"
         >
             <button
                 type="button"
                 aria-label="{{ __('Collapse sidebar') }}"
                 id="close"
+                @click="$dispatch('lazy-sidebar-toggle')"
                 class="swap-on focus:outline-none focus:ring-0"
             >
                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -32,6 +34,7 @@
                 type="button"
                 aria-label="{{ __('Expand sidebar') }}"
                 id="open"
+                @click="$dispatch('lazy-sidebar-toggle')"
                 class="swap-off focus:outline-none focus:ring-0"
             >
                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
