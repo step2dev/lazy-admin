@@ -22,10 +22,16 @@ class LazyAdminServiceProvider extends ServiceProvider
             if (config('lazy.auth.login.enabled', false)) {
                 Route::admin(function (): void {
                     $uri = (string) config('lazy.admin.route.login.uri', 'login');
+                    $guard = (string) config('lazy.auth.guard', 'web');
 
-                    Route::get($uri, [LoginController::class, 'showLoginForm'])->name('login');
-                    Route::post($uri, [LoginController::class, 'login'])->name('login.store');
-                    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+                    Route::middleware('guest:'.$guard)->group(function () use ($uri): void {
+                        Route::get($uri, [LoginController::class, 'showLoginForm'])->name('login');
+                        Route::post($uri, [LoginController::class, 'login'])->name('login.store');
+                    });
+
+                    Route::post('logout', [LoginController::class, 'logout'])
+                        ->middleware('auth:'.$guard)
+                        ->name('logout');
                 }, [
                     'prefix' => app(LocalizationInterface::class)->setRouteLocale(
                         trim((string) config('lazy.admin.route.login.prefix', ''), '/')
