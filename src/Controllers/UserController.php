@@ -19,14 +19,14 @@ class UserController extends Controller
 
     public function index(): View
     {
-        $this->authorizeUserAction('user_view');
+        $this->authorizeUserAction('users.view');
 
         return view('lazy::users.index');
     }
 
     public function create(): View
     {
-        $this->authorizeUserAction('user_create');
+        $this->authorizeUserAction('users.create');
 
         $model = $this->newUserModel();
 
@@ -38,7 +38,7 @@ class UserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $this->authorizeUserAction('user_create');
+        $this->authorizeUserAction('users.create');
 
         $model = $this->newUserModel();
 
@@ -64,7 +64,7 @@ class UserController extends Controller
 
     public function show(string $user): View
     {
-        $this->authorizeUserAction('user_view');
+        $this->authorizeUserAction('users.view');
 
         return view('lazy::users.show', [
             'user' => $this->findUser($user),
@@ -73,7 +73,7 @@ class UserController extends Controller
 
     public function edit(string $user): View
     {
-        $this->authorizeUserAction('user_edit');
+        $this->authorizeUserAction('users.edit');
 
         $model = $this->findUser($user);
 
@@ -85,7 +85,7 @@ class UserController extends Controller
 
     public function update(Request $request, string $user): RedirectResponse
     {
-        $this->authorizeUserAction('user_edit');
+        $this->authorizeUserAction('users.edit');
 
         $model = $this->findUser($user);
 
@@ -119,7 +119,7 @@ class UserController extends Controller
 
     public function destroy(Request $request, string $user): RedirectResponse
     {
-        $this->authorizeUserAction('user_delete');
+        $this->authorizeUserAction('users.delete');
 
         $model = $this->findUser($user);
         $authenticatedUser = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
