@@ -20,7 +20,7 @@ return [
         'domain' => env('LAZY_ROUTE_DOMAIN'),
         'middleware' => [
             'web',
-            'auth',
+            'auth:'.env('LAZY_AUTH_GUARD', 'web'),
             'verified',
             LazyAdminMiddleware::class,
         ],
