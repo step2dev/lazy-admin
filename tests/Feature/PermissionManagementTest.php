@@ -69,7 +69,7 @@ it('seeds default roles and permissions idempotently', function (): void {
         ->and(Permission::where('guard_name', 'web')->pluck('name')->all())
         ->toContain(
             'users.view',
-            'users.view',
+            'users.create',
             'roles.view',
             'permissions.view',
             'permissions.delete',
@@ -99,7 +99,7 @@ it('allows configured admin roles through middleware', function (): void {
     $this->get('/admin-test/role')->assertOk();
 });
 
-it('rejects authenticated users without admin access', function (): void {
+it('rejects authenticated users without an admin role', function (): void {
     $this->actingAs(User::factory()->create());
 
     $this->get('/admin-test/role')->assertForbidden();
@@ -112,17 +112,17 @@ it('creates and updates roles with permissions', function (): void {
 
     $this->post('/admin-test/role', [
         'name' => 'support',
-        'permissions' => ['admin_access', 'users.view'],
+        'permissions' => ['users.view', 'roles.view'],
     ])->assertRedirect();
 
     $role = Role::findByName('support', 'web');
 
     expect($role->hasPermissionTo('users.view'))->toBeTrue()
-        ->and($role->hasPermissionTo('users.view'))->toBeTrue();
+        ->and($role->hasPermissionTo('roles.view'))->toBeTrue();
 
     $this->put('/admin-test/role/'.$role->getKey(), [
         'name' => 'support-team',
-        'permissions' => ['admin_access'],
+        'permissions' => ['users.view'],
     ])->assertRedirect();
 
     $role->refresh();
