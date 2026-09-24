@@ -17,6 +17,11 @@
             $active = $item['active']
                 ?? ($target && Route::has($target) && request()->routeIs($target));
             $label = __($item['label'] ?? '');
+            $activePattern = $item['active_pattern'] ?? null;
+
+            if ($activePattern !== null) {
+                $active = request()->routeIs($activePattern);
+            }
         @endphp
 
         @if($hasChildren && $target)
@@ -36,15 +41,35 @@
                     @include('lazy::menu-label', ['item' => $item])
                 </a>
 
-                <details class="shrink-0" @if($active) open @endif>
+                <details class="shrink-0" @if($active) open @endif x-data="{ open: {{ $active ? 'true' : 'false' }} }" :open="open">
                     <summary
                         class="btn btn-ghost btn-xs relative"
                         aria-label="{{ __('Toggle :item submenu', ['item' => $label]) }}"
                         title="{{ __('Toggle :item submenu', ['item' => $label]) }}"
-                        @click="if (sidebarCompact) { $event.preventDefault(); toggleSidebar(); }"
-                    ></summary>
+                        @click.prevent="if (sidebarCompact) { toggleSidebar(); } else { open = ! open; }"
+                    >
+                        <svg
+                            class="h-4 w-4 transition-transform duration-200"
+                            :class="{ 'rotate-180': open }"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </summary>
 
-                    <ul x-show="! sidebarCompact" x-transition.opacity>
+                    <ul
+                        x-show="! sidebarCompact && open"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 -translate-y-1"
+                        x-transition:enter-end="opacity-100 translate-y-0"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 translate-y-0"
+                        x-transition:leave-end="opacity-0 -translate-y-1"
+                    >
                         @foreach($item['children'] as $child)
                             @include('lazy::menu-item', ['item' => $child])
                         @endforeach
@@ -52,17 +77,37 @@
                 </details>
             </div>
         @elseif($hasChildren)
-            <details @if($active) open @endif>
+            <details @if($active) open @endif x-data="{ open: {{ $active ? 'true' : 'false' }} }" :open="open">
                 <summary
                     class="relative"
                     title="{{ $label }}"
-                    @click="if (sidebarCompact) { $event.preventDefault(); toggleSidebar(); }"
+                    @click.prevent="if (sidebarCompact) { toggleSidebar(); } else { open = ! open; }"
                     :class="sidebarCompact ? 'justify-center px-2' : ''"
                 >
                     @include('lazy::menu-label', ['item' => $item])
+
+                    <svg
+                        class="h-4 w-4 shrink-0 transition-transform duration-200"
+                        :class="{ 'rotate-180': open }"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                    >
+                        <path d="m6 9 6 6 6-6"/>
+                    </svg>
                 </summary>
 
-                <ul x-show="! sidebarCompact" x-transition.opacity>
+                <ul
+                    x-show="! sidebarCompact && open"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 -translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 -translate-y-1"
+                >
                     @foreach($item['children'] as $child)
                         @include('lazy::menu-item', ['item' => $child])
                     @endforeach
