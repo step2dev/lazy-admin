@@ -165,19 +165,20 @@ it('does not allow deleting the superadmin role', function (): void {
     expect(Role::findByName('superadmin', 'web'))->not->toBeNull();
 });
 
-it('rejects roles from a different guard', function (): void {
+it('rejects permissions from a different guard when assigning a role', function (): void {
     $admin = User::factory()->create();
     $admin->assignRole('superadmin');
     $this->actingAs($admin);
 
-    Role::findOrCreate('api-only', 'api');
+    Permission::findOrCreate('api-only', 'api');
 
-    $this->post('/admin-test/role', [
-        'name' => 'invalid-role',
-        'permissions' => [],
-    ])->assertRedirect();
+    $this->from('/admin-test/role/create')
+        ->post('/admin-test/role', [
+            'name' => 'invalid-role',
+            'permissions' => ['api-only'],
+        ])
+        ->assertRedirect('/admin-test/role/create')
+        ->assertSessionHasErrors('permissions.0');
 
-    $role = Role::findByName('invalid-role', 'web');
-
-    expect($role)->not->toBeNull();
+    expect(Role::where('name', 'invalid-role')->exists())->toBeFalse();
 });
