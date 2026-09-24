@@ -13,10 +13,17 @@ class LazyAdminMiddleware
     {
         $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
 
-        abort_unless(
-            $user && method_exists($user, 'hasAnyRole') && $user->hasAnyRole(config('lazy.admin.roles', [])),
-            Response::HTTP_FORBIDDEN
-        );
+        abort_unless($user, Response::HTTP_FORBIDDEN);
+
+        if (config('lazy.admin.permissions.enforce', true)) {
+            abort_unless($user->can('admin_access'), Response::HTTP_FORBIDDEN);
+        } else {
+            abort_unless(
+                method_exists($user, 'hasAnyRole')
+                    && $user->hasAnyRole((array) config('lazy.admin.roles', [])),
+                Response::HTTP_FORBIDDEN
+            );
+        }
 
         return $next($request);
     }
