@@ -154,15 +154,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
             $menu->addItem(
-                $prefix.'.role.index',
-                __('Roles'),
-                permission: 'roles.view',
-            );
-
-            $menu->addItem(
-                $prefix.'.permission.index',
-                __('Permissions'),
-                permission: 'permissions.view',
+                $prefix.'.access.index',
+                __('Access'),
             );
         }, id: 'lazy-admin-access', priority: 80, group: __('Access'));
     }
