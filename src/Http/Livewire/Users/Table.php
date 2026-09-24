@@ -101,12 +101,15 @@ class Table extends Component
             403
         );
 
-        $editRoute = trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.edit';
+        $routePrefix = trim(config('lazy.admin.route.name', 'admin.'), '.');
+        $editRoute = $routePrefix.'.user.edit';
+        $createRoute = $routePrefix.'.user.create';
         $perPage = in_array($this->perPage, [10, 20, 30, 50, 100], true) ? $this->perPage : 20;
 
         return view('lazy::pages.users.table', [
             'users' => $this->usersQuery()->paginate($perPage),
-            'editRoute' => Route::has($editRoute) && $user->can('user_edit') ? $editRoute : null,
+            'editRoute' => Route::has($editRoute) ? $editRoute : null,
+            'createRoute' => Route::has($createRoute) ? $createRoute : null,
         ]);
     }
 }
