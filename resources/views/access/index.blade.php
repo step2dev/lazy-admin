@@ -2,6 +2,9 @@
     @php
         $routePrefix = trim(config('lazy.admin.route.name', 'admin.'), '.');
         $superAdminRole = config('lazy.admin.permissions.super_admin_role', 'superadmin');
+        $canViewRoles = ! config('lazy.admin.permissions.enforce', true) || auth()->user()?->can('roles.view');
+        $canViewPermissions = ! config('lazy.admin.permissions.enforce', true) || auth()->user()?->can('permissions.view');
+
         $permissionGroups = $permissions->groupBy(
             static fn ($permission) => str_contains($permission->name, '.')
                 ? str($permission->name)->before('.')->toString()
@@ -21,7 +24,12 @@
             <div class="alert alert-success">{{ session('status') }}</div>
         @endif
 
-        <div class="grid gap-8 xl:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
+        <div @class([
+            'grid gap-8',
+            'xl:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]' => $canViewRoles && $canViewPermissions,
+            'grid-cols-1' => ! ($canViewRoles && $canViewPermissions),
+        ])>
+            @if ($canViewRoles)
             <section class="space-y-5">
                 <div class="flex items-center justify-between gap-4">
                     <div>
@@ -163,7 +171,9 @@
                     @endforelse
                 </div>
             </section>
+            @endif
 
+            @if ($canViewPermissions)
             <aside class="space-y-5">
                 <div>
                     <h2 class="text-xl font-semibold">{{ __('Permissions') }}</h2>
@@ -258,6 +268,7 @@
                     @endforelse
                 </div>
             </aside>
+            @endif
         </div>
     </div>
 </x-lazy-layout>
