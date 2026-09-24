@@ -235,10 +235,9 @@ Lazy Admin seeds these roles by default:
 
 The default permissions are:
 
-- `admin_access`
-- `user_view`, `user_create`, `user_edit`, `user_delete`
-- `role_view`, `role_create`, `role_edit`, `role_delete`
-- `permission_view`, `permission_create`, `permission_edit`, `permission_delete`
+- `users.view`, `users.create`, `users.edit`, `users.delete`
+- `roles.view`, `roles.create`, `roles.edit`, `roles.delete`
+- `permissions.view`, `permissions.create`, `permissions.edit`, `permissions.delete`
 
 The role-to-permission mapping is configurable in `config/lazy/admin.php`. The `superadmin` role is granted every Gate ability through `Gate::before()`.
 
