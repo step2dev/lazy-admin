@@ -92,6 +92,11 @@ class Table extends Component
         return $query;
     }
 
+    protected function canManageUsers(object $user, string $permission): bool
+    {
+        return ! config('lazy.admin.permissions.enforce', true) || $user->can($permission);
+    }
+
     public function render(): View
     {
         $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
@@ -108,8 +113,8 @@ class Table extends Component
 
         return view('lazy::pages.users.table', [
             'users' => $this->usersQuery()->paginate($perPage),
-            'editRoute' => Route::has($editRoute) ? $editRoute : null,
-            'createRoute' => Route::has($createRoute) ? $createRoute : null,
+            'editRoute' => Route::has($editRoute) && $this->canManageUsers($user, 'user_edit') ? $editRoute : null,
+            'createRoute' => Route::has($createRoute) && $this->canManageUsers($user, 'user_create') ? $createRoute : null,
         ]);
     }
 }
