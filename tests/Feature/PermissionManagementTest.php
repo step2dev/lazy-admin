@@ -69,10 +69,10 @@ it('seeds default roles and permissions idempotently', function (): void {
         ->and(Permission::where('guard_name', 'web')->pluck('name')->all())
         ->toContain(
             'admin_access',
-            'user_view',
-            'role_view',
-            'permission_view',
-            'permission_delete',
+            'users.view',
+            'roles.view',
+            'permissions.view',
+            'permissions.delete',
         );
 
     $superadmin = Role::findByName('superadmin', 'web');
@@ -112,13 +112,13 @@ it('creates and updates roles with permissions', function (): void {
 
     $this->post('/admin-test/role', [
         'name' => 'support',
-        'permissions' => ['admin_access', 'user_view'],
+        'permissions' => ['admin_access', 'users.view'],
     ])->assertRedirect();
 
     $role = Role::findByName('support', 'web');
 
     expect($role->hasPermissionTo('admin_access'))->toBeTrue()
-        ->and($role->hasPermissionTo('user_view'))->toBeTrue();
+        ->and($role->hasPermissionTo('users.view'))->toBeTrue();
 
     $this->put('/admin-test/role/'.$role->getKey(), [
         'name' => 'support-team',
