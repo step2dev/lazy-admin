@@ -19,17 +19,23 @@ class LazyAdminServiceProvider extends ServiceProvider
         $this->routes(function () {
             $this->configureRateLimiting();
 
-            Route::admin(function () {
-                Route::get(config('lazy.admin.route.login.uri', 'login'), [LoginController::class, 'showLoginForm'])->name('login');
-            }, [
-                'prefix' => app(LocalizationInterface::class)->setRouteLocale(
-                    trim((string) config('lazy.admin.route.login.prefix', ''), '/')
-                ),
-                'as' => '',
-                'middleware' => ['web', 'guest'],
-            ]);
+            if (config('lazy.auth.login.enabled', false)) {
+                Route::admin(function (): void {
+                    $uri = (string) config('lazy.admin.route.login.uri', 'login');
 
-            Route::admin(function () {
+                    Route::get($uri, [LoginController::class, 'showLoginForm'])->name('login');
+                    Route::post($uri, [LoginController::class, 'login'])->name('login.store');
+                    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+                }, [
+                    'prefix' => app(LocalizationInterface::class)->setRouteLocale(
+                        trim((string) config('lazy.admin.route.login.prefix', ''), '/')
+                    ),
+                    'as' => '',
+                    'middleware' => ['web'],
+                ]);
+            }
+
+            Route::admin(function (): void {
                 require AdminRouter::getRoutePath();
             });
         });
