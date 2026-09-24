@@ -21,6 +21,8 @@ class UserController extends Controller
 
     public function create(): View
     {
+        $this->authorizeUserAction('user_create');
+
         $model = $this->newUserModel();
 
         return view('lazy::users.create', [
@@ -31,6 +33,8 @@ class UserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $this->authorizeUserAction('user_create');
+
         $model = $this->newUserModel();
 
         $validated = $request->validate([
@@ -55,6 +59,8 @@ class UserController extends Controller
 
     public function edit(string $user): View
     {
+        $this->authorizeUserAction('user_edit');
+
         $model = $this->findUser($user);
 
         return view('lazy::users.edit', [
@@ -65,6 +71,8 @@ class UserController extends Controller
 
     public function update(Request $request, string $user): RedirectResponse
     {
+        $this->authorizeUserAction('user_edit');
+
         $model = $this->findUser($user);
 
         $validated = $request->validate([
@@ -97,6 +105,8 @@ class UserController extends Controller
 
     public function destroy(Request $request, string $user): RedirectResponse
     {
+        $this->authorizeUserAction('user_delete');
+
         $model = $this->findUser($user);
         $authenticatedUser = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
 
@@ -158,6 +168,17 @@ class UserController extends Controller
         if (method_exists($user, 'syncRoles')) {
             $user->syncRoles($roles);
         }
+    }
+
+    protected function authorizeUserAction(string $permission): void
+    {
+        if (! config('lazy.admin.permissions.enforce', true)) {
+            return;
+        }
+
+        $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+
+        abort_unless($user && $user->can($permission), 403);
     }
 
     protected function routeName(string $route): string
