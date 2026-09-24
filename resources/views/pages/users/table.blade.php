@@ -1,4 +1,12 @@
 <div class="flex flex-col gap-4">
+    <div class="flex items-center justify-between gap-4">
+        <div>
+            @if ($createRoute)
+                <a class="btn btn-primary" href="{{ route($createRoute) }}">{{ __('Create user') }}</a>
+            @endif
+        </div>
+    </div>
+
     <div class="flex flex-wrap items-end gap-4">
         <label class="flex flex-col gap-1">
             <span>{{ __('Search') }}</span>
