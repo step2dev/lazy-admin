@@ -186,7 +186,6 @@ it('rejects permissions from a different guard when assigning a role', function 
     expect(Role::where('name', 'invalid-role')->exists())->toBeFalse();
 });
 
-
 it('persists Lazy Admin authorization across Livewire requests', function (): void {
     expect(app(PersistentMiddleware::class)->getPersistentMiddleware())
         ->toContain(LazyAdminMiddleware::class);
