@@ -13,7 +13,6 @@ class PermissionController extends Controller
 {
     public function __construct(private readonly AuthorizationManager $authorization) {}
 
-
     public function store(Request $request): RedirectResponse
     {
         $this->authorizeAction('permissions.create');
@@ -37,7 +36,6 @@ class PermissionController extends Controller
             ->route($this->routeName('access.index'))
             ->with('status', __('Permission created successfully.'));
     }
-
 
     public function update(Request $request, string $permission): RedirectResponse
     {

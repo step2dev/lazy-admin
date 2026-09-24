@@ -193,7 +193,6 @@ it('persists Lazy Admin authorization across Livewire requests', function (): vo
         ->toContain(LazyAdminMiddleware::class);
 });
 
-
 it('renders roles and permissions on one access page', function (): void {
     $admin = User::factory()->create();
     $admin->assignRole('superadmin');
@@ -206,7 +205,6 @@ it('renders roles and permissions on one access page', function (): void {
         ->assertSee('admin')
         ->assertSee('users.view');
 });
-
 
 it('hides permission management without permissions.view', function (): void {
     $user = User::factory()->create();
