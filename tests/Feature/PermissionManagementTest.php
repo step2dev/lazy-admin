@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
+use Step2dev\LazyAdmin\Controllers\AccessController;
 use Step2dev\LazyAdmin\Controllers\PermissionController;
 use Step2dev\LazyAdmin\Controllers\RoleController;
 use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
@@ -54,8 +55,9 @@ beforeEach(function (): void {
         ->prefix('admin-test')
         ->name('admin.')
         ->group(function (): void {
-            Route::resource('role', RoleController::class)->except(['show']);
-            Route::resource('permission', PermissionController::class)->except(['show']);
+            Route::get('access', AccessController::class)->name('access.index');
+            Route::resource('role', RoleController::class)->only(['store', 'update', 'destroy']);
+            Route::resource('permission', PermissionController::class)->only(['store', 'update', 'destroy']);
         });
 
     Route::getRoutes()->refreshNameLookups();
@@ -96,13 +98,13 @@ it('allows configured admin roles through middleware', function (): void {
 
     $this->actingAs($user);
 
-    $this->get('/admin-test/role')->assertOk();
+    $this->get('/admin-test/access')->assertOk();
 });
 
 it('rejects authenticated users without an admin role', function (): void {
     $this->actingAs(User::factory()->create());
 
-    $this->get('/admin-test/role')->assertForbidden();
+    $this->get('/admin-test/access')->assertForbidden();
 });
 
 it('creates and updates roles with permissions', function (): void {
@@ -113,7 +115,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->post('/admin-test/role', [
         'name' => 'support',
         'permissions' => ['users.view', 'roles.view'],
-    ])->assertRedirect();
+    ])->assertRedirect('/admin-test/access');
 
     $role = Role::findByName('support', 'web');
 
@@ -175,12 +177,12 @@ it('rejects permissions from a different guard when assigning a role', function 
 
     Permission::findOrCreate('api-only', 'api');
 
-    $this->from('/admin-test/role/create')
+    $this->from('/admin-test/access')
         ->post('/admin-test/role', [
             'name' => 'invalid-role',
             'permissions' => ['api-only'],
         ])
-        ->assertRedirect('/admin-test/role/create')
+        ->assertRedirect('/admin-test/access')
         ->assertSessionHasErrors('permissions.0');
 
     expect(Role::where('name', 'invalid-role')->exists())->toBeFalse();
@@ -189,4 +191,18 @@ it('rejects permissions from a different guard when assigning a role', function 
 it('persists Lazy Admin authorization across Livewire requests', function (): void {
     expect(app(PersistentMiddleware::class)->getPersistentMiddleware())
         ->toContain(LazyAdminMiddleware::class);
+});
+
+
+it('renders roles and permissions on one access page', function (): void {
+    $admin = User::factory()->create();
+    $admin->assignRole('superadmin');
+    $this->actingAs($admin);
+
+    $this->get('/admin-test/access')
+        ->assertOk()
+        ->assertSee('Roles')
+        ->assertSee('Permissions')
+        ->assertSee('admin')
+        ->assertSee('users.view');
 });
