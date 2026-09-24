@@ -102,7 +102,12 @@ class Table extends Component
         $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
 
         abort_unless(
-            $user && method_exists($user, 'hasAnyRole') && $user->hasAnyRole(config('lazy.admin.roles', [])),
+            $user && (
+                config('lazy.admin.permissions.enforce', true)
+                    ? $user->can('user_view')
+                    : method_exists($user, 'hasAnyRole')
+                        && $user->hasAnyRole((array) config('lazy.admin.roles', []))
+            ),
             403
         );
 
