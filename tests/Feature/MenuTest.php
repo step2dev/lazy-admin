@@ -235,7 +235,10 @@ it('renders the admin theme by default and keeps the package template selectable
     $admin = MenuFacade::render();
     $standalone = MenuFacade::render('lazy-menu::menu-generator');
 
-    expect($admin)->toContain('menu bg-base-200 w-56 rounded-box', 'class="badge"')
+    expect($admin)
+        ->toContain('menu bg-base-200 rounded-box transition-all duration-200')
+        ->toContain("sidebarCompact ? 'w-20 menu-compact' : 'w-56'")
+        ->toContain('class="badge"')
         ->not->toContain('bg-slate-900');
     expect($standalone)->toContain('bg-slate-900', 'rounded-full bg-cyan-500')
         ->not->toContain('bg-base-200');
