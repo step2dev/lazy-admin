@@ -62,7 +62,15 @@ class NotificationCenter
 
     public function title(object $notification): string
     {
-        return (string) data_get($notification, 'data.title', __('Notification'));
+        $title = data_get($notification, 'data.title');
+
+        if (is_string($title) && $title !== '') {
+            return $title;
+        }
+
+        $fallback = __('Notification');
+
+        return is_string($fallback) && $fallback !== '' ? $fallback : 'Notification';
     }
 
     public function message(object $notification): ?string
