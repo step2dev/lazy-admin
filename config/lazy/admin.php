@@ -31,6 +31,12 @@ return [
         ],
     ],
 
+    'integrations' => [
+        'seo_redirects' => [
+            'enabled' => env('LAZY_ADMIN_SEO_REDIRECTS_ENABLED', true),
+        ],
+    ],
+
     'roles' => [
         'superadmin',
         'admin',

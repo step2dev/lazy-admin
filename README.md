@@ -168,6 +168,23 @@ $menu->addItem('admin.blog.index', 'Articles', children: [
 
 Existing calls such as `Menu::addItem('admin', 'Dashboard', 'home', [Menu::createMenu('admin2', 'Child')])` remain valid. The `<x-lazy-layout>` component renders the menu and accepts `title`, `menu`, `header`, `footer` and `action` slots. Views under the `lazy::` namespace can be overridden in the application.
 
+## Optional SEO redirects
+
+Lazy Admin automatically exposes an **SEO → Redirects** workspace when `step2dev/lazy-seo-redirects` is installed. The redirect package remains optional and owns all redirect matching, normalization, caching and middleware behavior; Lazy Admin only provides the management UI.
+
+```bash
+composer require step2dev/lazy-seo-redirects
+php artisan vendor:publish --tag=lazy-seo-redirects-config
+php artisan vendor:publish --tag=lazy-seo-redirects-migrations
+php artisan migrate
+```
+
+The integration registers `/admin/seo/redirects` and adds `seo_redirects.view`, `seo_redirects.create`, `seo_redirects.edit` and `seo_redirects.delete` to Lazy Admin's authorization defaults only while the package is available. Disable the admin integration without disabling redirect handling itself with:
+
+```env
+LAZY_ADMIN_SEO_REDIRECTS_ENABLED=false
+```
+
 ## Authentication
 
 Lazy Admin is built on Laravel authentication and does not own the application's user model. By default it uses the `web` guard and resolves the user provider/model from the host application's `config/auth.php`.
