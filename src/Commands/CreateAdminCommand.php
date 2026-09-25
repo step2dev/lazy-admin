@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use RuntimeException;
-use Spatie\Permission\Contracts\Role as RoleContract;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
 use function Laravel\Prompts\confirm;
@@ -75,7 +74,7 @@ class CreateAdminCommand extends Command
             hint: 'Minimum 8 characters.'
         );
 
-        /** @var Model&object{assignRole: callable(string|int|RoleContract): mixed} $user */
+        /** @var Model $user */
         $user = $modelClass::query()->create([
             'name' => 'Admin',
             'email' => $email,
@@ -84,6 +83,7 @@ class CreateAdminCommand extends Command
 
         app(AuthorizationManager::class)->seedDefaults();
 
+        /** @phpstan-ignore-next-line The method is guaranteed by the runtime HasRoles check above. */
         $user->assignRole((string) config('lazy.admin.permissions.super_admin_role', 'superadmin'));
 
         $this->info('Super administrator created successfully.');
