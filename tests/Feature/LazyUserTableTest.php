@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -134,7 +135,6 @@ it('escapes user supplied names', function (): void {
         ->assertDontSee('<script>alert(1)</script>', false);
 });
 
-
 it('uses the primary key for admin links when the user model has a custom route key', function (): void {
     config()->set('auth.providers.users.model', UserWithNameRouteKey::class);
 
@@ -154,7 +154,7 @@ it('uses the primary key for admin links when the user model has a custom route 
 
     $controller = new class(app(AuthorizationManager::class)) extends UserController
     {
-        public function resolveUser(string $value): \Illuminate\Database\Eloquent\Model
+        public function resolveUser(string $value): Model
         {
             return $this->findUser($value);
         }
