@@ -51,6 +51,8 @@ beforeEach(function (): void {
 
     app(AuthorizationManager::class)->seedDefaults();
 
+    Route::post('/logout', fn () => response()->noContent())->name('logout');
+
     Route::middleware(['web', 'auth', LazyAdminMiddleware::class])
         ->prefix('admin-test')
         ->name('admin.')
