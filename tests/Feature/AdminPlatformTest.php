@@ -62,6 +62,45 @@ it('allows modules to register global search providers', function (): void {
         ->and($results[0]['url'])->toBe('/orders/1');
 });
 
+it('normalizes localized array values returned by search providers', function (): void {
+    app()->setLocale('uk');
+    config()->set('app.fallback_locale', 'en');
+
+    $registry = new SearchRegistry;
+
+    $registry->register(
+        id: 'localized',
+        provider: fn (): array => [[
+            'title' => ['uk' => 'Сторінка', 'en' => 'Page'],
+            'url' => '/pages/1',
+            'description' => ['uk' => 'Опис', 'en' => 'Description'],
+            'type' => ['uk' => 'Сторінка', 'en' => 'Page'],
+        ]],
+    );
+
+    $results = $registry->search('page', null);
+
+    expect($results)
+        ->toHaveCount(1)
+        ->and($results[0]['title'])->toBe('Сторінка')
+        ->and($results[0]['description'])->toBe('Опис')
+        ->and($results[0]['type'])->toBe('Сторінка');
+});
+
+it('skips malformed search results instead of casting arrays blindly', function (): void {
+    $registry = new SearchRegistry;
+
+    $registry->register(
+        id: 'malformed',
+        provider: fn (): array => [[
+            'title' => ['nested' => ['value']],
+            'url' => '/pages/1',
+        ]],
+    );
+
+    expect($registry->search('page', null))->toBe([]);
+});
+
 it('allows modules to register settings sections', function (): void {
     $registry = new SettingsRegistry;
 
