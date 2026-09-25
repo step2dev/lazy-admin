@@ -170,7 +170,6 @@ it('uses the primary key for admin links when the user model has a custom route 
     expect($controller->resolveUser((string) $target->getKey())->is($target))->toBeTrue();
 });
 
-
 it('opens a concrete user from global search even when the show route is registered after the provider', function (): void {
     Route::get('/admin/user/{user}', fn (string $user) => $user)->name('admin.user.show');
     Route::getRoutes()->refreshNameLookups();
