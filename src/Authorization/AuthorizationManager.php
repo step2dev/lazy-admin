@@ -80,7 +80,7 @@ class AuthorizationManager
         $permissionModel = $this->permissionModel();
 
         $permissions = collect(config('lazy.admin.permissions.defaults', []))
-            ->filter(static fn ($permission): bool => self::isNonEmptyPermissionName($permission))
+            ->filter(static fn ($permission): bool => is_string($permission) && $permission !== '')
             ->unique()
             ->values();
 
@@ -94,7 +94,7 @@ class AuthorizationManager
             $names = $rolePermissions === ['*']
                 ? $permissions->all()
                 : collect($rolePermissions)
-                    ->filter(static fn ($permission): bool => self::isNonEmptyPermissionName($permission))
+                    ->filter(static fn ($permission): bool => is_string($permission) && $permission !== '')
                     ->intersect($permissions)
                     ->values()
                     ->all();
@@ -105,10 +105,5 @@ class AuthorizationManager
         }
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();
-    }
-
-    private static function isNonEmptyPermissionName(mixed $permission): bool
-    {
-        return is_string($permission) && $permission !== '';
     }
 }
