@@ -1,4 +1,28 @@
 <div>
+    @php
+        $displayValue = static function (mixed $value, string $fallback = '—'): string {
+            if ($value === null || $value === '') {
+                return $fallback;
+            }
+
+            if (is_string($value) || is_int($value) || is_float($value)) {
+                return (string) $value;
+            }
+
+            if (is_bool($value)) {
+                return $value ? 'true' : 'false';
+            }
+
+            if ($value instanceof \Stringable) {
+                return (string) $value;
+            }
+
+            $encoded = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+            return is_string($encoded) && $encoded !== '' ? $encoded : $fallback;
+        };
+    @endphp
+
     <div class="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2">
         <x-lazy-input
             type="search"
@@ -36,18 +60,28 @@
             </thead>
             <tbody>
                 @foreach($activities as $activity)
+                    @php
+                        $causer = data_get($activity->causer, 'name');
+
+                        if ($causer === null || $causer === '') {
+                            $causer = data_get($activity->causer, 'email');
+                        }
+
+                        $ip = $activity->properties->get('ip');
+                    @endphp
+
                     <tr wire:key="activity-{{ $activity->id }}">
                         <td class="whitespace-nowrap">{{ $activity->created_at?->format('Y-m-d H:i') }}</td>
                         <td>
-                            <div>{{ data_get($activity->causer, 'name', data_get($activity->causer, 'email', '—')) }}</div>
-                            @if($activity->properties->get('ip'))
-                                <div class="mt-1 text-xs opacity-50">{{ $activity->properties->get('ip') }}</div>
+                            <div>{{ $displayValue($causer) }}</div>
+                            @if($ip !== null && $ip !== '')
+                                <div class="mt-1 text-xs opacity-50">{{ $displayValue($ip) }}</div>
                             @endif
                         </td>
                         <td>
-                            <x-lazy-badge ghost :label="$activity->event ?: '—'" />
+                            <x-lazy-badge ghost :label="$displayValue($activity->event)" />
                         </td>
-                        <td>{{ $activity->description }}</td>
+                        <td>{{ $displayValue($activity->description) }}</td>
                         <td class="max-w-lg">
                             @if($activity->properties->has('old') || $activity->properties->has('new'))
                                 <details>
