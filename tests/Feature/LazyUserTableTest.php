@@ -136,7 +136,13 @@ it('escapes user supplied names', function (): void {
 });
 
 it('uses the primary key for admin links when the user model has a custom route key', function (): void {
-    config()->set('auth.providers.users.model', UserWithNameRouteKey::class);
+    config()->set([
+        'auth.providers.route-key-users' => [
+            'driver' => 'eloquent',
+            'model' => UserWithNameRouteKey::class,
+        ],
+        'lazy.auth.provider' => 'route-key-users',
+    ]);
 
     $target = UserWithNameRouteKey::query()->create([
         'name' => 'user/with-route-key',
