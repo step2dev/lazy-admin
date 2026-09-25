@@ -43,7 +43,7 @@ class RoleController extends Controller
         $role->syncPermissions($validated['permissions'] ?? []);
 
         return redirect()
-            ->route($this->routeName('access.index'))
+            ->route($this->routeName('access.index'), ['role' => $role->getRouteKey()])
             ->with('status', __('Role created successfully.'));
     }
 
@@ -79,7 +79,9 @@ class RoleController extends Controller
         $model->save();
         $model->syncPermissions($validated['permissions'] ?? []);
 
-        return redirect()->route($this->routeName('access.index'))->with('status', __('Role updated successfully.'));
+        return redirect()
+            ->route($this->routeName('access.index'), ['role' => $model->getRouteKey()])
+            ->with('status', __('Role updated successfully.'));
     }
 
     public function destroy(string $role): RedirectResponse
