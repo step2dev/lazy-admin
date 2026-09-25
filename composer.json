@@ -47,7 +47,7 @@
         "illuminate/contracts": "^12.0|^13.0",
         "livewire/livewire": "^3.0|^4.0",
         "spatie/laravel-package-tools": "^1.14.0",
-        "spatie/laravel-permission": "^7.0",
+        "spatie/laravel-permission": "^8.3",
         "step2dev/lazy-breadcrumb": "dev-main",
         "step2dev/lazy-setting": "dev-main",
         "step2dev/lazy-ui": "dev-main",
