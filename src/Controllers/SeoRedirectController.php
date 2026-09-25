@@ -2,6 +2,7 @@
 
 namespace Step2dev\LazyAdmin\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
@@ -9,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 use Step2dev\LazyAdmin\Integrations\SeoRedirectsIntegration;
 
 class SeoRedirectController extends Controller
@@ -32,7 +32,7 @@ class SeoRedirectController extends Controller
             ->paginate(25)
             ->withQueryString();
 
-        return view('lazy::seo.redirects.index', [
+        return lazyView('lazy::seo.redirects.index', [
             'redirects' => $redirects,
             'search' => $search,
             'allowedStatusCodes' => $this->allowedStatusCodes(),

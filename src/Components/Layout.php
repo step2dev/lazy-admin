@@ -9,7 +9,7 @@ class Layout extends BaseLayout
     public function render(): \Closure|View
     {
         return function (array $data) {
-            return view('lazy::layout', $this->mergeData($data))->render();
+            return lazyView('lazy::layout', $this->mergeData($data))->render();
         };
     }
 }

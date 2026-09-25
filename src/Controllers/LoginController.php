@@ -2,18 +2,18 @@
 
 namespace Step2dev\LazyAdmin\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\View\View;
 
 class LoginController extends Controller
 {
     public function showLoginForm(): View
     {
-        return view('lazy::auth.login');
+        return lazyView('lazy::auth.login');
     }
 
     public function login(Request $request): RedirectResponse

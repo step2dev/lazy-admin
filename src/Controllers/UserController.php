@@ -2,6 +2,7 @@
 
 namespace Step2dev\LazyAdmin\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -9,7 +10,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 use RuntimeException;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $this->authorizeUserAction('users.view');
 
-        return view('lazy::users.index');
+        return lazyView('lazy::users.index');
     }
 
     public function create(): View
@@ -30,7 +30,7 @@ class UserController extends Controller
 
         $model = $this->newUserModel();
 
-        return view('lazy::users.create', [
+        return lazyView('lazy::users.create', [
             'user' => $model,
             'roles' => $this->availableRoles($model),
         ]);
@@ -66,7 +66,7 @@ class UserController extends Controller
     {
         $this->authorizeUserAction('users.view');
 
-        return view('lazy::users.show', [
+        return lazyView('lazy::users.show', [
             'user' => $this->findUser($user),
         ]);
     }
@@ -77,7 +77,7 @@ class UserController extends Controller
 
         $model = $this->findUser($user);
 
-        return view('lazy::users.edit', [
+        return lazyView('lazy::users.edit', [
             'user' => $model,
             'roles' => $this->availableRoles($model),
         ]);

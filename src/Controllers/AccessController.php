@@ -2,10 +2,10 @@
 
 namespace Step2dev\LazyAdmin\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
 class AccessController extends Controller
@@ -35,7 +35,7 @@ class AccessController extends Controller
                 && (string) $role->getRouteKey() === (string) $selectedRoleKey
         ) ?? $roles->first();
 
-        return view('lazy::access.index', [
+        return lazyView('lazy::access.index', [
             'roles' => $roles,
             'permissions' => $permissions,
             'selectedRole' => $selectedRole,

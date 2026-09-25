@@ -18,7 +18,7 @@ class BaseLayout extends LazyComponent
     public function render(): \Closure|View
     {
         return function (array $data) {
-            return view('lazy::base-layout', $this->mergeData($data))->render();
+            return lazyView('lazy::base-layout', $this->mergeData($data))->render();
         };
     }
 }

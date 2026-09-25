@@ -10,7 +10,7 @@ class Header extends LazyComponent
     public function render(): Closure
     {
         return function (array $data) {
-            return view('lazy::header', $this->mergeData($data))->render();
+            return lazyView('lazy::header', $this->mergeData($data))->render();
         };
     }
 }

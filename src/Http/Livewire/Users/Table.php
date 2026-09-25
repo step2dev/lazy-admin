@@ -118,7 +118,7 @@ class Table extends Component
         $destroyRoute = $routePrefix.'.user.destroy';
         $perPage = in_array($this->perPage, [10, 20, 30, 50, 100], true) ? $this->perPage : 20;
 
-        return view('lazy::pages.users.table', [
+        return lazyView('lazy::pages.users.table', [
             'users' => $this->usersQuery()->paginate($perPage),
             'showRoute' => Route::has($showRoute) && $this->canManageUsers($user, 'users.view') ? $showRoute : null,
             'editRoute' => Route::has($editRoute) && $this->canManageUsers($user, 'users.edit') ? $editRoute : null,

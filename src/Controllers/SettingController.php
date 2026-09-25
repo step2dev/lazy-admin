@@ -9,6 +9,6 @@ class SettingController extends Controller
 {
     public function index(): View
     {
-        return view('lazy::settings.index');
+        return lazyView('lazy::settings.index');
     }
 }

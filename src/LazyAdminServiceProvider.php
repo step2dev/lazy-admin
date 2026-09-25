@@ -5,7 +5,6 @@ namespace Step2dev\LazyAdmin;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route as RouteFacade;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
@@ -21,10 +20,12 @@ use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Controllers\AccessController;
+use Step2dev\LazyAdmin\Controllers\PageController;
 use Step2dev\LazyAdmin\Controllers\PermissionController;
 use Step2dev\LazyAdmin\Controllers\RoleController;
 use Step2dev\LazyAdmin\Controllers\SeoRedirectController;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
+use Step2dev\LazyAdmin\Facades\Route as RouteFacade;
 use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
 use Step2dev\LazyAdmin\Integrations\SeoRedirectsIntegration;
@@ -165,6 +166,9 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             RouteFacade::get('access', AccessController::class)->name('access.index');
             RouteFacade::resource('role', RoleController::class)->only(['store', 'update', 'destroy']);
             RouteFacade::resource('permission', PermissionController::class)->only(['store', 'update', 'destroy']);
+            RouteFacade::resource('page', PageController::class)->except(['show']);
+            RouteFacade::get('page/{page}/preview', [PageController::class, 'preview'])->name('page.preview');
+            RouteFacade::post('page/{page}/restore', [PageController::class, 'restore'])->name('page.restore');
 
             if (SeoRedirectsIntegration::available()) {
                 RouteFacade::prefix('seo')->name('seo.')->group(function (): void {
@@ -198,6 +202,21 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 );
             }, id: 'lazy-admin-seo-redirects', priority: 70);
         }
+
+        MenuFacade::register(function (MenuManager $menu): void {
+            $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+            $enforce = (bool) config('lazy.admin.permissions.enforce', true);
+
+            if (! $enforce || $user?->can('pages.view')) {
+                $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
+
+                $menu->group(__('Content'));
+                $menu->addItem(
+                    $prefix.'.page.index',
+                    __('Pages'),
+                );
+            }
+        }, id: 'lazy-admin-pages', priority: 60);
 
         MenuFacade::register(function (MenuManager $menu): void {
             $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();

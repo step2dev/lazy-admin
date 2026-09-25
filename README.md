@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/step2dev/lazy-admin/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/step2dev/lazy-admin/actions/workflows/fix-php-code-style-issues.yml?query=branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/step2dev/lazy-admin.svg?style=flat-square)](https://packagist.org/packages/step2dev/lazy-admin)
 
-Laravel admin layout and configurable route group, with navigation provided by [lazy-menu](https://github.com/step2dev/lazy-menu). Requires PHP 8.2+ and Laravel 10–13.
+Laravel admin layout and configurable route group, with navigation provided by [lazy-menu](https://github.com/step2dev/lazy-menu). Requires PHP 8.4+ and Laravel 11–13. Page management is powered by [lazy-page](https://github.com/step2dev/lazy-page).
 
 ## Installation
 
@@ -23,6 +23,24 @@ The navigation engine lives in `step2dev/lazy-menu`; lazy-admin keeps its own Da
 Lazy Admin uses the `step2dev/lazy-menu` classes directly. Use `Step2dev\\LazyMenu\\Facades\\Menu`, `Step2dev\\LazyMenu\\Navigation\\Menu\\MenuManager`, `Menu`, and `MenuRegistry`; the former Lazy Admin menu wrappers are removed.
 
 The admin layout renders its own DaisyUI templates under `lazy::menu-generator`, `lazy::menu-item` and `lazy::menu-label`. Override the corresponding files in `resources/views/vendor/lazy/`, or select your own view in a provider with `Menu::useView('admin.navigation.menu')`. For a single render, pass a view to `Menu::render('admin.navigation.menu')`. The standalone lazy-menu package uses a Tailwind template. No menu config needs publishing. See the [lazy-menu documentation](https://github.com/step2dev/lazy-menu) for template variables.
+
+## Page management
+
+Lazy Admin includes the administration UI for `step2dev/lazy-page`. The dependency direction is intentional: Lazy Admin consumes Lazy Page; Lazy Page does not depend on the admin package.
+
+The Pages module provides:
+
+- multilingual title, description and content editing
+- locale tabs using the configured localization manager, with Laravel locale fallback
+- draft, published, scheduled and archived states
+- publication and expiration timestamps
+- stable keys, slugs and page templates
+- parent/child hierarchy
+- admin preview
+- soft delete and restore
+- permission-aware navigation and actions
+
+Default page permissions are `pages.view`, `pages.create`, `pages.edit`, `pages.delete`, `pages.restore`, `pages.publish` and `pages.preview`.
 
 ## Routes
 
