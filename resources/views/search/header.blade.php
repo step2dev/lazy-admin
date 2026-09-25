@@ -3,8 +3,8 @@
         type="search"
         wire:model.live.debounce.250ms="query"
         @focus="open = true"
-        :placeholder="__('Search')"
-        aria-label="{{ __('Search') }}"
+        :placeholder="__('lazy-admin::search.short_placeholder')"
+        aria-label="{{ __('lazy-admin::search.short_placeholder') }}"
         class="w-72"
         minlength="2"
         maxlength="100"
@@ -32,7 +32,7 @@
                         </span>
                     </x-lazy-btn>
                 @empty
-                    <x-lazy-empty-state :title="__('No results')" class="border-0 p-3 shadow-none" />
+                    <x-lazy-empty-state :title="__('lazy-admin::search.no_results')" class="border-0 p-3 shadow-none" />
                 @endforelse
 
                 <x-lazy-btn
@@ -40,7 +40,7 @@
                     ghost
                     sm
                     block
-                    :label="__('View all results')"
+                    :label="__('lazy-admin::search.view_all')"
                     class="mt-1"
                 />
             </x-lazy-card>
