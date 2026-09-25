@@ -70,7 +70,7 @@ it('normalizes localized array values returned by search providers', function ()
 
     $registry->register(
         id: 'localized',
-        provider: fn (): array => [[
+        provider: fn (string $query, int $limit): array => [[
             'title' => ['uk' => 'Сторінка', 'en' => 'Page'],
             'url' => '/pages/1',
             'description' => ['uk' => 'Опис', 'en' => 'Description'],
@@ -92,7 +92,7 @@ it('skips malformed search results instead of casting arrays blindly', function 
 
     $registry->register(
         id: 'malformed',
-        provider: fn (): array => [[
+        provider: fn (string $query, int $limit): array => [[
             'title' => ['nested' => ['value']],
             'url' => '/pages/1',
         ]],
