@@ -237,7 +237,6 @@ it('hides role management without roles.view', function (): void {
         ->assertDontSee('Access rules');
 });
 
-
 it('selects a role through the access query string', function (): void {
     $admin = User::factory()->create();
     $admin->assignRole('superadmin');
