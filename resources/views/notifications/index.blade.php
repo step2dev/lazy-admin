@@ -14,7 +14,7 @@
         <x-lazy-card class="flex flex-col gap-1 p-2">
             @foreach($notifications as $notification)
                 <x-lazy-btn
-                    wire:click="markRead(@js($notification->id))"
+                    :wire:click="'markRead('.\Illuminate\Support\Js::from($notification->id)->toHtml().')'"
                     ghost
                     block
                     class="h-auto justify-between px-4 py-3 text-left"
