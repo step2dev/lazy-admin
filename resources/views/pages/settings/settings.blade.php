@@ -1,4 +1,5 @@
 <x-lazy-form wire:submit="save" class="mx-auto flex w-full max-w-5xl flex-col gap-6">
+    <fieldset @disabled(! $canEdit) class="contents">
     <header class="flex flex-col gap-2">
         <h1 class="text-2xl font-semibold tracking-tight">{{ __('General settings') }}</h1>
         <p class="text-sm opacity-70">{{ __('Manage the name, description and logo of your site.') }}</p>
@@ -29,8 +30,8 @@
             </div>
 
             <div class="flex min-h-40 items-center justify-center rounded-xl border border-dashed border-base-300 bg-base-200 p-6">
-                @if ($currentLogo = setting('admin.logo'))
-                    <x-lazy-image :src="$currentLogo" :alt="__('Current site logo')" class="max-h-28 max-w-full object-contain" />
+                @if ($currentLogoUrl)
+                    <x-lazy-image :src="$currentLogoUrl" :alt="__('Current site logo')" class="max-h-28 max-w-full object-contain" />
                 @else
                     <span class="text-sm opacity-60">{{ __('No logo uploaded') }}</span>
                 @endif
@@ -50,14 +51,20 @@
         </section>
     </div>
 
+    </fieldset>
+
     <footer class="flex flex-col gap-4 rounded-2xl border border-base-300 bg-base-100 p-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p class="text-sm opacity-70">{{ __('Changes take effect after saving.') }}</p>
         <div class="flex items-center justify-end gap-3">
-            <span wire:dirty class="text-xs opacity-70">{{ __('Unsaved changes') }}</span>
-            <x-lazy-btn primary type="submit" wire:loading.attr="disabled" wire:target="save,logo">
-                <span wire:loading.remove wire:target="save">{{ __('Save changes') }}</span>
-                <span wire:loading wire:target="save" role="status">{{ __('Saving…') }}</span>
-            </x-lazy-btn>
+            @if($canEdit)
+                <span wire:dirty class="text-xs opacity-70">{{ __('Unsaved changes') }}</span>
+                <x-lazy-btn primary type="submit" wire:loading.attr="disabled" wire:target="save,logo">
+                    <span wire:loading.remove wire:target="save">{{ __('Save changes') }}</span>
+                    <span wire:loading wire:target="save" role="status">{{ __('Saving…') }}</span>
+                </x-lazy-btn>
+            @else
+                <span class="badge badge-ghost">{{ __('Read only') }}</span>
+            @endif
         </div>
     </footer>
 </x-lazy-form>

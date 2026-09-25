@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/step2dev/lazy-admin/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/step2dev/lazy-admin/actions/workflows/fix-php-code-style-issues.yml?query=branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/step2dev/lazy-admin.svg?style=flat-square)](https://packagist.org/packages/step2dev/lazy-admin)
 
-Laravel admin layout and configurable route group, with navigation provided by [lazy-menu](https://github.com/step2dev/lazy-menu). Requires PHP 8.4+ and Laravel 11–13. Page management is powered by [lazy-page](https://github.com/step2dev/lazy-page).
+Laravel admin layout and configurable route group, with navigation provided by [lazy-menu](https://github.com/step2dev/lazy-menu). Requires PHP 8.4+ and Laravel 12–13. Page management is powered by [lazy-page](https://github.com/step2dev/lazy-page). Activity history is powered by [spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog).
 
 ## Installation
 
@@ -23,6 +23,71 @@ The navigation engine lives in `step2dev/lazy-menu`; lazy-admin keeps its own Da
 Lazy Admin uses the `step2dev/lazy-menu` classes directly. Use `Step2dev\\LazyMenu\\Facades\\Menu`, `Step2dev\\LazyMenu\\Navigation\\Menu\\MenuManager`, `Menu`, and `MenuRegistry`; the former Lazy Admin menu wrappers are removed.
 
 The admin layout renders its own DaisyUI templates under `lazy::menu-generator`, `lazy::menu-item` and `lazy::menu-label`. Override the corresponding files in `resources/views/vendor/lazy/`, or select your own view in a provider with `Menu::useView('admin.navigation.menu')`. For a single render, pass a view to `Menu::render('admin.navigation.menu')`. The standalone lazy-menu package uses a Tailwind template. No menu config needs publishing. See the [lazy-menu documentation](https://github.com/step2dev/lazy-menu) for template variables.
+
+## Admin platform registries
+
+Lazy Admin exposes registries so installed modules can extend the admin shell without editing the core package.
+
+```php
+use Step2dev\LazyAdmin\Facades\Dashboard;
+use Step2dev\LazyAdmin\Facades\Search;
+use Step2dev\LazyAdmin\Facades\Settings;
+
+Dashboard::registerWidget(
+    id: 'orders',
+    label: 'Orders',
+    value: fn () => Order::query()->count(),
+    route: 'admin.orders.index',
+    permission: 'orders.view',
+);
+
+Search::register(
+    id: 'orders',
+    provider: fn (string $query, int $limit) => Order::query()
+        ->where('number', 'like', "%{$query}%")
+        ->limit($limit)
+        ->get()
+        ->map(fn (Order $order) => [
+            'title' => $order->number,
+            'url' => route('admin.orders.show', $order),
+            'type' => 'Order',
+        ])
+        ->all(),
+    permission: 'orders.view',
+);
+
+Settings::registerSection(
+    id: 'shop',
+    label: 'Shop',
+    component: 'lazy-shop.settings',
+    permission: 'shop.settings.view',
+);
+```
+
+The built-in dashboard registers Pages, Draft pages, Users and Activity today. The global search registers Pages, Users and Settings. Other packages can register their own widgets, search providers and settings sections from their service provider `boot()`.
+
+### Notifications
+
+The header uses Laravel's standard database notifications. Any installed package can send its own notification classes; Lazy Admin reads `title`, `message` and optional `url` from the notification data.
+
+Create Laravel's standard notifications table in host applications that do not already have one:
+
+```bash
+php artisan make:notifications-table
+php artisan migrate
+```
+
+### Activity log
+
+Lazy Admin uses `spatie/laravel-activitylog` v5 and records create/update/delete/restore actions for Pages, Users, Roles, Permissions, Settings and SEO redirects. The Activity screen requires `activity.view`; Settings use `settings.view` and `settings.edit`.
+
+The Lazy Admin installer publishes Spatie's activity-log migration and config before migrations run. For an existing installation:
+
+```bash
+php artisan vendor:publish --provider="Spatie\Activitylog\ActivitylogServiceProvider" --tag="activitylog-migrations"
+php artisan vendor:publish --provider="Spatie\Activitylog\ActivitylogServiceProvider" --tag="activitylog-config"
+php artisan migrate
+```
 
 ## Page management
 

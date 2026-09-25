@@ -5,6 +5,7 @@ use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 
 beforeEach(function (): void {
     config()->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
+    config()->set('lazy.admin.permissions.enforce', false);
     $this->settingsStore = Mockery::mock();
     $this->settingsStore->shouldReceive('all')->andReturn(collect([
         (object) ['group' => 'admin', 'key' => 'name', 'value' => 'Example site'],

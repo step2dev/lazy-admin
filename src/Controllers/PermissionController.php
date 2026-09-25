@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
+use Step2dev\LazyAdmin\Support\AdminActivity;
 
 class PermissionController extends Controller
 {
@@ -32,6 +33,8 @@ class PermissionController extends Controller
 
         $permission = $permissionModel::findOrCreate($validated['name'], $guard);
 
+        AdminActivity::log('created', 'Permission created', $permission, new: $this->auditData($permission));
+
         return redirect()
             ->route($this->routeName('access.index'))
             ->with('status', __('Permission created successfully.'));
@@ -42,6 +45,7 @@ class PermissionController extends Controller
         $this->authorizeAction('permissions.edit');
 
         $model = $this->findPermission($permission);
+        $old = $this->auditData($model);
         $permissionModel = $this->authorization->permissionModel();
         $guard = $this->authorization->guard();
         $table = (new $permissionModel)->getTable();
@@ -60,6 +64,8 @@ class PermissionController extends Controller
         $model->name = $validated['name'];
         $model->save();
 
+        AdminActivity::log('updated', 'Permission updated', $model, old: $old, new: $this->auditData($model));
+
         return redirect()->route($this->routeName('access.index'))->with('status', __('Permission updated successfully.'));
     }
 
@@ -68,11 +74,22 @@ class PermissionController extends Controller
         $this->authorizeAction('permissions.delete');
 
         $model = $this->findPermission($permission);
+        $old = $this->auditData($model);
         $model->delete();
+
+        AdminActivity::log('deleted', 'Permission deleted', $model, old: $old);
 
         return redirect()
             ->route($this->routeName('access.index'))
             ->with('status', __('Permission deleted successfully.'));
+    }
+
+    private function auditData($permission): array
+    {
+        return [
+            'name' => $permission->name,
+            'guard_name' => $permission->guard_name,
+        ];
     }
 
     private function findPermission(string $value)

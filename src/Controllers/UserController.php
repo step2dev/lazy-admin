@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use RuntimeException;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
+use Step2dev\LazyAdmin\Support\AdminActivity;
 
 class UserController extends Controller
 {
@@ -57,6 +58,8 @@ class UserController extends Controller
 
         $this->syncRoles($model, $validated['roles'] ?? []);
 
+        AdminActivity::log('created', 'User created', $model, new: $this->auditData($model));
+
         return redirect()
             ->route($this->routeName('user.edit'), $model)
             ->with('status', __('User created successfully.'));
@@ -88,6 +91,7 @@ class UserController extends Controller
         $this->authorizeUserAction('users.edit');
 
         $model = $this->findUser($user);
+        $old = $this->auditData($model);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -113,6 +117,9 @@ class UserController extends Controller
         $model->save();
 
         $this->syncRoles($model, $validated['roles'] ?? []);
+        $model->refresh();
+
+        AdminActivity::log('updated', 'User updated', $model, old: $old, new: $this->auditData($model));
 
         return back()->with('status', __('User updated successfully.'));
     }
@@ -130,11 +137,28 @@ class UserController extends Controller
             'You cannot delete your own account from Lazy Admin.'
         );
 
+        $old = $this->auditData($model);
         $model->delete();
+
+        AdminActivity::log('deleted', 'User deleted', $model, old: $old);
 
         return redirect()
             ->route($this->routeName('user.index'))
             ->with('status', __('User deleted successfully.'));
+    }
+
+    protected function auditData(Model $user): array
+    {
+        $roles = method_exists($user, 'roles')
+            ? $user->roles()->pluck('name')->all()
+            : [];
+
+        return [
+            'id' => $user->getKey(),
+            'name' => $user->getAttribute('name'),
+            'email' => $user->getAttribute('email'),
+            'roles' => $roles,
+        ];
     }
 
     protected function findUser(string $value): Model
