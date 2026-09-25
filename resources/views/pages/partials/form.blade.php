@@ -13,8 +13,8 @@
         @method($method)
     @endif
 
-    <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem]">
-        <section class="rounded-box border border-base-300 bg-base-100">
+    <div class="grid gap-4 xl:grid-cols-12">
+        <section class="rounded-box border border-base-300 bg-base-100 xl:col-span-9">
             <div class="border-b border-base-300 px-4 py-3">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <div>
@@ -87,7 +87,7 @@
             </div>
         </section>
 
-        <aside class="space-y-4">
+        <aside class="space-y-4 self-start xl:sticky xl:top-4 xl:col-span-3">
             <section class="rounded-box border border-base-300 bg-base-100 p-4">
                 <h2 class="mb-4 font-semibold">{{ __('Page settings') }}</h2>
 
@@ -188,12 +188,10 @@
                     </label>
                 </div>
             </section>
-        </aside>
-    </div>
 
-    <div class="rounded-box border border-base-300 bg-base-100 px-4 py-3">
-        <div class="flex justify-end">
-            <button class="btn btn-primary btn-sm min-w-28" type="submit">{{ $submitLabel }}</button>
-        </div>
+            <section class="rounded-box border border-base-300 bg-base-100 p-4">
+                <button class="btn btn-primary btn-sm w-full" type="submit">{{ $submitLabel }}</button>
+            </section>
+        </aside>
     </div>
 </form>
