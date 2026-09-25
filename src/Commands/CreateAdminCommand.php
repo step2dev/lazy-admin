@@ -83,6 +83,7 @@ class CreateAdminCommand extends Command
 
         app(AuthorizationManager::class)->seedDefaults();
 
+        /** @phpstan-ignore-next-line The method is guaranteed by the runtime HasRoles check above. */
         $user->assignRole((string) config('lazy.admin.permissions.super_admin_role', 'superadmin'));
 
         $this->info('Super administrator created successfully.');

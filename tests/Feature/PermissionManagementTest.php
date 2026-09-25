@@ -51,6 +51,8 @@ beforeEach(function (): void {
 
     app(AuthorizationManager::class)->seedDefaults();
 
+    Route::post('/logout', fn () => response()->noContent())->name('logout');
+
     Route::middleware(['web', 'auth', LazyAdminMiddleware::class])
         ->prefix('admin-test')
         ->name('admin.')
@@ -115,7 +117,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->post('/admin-test/role', [
         'name' => 'support',
         'permissions' => ['users.view', 'roles.view'],
-    ])->assertRedirect('/admin-test/access');
+    ])->assertRedirect('/admin/access');
 
     $role = Role::findByName('support', 'web');
 
@@ -125,7 +127,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->put('/admin-test/role/'.$role->getKey(), [
         'name' => 'support-team',
         'permissions' => ['users.view'],
-    ])->assertRedirect('/admin-test/access');
+    ])->assertRedirect('/admin/access');
 
     $role->refresh();
 
@@ -140,7 +142,7 @@ it('creates updates and deletes permissions', function (): void {
 
     $this->post('/admin-test/permission', [
         'name' => 'reports.view',
-    ])->assertRedirect('/admin-test/access');
+    ])->assertRedirect('/admin/access');
 
     $permission = Permission::findByName('reports.view', 'web');
 
@@ -208,7 +210,7 @@ it('renders roles and permissions on one access page', function (): void {
 
 it('hides permission management without permissions.view', function (): void {
     $user = User::factory()->create();
-    $user->assignRole('manager');
+    $user->assignRole('moderator');
     $user->syncPermissions(['roles.view']);
     $this->actingAs($user);
 
@@ -220,7 +222,7 @@ it('hides permission management without permissions.view', function (): void {
 
 it('hides role management without roles.view', function (): void {
     $user = User::factory()->create();
-    $user->assignRole('manager');
+    $user->assignRole('moderator');
     $user->syncPermissions(['permissions.view']);
     $this->actingAs($user);
 

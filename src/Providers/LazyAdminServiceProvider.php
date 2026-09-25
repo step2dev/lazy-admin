@@ -5,10 +5,7 @@ namespace Step2dev\LazyAdmin\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use ReflectionException;
-use Step2dev\LazyAdmin\Controllers\AccessController;
 use Step2dev\LazyAdmin\Controllers\LoginController;
-use Step2dev\LazyAdmin\Controllers\PermissionController;
-use Step2dev\LazyAdmin\Controllers\RoleController;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 
@@ -45,10 +42,6 @@ class LazyAdminServiceProvider extends ServiceProvider
             }
 
             Route::admin(function (): void {
-                Route::get('access', AccessController::class)->name('access.index');
-                Route::resource('role', RoleController::class)->only(['store', 'update', 'destroy']);
-                Route::resource('permission', PermissionController::class)->only(['store', 'update', 'destroy']);
-
                 require AdminRouter::getRoutePath();
             });
         });

@@ -11,5 +11,4 @@ parameters:
     checkModelProperties: true
     ignoreErrors:
         - '#Unsafe usage of new static\(\).#'
-        - '#Call to static method where\(\) on an unknown class App\\Models\\User.#'
-        - '#Call to static method create\(\) on an unknown class App\\Models\\User.#'
+        - '#Trait Step2dev\\LazyAdmin\\Authorization\\HasLazyAdminPermissions is used zero times and is not analysed\.#'

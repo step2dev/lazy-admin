@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
+use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
 use Step2dev\LazyAdmin\Tests\Fixtures\User;
 
@@ -36,11 +37,13 @@ beforeEach(function (): void {
     $migration = require $permissionPath.'/database/migrations/create_permission_tables.php.stub';
     $migration->up();
 
+    app(AuthorizationManager::class)->seedDefaults();
+
     Route::get('/admin/user/{user}/edit', fn () => 'Edit user')->name('admin.user.edit');
     Route::getRoutes()->refreshNameLookups();
 
     $this->admin = User::factory()->create(['name' => 'Administrator']);
-    $this->admin->assignRole(Role::findOrCreate('admin', 'web'));
+    $this->admin->assignRole(Role::findByName('moderator', 'web'));
     $this->actingAs($this->admin);
 });
 
