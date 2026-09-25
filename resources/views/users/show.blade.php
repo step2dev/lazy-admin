@@ -10,7 +10,7 @@
                 @if (Route::has(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.edit'))
                     <a
                         class="btn btn-warning btn-sm btn-square"
-                        href="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.edit', $user) }}"
+                        href="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.edit', $user->getKey()) }}"
                         title="{{ __('Edit') }}"
                         aria-label="{{ __('Edit') }}"
                     >

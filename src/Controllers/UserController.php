@@ -61,7 +61,7 @@ class UserController extends Controller
         AdminActivity::log('created', 'User created', $model, new: $this->auditData($model));
 
         return redirect()
-            ->route($this->routeName('user.edit'), $model)
+            ->route($this->routeName('user.edit'), $model->getKey())
             ->with('status', __('User created successfully.'));
     }
 
@@ -165,9 +165,19 @@ class UserController extends Controller
     {
         $model = $this->newUserModel();
 
-        return $model->newQuery()
-            ->where($model->getRouteKeyName(), $value)
-            ->firstOrFail();
+        $resolved = $model->newQuery()->whereKey($value)->first();
+
+        if ($resolved instanceof Model) {
+            return $resolved;
+        }
+
+        if ($model->getRouteKeyName() !== $model->getKeyName()) {
+            return $model->newQuery()
+                ->where($model->getRouteKeyName(), $value)
+                ->firstOrFail();
+        }
+
+        return $model->newQuery()->whereKey($value)->firstOrFail();
     }
 
     protected function newUserModel(): Model

@@ -69,7 +69,7 @@
                                 @if ($showRoute)
                                     <a
                                         class="btn btn-secondary btn-sm btn-square"
-                                        href="{{ route($showRoute, $user) }}"
+                                        href="{{ route($showRoute, $user->getKey()) }}"
                                         title="{{ __('View') }}"
                                         aria-label="{{ __('View') }}"
                                     >
@@ -84,7 +84,7 @@
                                 @if ($editRoute)
                                     <a
                                         class="btn btn-warning btn-sm btn-square"
-                                        href="{{ route($editRoute, $user) }}"
+                                        href="{{ route($editRoute, $user->getKey()) }}"
                                         title="{{ __('Edit') }}"
                                         aria-label="{{ __('Edit') }}"
                                     >
@@ -97,7 +97,7 @@
                                 @endif
 
                                 @if ($destroyRoute)
-                                    <form method="POST" action="{{ route($destroyRoute, $user) }}"
+                                    <form method="POST" action="{{ route($destroyRoute, $user->getKey()) }}"
                                           onsubmit="return confirm('{{ __('Delete this user?') }}')">
                                         @csrf
                                         @method('DELETE')
