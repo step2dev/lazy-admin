@@ -10,6 +10,7 @@
     'scripts' => '',
     'noscript' => '',
     'menu' => '',
+    'routes' => [],
 ])
 @use('Step2dev\LazyMenu\Facades\Menu')
 <x-lazy-base-layout

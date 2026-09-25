@@ -10,9 +10,12 @@ class BaseLayout extends LazyComponent
 {
     public array $routes = [];
 
-    public function __construct()
+    public function __construct(?array $routes = null)
     {
-        $this->routes = GenerateRoute::make()->generateRoutes();
+        $this->routes = array_replace(
+            GenerateRoute::make()->generateRoutes(),
+            $routes ?? [],
+        );
     }
 
     public function render(): \Closure|View
