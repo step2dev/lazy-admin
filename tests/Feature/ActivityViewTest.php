@@ -51,10 +51,15 @@ it('normalizes array activity values before rendering', function (): void {
         'path' => '/admin/activity',
     ]);
 
+    app('translator')->addLines([
+        'User' => ['profile' => 'Profile'],
+    ], 'en');
+
     $html = view('lazy::activity.index', compact('activities'))->render();
 
     expect($html)
         ->toContain('&quot;uk&quot;')
         ->toContain('terms2')
-        ->toContain('updated');
+        ->toContain('updated')
+        ->toContain('User');
 });
