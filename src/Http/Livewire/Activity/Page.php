@@ -138,6 +138,6 @@ class Page extends Component
 
         $encoded = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-        return is_string($encoded) && $encoded !== '' ? $encoded : $fallback;
+        return is_string($encoded) ? $encoded : $fallback;
     }
 }

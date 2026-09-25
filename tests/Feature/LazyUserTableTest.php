@@ -179,6 +179,9 @@ it('opens a concrete user from global search even when the show route is registe
         'email' => 'specific-search@example.com',
     ]);
 
+    $this->admin->syncRoles([]);
+    $this->admin->givePermissionTo(Permission::findOrCreate('users.view', 'web'));
+
     $result = collect(app(SearchRegistry::class)->search('Specific Search Person', $this->admin))
         ->firstWhere('provider', 'users');
 
