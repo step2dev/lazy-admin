@@ -2,6 +2,7 @@
 
 namespace Step2dev\LazyAdmin\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -9,7 +10,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Illuminate\Contracts\View\View;
 use RuntimeException;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 

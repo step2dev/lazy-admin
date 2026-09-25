@@ -2,10 +2,10 @@
 
 namespace Step2dev\LazyAdmin\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\View\View;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
 class AccessController extends Controller
