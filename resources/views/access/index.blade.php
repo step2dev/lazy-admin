@@ -210,24 +210,11 @@
                         <div class="space-y-5">
                             @forelse ($permissionGroups as $group => $groupPermissions)
                                 <fieldset class="rounded-3xl border border-base-300 bg-base-100/40 p-5">
-                                    <div class="mb-5 flex flex-wrap items-baseline justify-between gap-2">
-                                        <div>
-                                            <legend class="text-lg font-semibold">{{ $group }}</legend>
-                                            <div class="text-sm opacity-50">
-                                                {{ trans_choice(':count permission|:count permissions', $groupPermissions->count(), ['count' => $groupPermissions->count()]) }}
-                                            </div>
+                                    <div class="mb-5">
+                                        <h3 class="text-lg font-semibold">{{ $group }}</h3>
+                                        <div class="text-sm opacity-50">
+                                            {{ trans_choice(':count permission|:count permissions', $groupPermissions->count(), ['count' => $groupPermissions->count()]) }}
                                         </div>
-
-                                        @if ($canEditRoles && ! $selectedIsSuperAdmin)
-                                            <label class="flex cursor-pointer items-center gap-2 text-xs opacity-60">
-                                                <span>{{ __('Select group') }}</span>
-                                                <input
-                                                    type="checkbox"
-                                                    class="checkbox checkbox-xs"
-                                                    onclick="this.closest('fieldset').querySelectorAll('input[name=&quot;permissions[]&quot;]').forEach((item) => item.checked = this.checked)"
-                                                />
-                                            </label>
-                                        @endif
                                     </div>
 
                                     <div class="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
