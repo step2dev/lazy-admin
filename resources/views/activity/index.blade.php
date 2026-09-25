@@ -3,14 +3,14 @@
         <x-lazy-input
             type="search"
             wire:model.live.debounce.300ms="search"
-            :placeholder="__('Search activity')"
-            aria-label="{{ __('Search activity') }}"
+            :placeholder="__('lazy-admin::activity.search')"
+            aria-label="{{ __('lazy-admin::activity.search') }}"
         />
         <x-lazy-input
             type="text"
             wire:model.live.debounce.300ms="event"
-            :placeholder="__('Event')"
-            aria-label="{{ __('Event') }}"
+            :placeholder="__('lazy-admin::activity.event')"
+            aria-label="{{ __('lazy-admin::activity.event') }}"
         />
     </div>
 
@@ -20,18 +20,18 @@
 
     @if($activities->isEmpty())
         <x-lazy-empty-state
-            :title="__('No activity recorded yet.')"
-            :description="__('Run the Spatie activity log migration if this is a new installation.')"
+            :title="__('lazy-admin::activity.empty.title')"
+            :description="__('lazy-admin::activity.empty.description')"
         />
     @else
         <x-lazy-table>
             <thead>
                 <tr>
-                    <th>{{ __('When') }}</th>
-                    <th>{{ __('User') }}</th>
-                    <th>{{ __('Event') }}</th>
-                    <th>{{ __('Description') }}</th>
-                    <th>{{ __('Changes') }}</th>
+                    <th>{{ __('lazy-admin::activity.columns.when') }}</th>
+                    <th>{{ __('lazy-admin::activity.columns.user') }}</th>
+                    <th>{{ __('lazy-admin::activity.columns.event') }}</th>
+                    <th>{{ __('lazy-admin::activity.columns.description') }}</th>
+                    <th>{{ __('lazy-admin::activity.columns.changes') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,7 +51,7 @@
                         <td class="max-w-lg">
                             @if($activity['has_changes'])
                                 <details>
-                                    <summary class="cursor-pointer text-sm">{{ __('View changes') }}</summary>
+                                    <summary class="cursor-pointer text-sm">{{ __('lazy-admin::activity.view_changes') }}</summary>
                                     <pre class="mt-2 max-h-72 overflow-auto rounded-lg bg-base-200 p-3 text-xs">{{ $activity['changes'] }}</pre>
                                 </details>
                             @else
