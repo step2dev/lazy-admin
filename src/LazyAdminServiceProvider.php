@@ -343,8 +343,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 }
 
                 $showRoute = $prefix.'.user.show';
+                $editRoute = $prefix.'.user.edit';
                 $indexRoute = $prefix.'.user.index';
-                $hasShowRoute = RouteFacade::has($showRoute);
 
                 return $model::query()
                     ->where(fn ($builder) => $builder
@@ -355,9 +355,11 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->map(fn ($user): array => [
                         'title' => (string) $user->getAttribute('name'),
                         'description' => (string) $user->getAttribute('email'),
-                        'url' => $hasShowRoute
-                            ? route($showRoute, $user->getKey())
-                            : route($indexRoute),
+                        'url' => match (true) {
+                            RouteFacade::has($showRoute) => route($showRoute, $user->getKey()),
+                            RouteFacade::has($editRoute) => route($editRoute, $user->getKey()),
+                            default => route($indexRoute, ['search' => (string) $user->getAttribute('email')]),
+                        },
                         'type' => __('lazy-admin::search.types.user'),
                     ])
                     ->all();
