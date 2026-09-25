@@ -115,12 +115,14 @@ it('creates and updates roles with permissions', function (): void {
     $admin->assignRole('superadmin');
     $this->actingAs($admin);
 
-    $this->post('/admin-test/role', [
+    $response = $this->post('/admin-test/role', [
         'name' => 'support',
         'permissions' => ['users.view', 'roles.view'],
-    ])->assertRedirect('/admin-test/access');
+    ]);
 
     $role = Role::findByName('support', 'web');
+
+    $response->assertRedirect('/admin-test/access?role='.$role->getRouteKey());
 
     expect($role->hasPermissionTo('users.view'))->toBeTrue()
         ->and($role->hasPermissionTo('roles.view'))->toBeTrue();
@@ -128,7 +130,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->put('/admin-test/role/'.$role->getKey(), [
         'name' => 'support-team',
         'permissions' => ['users.view'],
-    ])->assertRedirect('/admin-test/access');
+    ])->assertRedirect('/admin-test/access?role='.$role->getRouteKey());
 
     $role->refresh();
 
@@ -206,7 +208,9 @@ it('renders roles and permissions on one access page', function (): void {
         ->assertSee('Roles')
         ->assertSee('Permissions')
         ->assertSee('admin')
-        ->assertSee('users.view');
+        ->assertSee('users.view')
+        ->assertSee('Permission catalog')
+        ->assertSee('Access rules');
 });
 
 it('hides permission management without permissions.view', function (): void {
@@ -218,7 +222,7 @@ it('hides permission management without permissions.view', function (): void {
     $this->get('/admin-test/access')
         ->assertOk()
         ->assertSee('Roles')
-        ->assertDontSee('Permissions can be shared by Lazy Admin modules.');
+        ->assertDontSee('Permission catalog');
 });
 
 it('hides role management without roles.view', function (): void {
@@ -229,6 +233,35 @@ it('hides role management without roles.view', function (): void {
 
     $this->get('/admin-test/access')
         ->assertOk()
-        ->assertSee('Permissions')
-        ->assertDontSee('Assign permissions to each admin role.');
+        ->assertSee('Permission catalog')
+        ->assertDontSee('Access rules');
+});
+
+
+it('selects a role through the access query string', function (): void {
+    $admin = User::factory()->create();
+    $admin->assignRole('superadmin');
+    $this->actingAs($admin);
+
+    $manager = Role::findByName('manager', 'web');
+
+    $this->get('/admin-test/access?role='.$manager->getRouteKey())
+        ->assertOk()
+        ->assertSee('Role name')
+        ->assertSee('manager')
+        ->assertSee('Permissions are split into logical groups for the selected role.');
+});
+
+it('renders superadmin as locked', function (): void {
+    $admin = User::factory()->create();
+    $admin->assignRole('superadmin');
+    $this->actingAs($admin);
+
+    $superadmin = Role::findByName('superadmin', 'web');
+
+    $this->get('/admin-test/access?role='.$superadmin->getRouteKey())
+        ->assertOk()
+        ->assertSee('locked')
+        ->assertSee('This role is granted every permission automatically.')
+        ->assertDontSee('Delete role');
 });
