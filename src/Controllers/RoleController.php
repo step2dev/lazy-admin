@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
+use Step2dev\LazyAdmin\Support\AdminActivity;
 
 class RoleController extends Controller
 {
@@ -42,6 +43,8 @@ class RoleController extends Controller
         $role = $roleModel::findOrCreate($validated['name'], $guard);
         $role->syncPermissions($validated['permissions'] ?? []);
 
+        AdminActivity::log('created', 'Role created', $role, new: $this->auditData($role));
+
         return redirect()
             ->route($this->routeName('access.index'), ['role' => $role->getRouteKey()])
             ->with('status', __('Role created successfully.'));
@@ -52,6 +55,7 @@ class RoleController extends Controller
         $this->authorizeAction('roles.edit');
 
         $model = $this->findRole($role);
+        $old = $this->auditData($model);
         $roleModel = $this->authorization->roleModel();
         $permissionModel = $this->authorization->permissionModel();
         $guard = $this->authorization->guard();
@@ -78,6 +82,9 @@ class RoleController extends Controller
         $model->name = $validated['name'];
         $model->save();
         $model->syncPermissions($validated['permissions'] ?? []);
+        $model->refresh();
+
+        AdminActivity::log('updated', 'Role updated', $model, old: $old, new: $this->auditData($model));
 
         return redirect()
             ->route($this->routeName('access.index'), ['role' => $model->getRouteKey()])
@@ -96,11 +103,23 @@ class RoleController extends Controller
             'The super admin role cannot be deleted.'
         );
 
+        $old = $this->auditData($model);
         $model->delete();
+
+        AdminActivity::log('deleted', 'Role deleted', $model, old: $old);
 
         return redirect()
             ->route($this->routeName('access.index'))
             ->with('status', __('Role deleted successfully.'));
+    }
+
+    private function auditData($role): array
+    {
+        return [
+            'name' => $role->name,
+            'guard_name' => $role->guard_name,
+            'permissions' => $role->permissions()->pluck('name')->sort()->values()->all(),
+        ];
     }
 
     private function findRole(string $value)

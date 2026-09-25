@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
+use Step2dev\LazyAdmin\Support\AdminActivity;
 use Step2dev\LazyPage\Enums\PageStatus;
 use Step2dev\LazyPage\Models\Page;
+use Step2dev\LazyPage\Models\PageTranslation;
 
 class PageController extends Controller
 {
@@ -72,6 +74,8 @@ class PageController extends Controller
         $this->fillTranslations($page, $validated['translations']);
         $page->save();
 
+        AdminActivity::log('created', 'Page created', $page, new: $this->auditData($page));
+
         return redirect()
             ->route($this->routeName('page.edit'), $page)
             ->with('status', __('Page created successfully.'));
@@ -95,10 +99,14 @@ class PageController extends Controller
 
         $validated = $this->validatePage($request, $page);
         $this->validateParent($page, $validated['parent_id'] ?? null);
+        $old = $this->auditData($page);
 
         $this->fillPage($page, $validated);
         $this->fillTranslations($page, $validated['translations']);
         $page->save();
+        $page->refresh();
+
+        AdminActivity::log('updated', 'Page updated', $page, old: $old, new: $this->auditData($page));
 
         return back()->with('status', __('Page updated successfully.'));
     }
@@ -117,7 +125,10 @@ class PageController extends Controller
     {
         $this->authorizePageAction('pages.delete');
 
+        $old = $this->auditData($page);
         $page->delete();
+
+        AdminActivity::log('deleted', 'Page moved to trash', $page, old: $old);
 
         return redirect()
             ->route($this->routeName('page.index'))
@@ -130,6 +141,8 @@ class PageController extends Controller
 
         $model = Page::withTrashed()->findOrFail($page);
         $model->restore();
+
+        AdminActivity::log('restored', 'Page restored', $model, new: $this->auditData($model));
 
         return redirect()
             ->route($this->routeName('page.edit'), $model)
@@ -259,6 +272,38 @@ class PageController extends Controller
 
             $candidate = $candidate->parent;
         }
+    }
+
+    private function auditData(Page $page): array
+    {
+        $page->loadMissing('translations');
+
+        $translations = [];
+
+        foreach ($page->translations as $translation) {
+            if (! $translation instanceof PageTranslation) {
+                continue;
+            }
+
+            $translations[(string) $translation->getAttribute('locale')] = [
+                'title' => $translation->getAttribute('title'),
+                'description' => $translation->getAttribute('description'),
+                'content' => $translation->getAttribute('content'),
+            ];
+        }
+
+        return [
+            'parent_id' => $page->parent_id,
+            'key' => $page->key,
+            'slug' => $page->slug,
+            'status' => $page->status->value,
+            'template' => $page->template,
+            'original_locale' => $page->original_locale,
+            'published_at' => $page->published_at?->toISOString(),
+            'expires_at' => $page->expires_at?->toISOString(),
+            'position' => $page->position,
+            'translations' => $translations,
+        ];
     }
 
     private function authorizePageAction(string $permission): void

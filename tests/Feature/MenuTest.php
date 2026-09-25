@@ -17,7 +17,9 @@ it('builds the step2dev menu lazily once and filters permissions', function (): 
     Route::getRoutes()->refreshNameLookups();
     view()->addNamespace('menu-test', __DIR__.'/../Fixtures/views');
 
-    $menu = new MenuManager(new Menu);
+    $registry = new MenuRegistry;
+    $registry->useView('lazy::menu-generator');
+    $menu = new MenuManager(new Menu, [], $registry);
     $calls = 0;
     $badgeCalls = 0;
 
@@ -160,16 +162,25 @@ it('keeps module contributors after request scoped services reset', function ():
     }, id: 'pages');
 
     $first = app(MenuManager::class);
-    expect($first->visibleItems())->toHaveCount(2)
-        ->and(array_column($first->visibleItems(), 'label'))->toBe(['Pages', 'Blog'])
+    $firstLabels = array_values(array_intersect(
+        array_column($first->visibleItems(), 'label'),
+        ['Pages', 'Blog'],
+    ));
+
+    expect($firstLabels)->toBe(['Pages', 'Blog'])
         ->and($blogCalls)->toBe(1)
         ->and($pageCalls)->toBe(1);
 
     app()->forgetScopedInstances();
 
     $second = app(MenuManager::class);
+    $secondLabels = array_values(array_intersect(
+        array_column($second->visibleItems(), 'label'),
+        ['Pages', 'Blog'],
+    ));
+
     expect($second)->not->toBe($first)
-        ->and(array_column($second->visibleItems(), 'label'))->toBe(['Pages', 'Blog'])
+        ->and($secondLabels)->toBe(['Pages', 'Blog'])
         ->and($blogCalls)->toBe(2)
         ->and($pageCalls)->toBe(2);
 

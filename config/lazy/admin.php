@@ -73,6 +73,10 @@ return [
             'pages.restore',
             'pages.publish',
             'pages.preview',
+
+            'settings.view',
+            'settings.edit',
+            'activity.view',
         ],
 
         'role_permissions' => [
@@ -95,6 +99,9 @@ return [
                 'pages.restore',
                 'pages.publish',
                 'pages.preview',
+                'settings.view',
+                'settings.edit',
+                'activity.view',
             ],
             'manager' => [
                 'users.view',
@@ -107,6 +114,8 @@ return [
                 'pages.edit',
                 'pages.publish',
                 'pages.preview',
+                'settings.view',
+                'activity.view',
             ],
             'moderator' => [
                 'users.view',

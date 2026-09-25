@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Step2dev\LazyAdmin\Integrations\SeoRedirectsIntegration;
+use Step2dev\LazyAdmin\Support\AdminActivity;
 
 class SeoRedirectController extends Controller
 {
@@ -44,7 +45,9 @@ class SeoRedirectController extends Controller
         $this->authorizeAbility('seo_redirects.create');
 
         $model = $this->modelClass();
-        $model::query()->create($this->validatedData($request));
+        $redirect = $model::query()->create($this->validatedData($request));
+
+        AdminActivity::log('created', 'SEO redirect created', $redirect, new: $this->auditData($redirect));
 
         return $this->redirectToIndex(__('Redirect created successfully.'));
     }
@@ -54,8 +57,11 @@ class SeoRedirectController extends Controller
         $this->authorizeAbility('seo_redirects.edit');
 
         $model = $this->findRedirect($redirect);
+        $old = $this->auditData($model);
         $model->fill($this->validatedData($request));
         $model->save();
+
+        AdminActivity::log('updated', 'SEO redirect updated', $model, old: $old, new: $this->auditData($model));
 
         return $this->redirectToIndex(__('Redirect updated successfully.'));
     }
@@ -64,9 +70,24 @@ class SeoRedirectController extends Controller
     {
         $this->authorizeAbility('seo_redirects.delete');
 
-        $this->findRedirect($redirect)->delete();
+        $model = $this->findRedirect($redirect);
+        $old = $this->auditData($model);
+        $model->delete();
+
+        AdminActivity::log('deleted', 'SEO redirect deleted', $model, old: $old);
 
         return $this->redirectToIndex(__('Redirect deleted successfully.'));
+    }
+
+    private function auditData(Model $redirect): array
+    {
+        return [
+            'old_url' => $redirect->getAttribute('old_url'),
+            'new_url' => $redirect->getAttribute('new_url'),
+            'status_code' => $redirect->getAttribute('status_code'),
+            'enabled' => $redirect->getAttribute('enabled'),
+            'is_regex' => $redirect->getAttribute('is_regex'),
+        ];
     }
 
     /**
