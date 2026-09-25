@@ -117,7 +117,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->post('/admin-test/role', [
         'name' => 'support',
         'permissions' => ['users.view', 'roles.view'],
-    ])->assertRedirect('/admin-test/access');
+    ])->assertRedirect('/admin/access');
 
     $role = Role::findByName('support', 'web');
 
@@ -127,7 +127,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->put('/admin-test/role/'.$role->getKey(), [
         'name' => 'support-team',
         'permissions' => ['users.view'],
-    ])->assertRedirect('/admin-test/access');
+    ])->assertRedirect('/admin/access');
 
     $role->refresh();
 
@@ -142,7 +142,7 @@ it('creates updates and deletes permissions', function (): void {
 
     $this->post('/admin-test/permission', [
         'name' => 'reports.view',
-    ])->assertRedirect('/admin-test/access');
+    ])->assertRedirect('/admin/access');
 
     $permission = Permission::findByName('reports.view', 'web');
 
