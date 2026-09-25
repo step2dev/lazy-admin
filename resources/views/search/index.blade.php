@@ -5,8 +5,8 @@
             wire:model.live.debounce.250ms="query"
             minlength="2"
             maxlength="100"
-            :placeholder="__('Search admin content')"
-            aria-label="{{ __('Search admin content') }}"
+            :placeholder="__('lazy-admin::search.placeholder')"
+            aria-label="{{ __('lazy-admin::search.placeholder') }}"
             autofocus
         />
         <div wire:loading wire:target="query" class="mt-2 text-sm opacity-60">
@@ -15,9 +15,9 @@
     </div>
 
     @if(mb_strlen($query) < 2)
-        <x-lazy-alert :message="__('Enter at least two characters.')" />
+        <x-lazy-alert :message="__('lazy-admin::search.min_length')" />
     @elseif($results === [])
-        <x-lazy-empty-state :title="__('No results found.')" />
+        <x-lazy-empty-state :title="__('lazy-admin::search.empty')" />
     @else
         <div class="flex flex-col gap-1 rounded-2xl border border-base-300 bg-base-100 p-2">
             @foreach($results as $result)
