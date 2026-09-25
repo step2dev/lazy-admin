@@ -28,6 +28,7 @@ beforeEach(function (): void {
         'auth.guards.web' => ['driver' => 'session', 'provider' => 'users'],
         'auth.providers.users' => ['driver' => 'eloquent', 'model' => User::class],
         'lazy.auth.guard' => 'web',
+        'lazy.admin.route.name' => 'admin-test.',
         'lazy.admin.permissions.enforce' => true,
         'lazy.admin.permissions.guard' => 'web',
         'lazy.admin.permissions.super_admin_role' => 'superadmin',
@@ -55,7 +56,7 @@ beforeEach(function (): void {
 
     Route::middleware(['web', 'auth', LazyAdminMiddleware::class])
         ->prefix('admin-test')
-        ->name('admin.')
+        ->name('admin-test.')
         ->group(function (): void {
             Route::get('access', AccessController::class)->name('access.index');
             Route::resource('role', RoleController::class)->only(['store', 'update', 'destroy']);
@@ -117,7 +118,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->post('/admin-test/role', [
         'name' => 'support',
         'permissions' => ['users.view', 'roles.view'],
-    ])->assertRedirect('/admin/access');
+    ])->assertRedirect('/admin-test/access');
 
     $role = Role::findByName('support', 'web');
 
@@ -127,7 +128,7 @@ it('creates and updates roles with permissions', function (): void {
     $this->put('/admin-test/role/'.$role->getKey(), [
         'name' => 'support-team',
         'permissions' => ['users.view'],
-    ])->assertRedirect('/admin/access');
+    ])->assertRedirect('/admin-test/access');
 
     $role->refresh();
 
@@ -142,7 +143,7 @@ it('creates updates and deletes permissions', function (): void {
 
     $this->post('/admin-test/permission', [
         'name' => 'reports.view',
-    ])->assertRedirect('/admin/access');
+    ])->assertRedirect('/admin-test/access');
 
     $permission = Permission::findByName('reports.view', 'web');
 
