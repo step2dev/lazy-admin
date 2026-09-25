@@ -210,7 +210,7 @@ it('renders roles and permissions on one access page', function (): void {
 
 it('hides permission management without permissions.view', function (): void {
     $user = User::factory()->create();
-    $user->assignRole('manager');
+    $user->assignRole('moderator');
     $user->syncPermissions(['roles.view']);
     $this->actingAs($user);
 
@@ -222,7 +222,7 @@ it('hides permission management without permissions.view', function (): void {
 
 it('hides role management without roles.view', function (): void {
     $user = User::factory()->create();
-    $user->assignRole('manager');
+    $user->assignRole('moderator');
     $user->syncPermissions(['permissions.view']);
     $this->actingAs($user);
 
