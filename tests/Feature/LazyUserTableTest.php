@@ -14,6 +14,7 @@ use Spatie\Permission\PermissionServiceProvider;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 use Step2dev\LazyAdmin\Controllers\UserController;
 use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
+use Step2dev\LazyAdmin\Search\SearchRegistry;
 use Step2dev\LazyAdmin\Tests\Fixtures\User;
 use Step2dev\LazyAdmin\Tests\Fixtures\UserWithNameRouteKey;
 
@@ -167,4 +168,21 @@ it('uses the primary key for admin links when the user model has a custom route 
     };
 
     expect($controller->resolveUser((string) $target->getKey())->is($target))->toBeTrue();
+});
+
+it('opens a concrete user from global search even when the show route is registered after the provider', function (): void {
+    Route::get('/admin/user/{user}', fn (string $user) => $user)->name('admin.user.show');
+    Route::getRoutes()->refreshNameLookups();
+
+    $target = User::factory()->create([
+        'name' => 'Specific Search Person',
+        'email' => 'specific-search@example.com',
+    ]);
+
+    $result = collect(app(SearchRegistry::class)->search('Specific Search Person', $this->admin))
+        ->firstWhere('provider', 'users');
+
+    expect($result)
+        ->not->toBeNull()
+        ->and($result['url'])->toBe(route('admin.user.show', $target->getKey()));
 });
