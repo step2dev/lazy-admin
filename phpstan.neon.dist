@@ -9,6 +9,8 @@ parameters:
     checkOctaneCompatibility: true
     checkModelAppends: true
     checkModelProperties: true
+    scanFiles:
+        - src/Authorization/HasLazyAdminPermissions.php
     ignoreErrors:
         - '#Unsafe usage of new static\(\).#'
         - '#Call to static method where\(\) on an unknown class App\\Models\\User.#'
