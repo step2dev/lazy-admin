@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Spatie\Activitylog\Models\Activity;
 use Step2dev\LazyAdmin\Http\Livewire\Activity\Page;
@@ -46,7 +47,7 @@ it('normalizes array activity values before rendering', function (): void {
         ->and($row['description'])->toContain('"uk":"Оновлено"')
         ->and($row['changes'])->toContain('"terms2"');
 
-    $activities = new \Illuminate\Pagination\LengthAwarePaginator([$row], 1, 25, 1, [
+    $activities = new LengthAwarePaginator([$row], 1, 25, 1, [
         'path' => '/admin/activity',
     ]);
 
