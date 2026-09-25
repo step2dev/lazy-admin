@@ -186,10 +186,14 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 }
 
                 $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
+                $routeName = $prefix.'.seo.redirects.index';
+                $routeTarget = RouteFacade::has($routeName)
+                    ? $routeName
+                    : url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/').'/seo/redirects');
 
                 $menu->group(__('SEO'));
                 $menu->addItem(
-                    $prefix.'.seo.redirects.index',
+                    $routeTarget,
                     __('Redirects'),
                 );
             }, id: 'lazy-admin-seo-redirects', priority: 70);
