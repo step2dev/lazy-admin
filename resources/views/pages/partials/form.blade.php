@@ -5,44 +5,8 @@
     x-data="{
         locale: '{{ old('original_locale', $page->original_locale ?: ($locales[0] ?? app()->getLocale())) }}',
         advanced: false,
-
-        init() {
-            this.$nextTick(() => this.initEditors(this.locale))
-            this.$watch('locale', (value) => this.$nextTick(() => this.initEditors(value)))
-        },
-
-        initEditors(locale) {
-            if (! window.tinymce || ! window.tinymceConfig) {
-                return
-            }
-
-            this.$el
-                .querySelectorAll('[data-lazy-page-editor][data-locale="' + locale + '"]')
-                .forEach((element) => {
-                    if (! element.id || window.tinymce.get(element.id)) {
-                        return
-                    }
-
-                    const height = element.dataset.lazyPageEditor === 'description' ? 240 : 600
-
-                    window.tinymce.init({
-                        ...window.tinymceConfig,
-                        target: element,
-                        height,
-                        setup(editor) {
-                            editor.on('change input blur', () => editor.save())
-                        },
-                    })
-                })
-        },
-
-        syncEditors() {
-            if (window.tinymce) {
-                window.tinymce.triggerSave()
-            }
-        },
     }"
-    @submit="syncEditors()"
+    x-init="$nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
 >
     @csrf
     @if ($method !== 'POST')
@@ -64,7 +28,7 @@
                                 type="button"
                                 class="btn btn-sm join-item min-w-12"
                                 :class="locale === '{{ $locale }}' ? 'btn-active btn-neutral' : 'btn-ghost border border-base-300'"
-                                @click="locale = '{{ $locale }}'"
+                                @click="locale = '{{ $locale }}'; $nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
                             >
                                 {{ strtoupper($locale) }}
                             </button>
@@ -77,7 +41,12 @@
                 @foreach ($locales as $locale)
                     @php($translation = $page->translate($locale))
 
-                    <div x-show="locale === '{{ $locale }}'" x-cloak class="space-y-4">
+                    <div
+                        x-show="locale === '{{ $locale }}'"
+                        x-cloak
+                        class="space-y-4"
+                        data-lazy-page-locale-panel="{{ $locale }}"
+                    >
                         <label class="form-control">
                             <span class="label-text mb-1 text-sm">{{ __('Title') }} ({{ strtoupper($locale) }})</span>
                             <input
@@ -149,7 +118,12 @@
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Original locale') }}</span>
-                        <select class="select select-bordered select-sm w-full" name="original_locale" x-model="locale">
+                        <select
+                            class="select select-bordered select-sm w-full"
+                            name="original_locale"
+                            x-model="locale"
+                            @change="$nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
+                        >
                             @foreach ($locales as $locale)
                                 <option value="{{ $locale }}">{{ strtoupper($locale) }}</option>
                             @endforeach
