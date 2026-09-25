@@ -106,6 +106,7 @@
     "suggest": {
         "laravel/fortify": "Optional headless authentication backend for applications using Lazy Admin.",
         "laravel/socialite": "Optional social authentication integration for host applications.",
-        "laravel/sanctum": "Optional SPA, mobile, or API token authentication for host applications."
+        "laravel/sanctum": "Optional SPA, mobile, or API token authentication for host applications.",
+        "step2dev/lazy-seo-redirects": "Optional SEO redirect management UI for Lazy Admin."
     }
 }

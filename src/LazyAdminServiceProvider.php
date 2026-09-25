@@ -23,9 +23,11 @@ use Step2dev\LazyAdmin\Components\Layout;
 use Step2dev\LazyAdmin\Controllers\AccessController;
 use Step2dev\LazyAdmin\Controllers\PermissionController;
 use Step2dev\LazyAdmin\Controllers\RoleController;
+use Step2dev\LazyAdmin\Controllers\SeoRedirectController;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 use Step2dev\LazyAdmin\Http\Livewire\Settings\Setting;
 use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
+use Step2dev\LazyAdmin\Integrations\SeoRedirectsIntegration;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
@@ -116,6 +118,10 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
         $this->app->singleton(AuthorizationManager::class);
 
+        if (SeoRedirectsIntegration::available()) {
+            $this->registerSeoRedirectPermissions();
+        }
+
         $this->app->register(LazyMenuServiceProvider::class);
         $this->app->register(LazyBreadcrumbServiceProvider::class);
         $this->app->singleton(MenuRegistry::class, static function (): MenuRegistry {
@@ -159,7 +165,35 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             RouteFacade::get('access', AccessController::class)->name('access.index');
             RouteFacade::resource('role', RoleController::class)->only(['store', 'update', 'destroy']);
             RouteFacade::resource('permission', PermissionController::class)->only(['store', 'update', 'destroy']);
+
+            if (SeoRedirectsIntegration::available()) {
+                RouteFacade::prefix('seo')->name('seo.')->group(function (): void {
+                    RouteFacade::get('redirects', [SeoRedirectController::class, 'index'])->name('redirects.index');
+                    RouteFacade::post('redirects', [SeoRedirectController::class, 'store'])->name('redirects.store');
+                    RouteFacade::put('redirects/{redirect}', [SeoRedirectController::class, 'update'])->name('redirects.update');
+                    RouteFacade::delete('redirects/{redirect}', [SeoRedirectController::class, 'destroy'])->name('redirects.destroy');
+                });
+            }
         });
+
+        if (SeoRedirectsIntegration::available()) {
+            MenuFacade::register(function (MenuManager $menu): void {
+                $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+                $enforce = (bool) config('lazy.admin.permissions.enforce', true);
+
+                if ($enforce && ! $user?->can('seo_redirects.view')) {
+                    return;
+                }
+
+                $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
+
+                $menu->group(__('SEO'));
+                $menu->addItem(
+                    $prefix.'.seo.redirects.index',
+                    __('Redirects'),
+                );
+            }, id: 'lazy-admin-seo-redirects', priority: 70);
+        }
 
         MenuFacade::register(function (MenuManager $menu): void {
             $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
@@ -179,5 +213,28 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 __('Access'),
             );
         }, id: 'lazy-admin-access', priority: 80);
+    }
+
+    private function registerSeoRedirectPermissions(): void
+    {
+        $permissions = SeoRedirectsIntegration::permissions();
+        $defaults = array_values(array_unique([
+            ...(array) config('lazy.admin.permissions.defaults', []),
+            ...$permissions,
+        ]));
+
+        config()->set('lazy.admin.permissions.defaults', $defaults);
+
+        $rolePermissions = (array) config('lazy.admin.permissions.role_permissions', []);
+        $rolePermissions['admin'] = array_values(array_unique([
+            ...(array) ($rolePermissions['admin'] ?? []),
+            ...$permissions,
+        ]));
+        $rolePermissions['manager'] = array_values(array_unique([
+            ...(array) ($rolePermissions['manager'] ?? []),
+            'seo_redirects.view',
+        ]));
+
+        config()->set('lazy.admin.permissions.role_permissions', $rolePermissions);
     }
 }
