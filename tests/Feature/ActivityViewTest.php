@@ -51,9 +51,7 @@ it('normalizes array activity values before rendering', function (): void {
         'path' => '/admin/activity',
     ]);
 
-    app('translator')->addLines([
-        'User' => ['profile' => 'Profile'],
-    ], 'en');
+    expect(__('lazy-admin::activity.columns.user'))->toBe('User');
 
     $html = view('lazy::activity.index', compact('activities'))->render();
 
