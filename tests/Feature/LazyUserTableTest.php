@@ -11,8 +11,10 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
+use Step2dev\LazyAdmin\Controllers\UserController;
 use Step2dev\LazyAdmin\Http\Livewire\Users\Table;
 use Step2dev\LazyAdmin\Tests\Fixtures\User;
+use Step2dev\LazyAdmin\Tests\Fixtures\UserWithNameRouteKey;
 
 beforeEach(function (): void {
     config()->set([
@@ -130,4 +132,33 @@ it('escapes user supplied names', function (): void {
 
     Livewire::test(Table::class)->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
         ->assertDontSee('<script>alert(1)</script>', false);
+});
+
+
+it('uses the primary key for admin links when the user model has a custom route key', function (): void {
+    config()->set('auth.providers.users.model', UserWithNameRouteKey::class);
+
+    $target = UserWithNameRouteKey::query()->create([
+        'name' => 'user/with-route-key',
+        'email' => 'route-key@example.com',
+        'password' => 'unused-test-password',
+    ]);
+
+    $this->admin->givePermissionTo(Permission::findOrCreate('users.edit', 'web'));
+
+    $url = route('admin.user.edit', $target->getKey());
+
+    Livewire::test(Table::class)
+        ->assertSee($url, false)
+        ->assertDontSee(route('admin.user.edit', $target), false);
+
+    $controller = new class(app(AuthorizationManager::class)) extends UserController
+    {
+        public function resolveUser(string $value): \Illuminate\Database\Eloquent\Model
+        {
+            return $this->findUser($value);
+        }
+    };
+
+    expect($controller->resolveUser((string) $target->getKey())->is($target))->toBeTrue();
 });
