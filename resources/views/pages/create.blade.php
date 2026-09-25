@@ -1,10 +1,5 @@
-<x-lazy-layout>
-    <div class="mx-auto max-w-5xl">
-        <div class="mb-6 flex items-center justify-between">
-            <h1 class="text-2xl font-semibold">{{ __('Create page') }}</h1>
-            <a class="btn btn-ghost" href="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.index') }}">{{ __('Back') }}</a>
-        </div>
-
+<x-lazy-layout :title="__('Create page')">
+    <div class="mx-auto max-w-7xl">
         @include('lazy::pages.partials.form', [
             'action' => route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.store'),
             'method' => 'POST',
