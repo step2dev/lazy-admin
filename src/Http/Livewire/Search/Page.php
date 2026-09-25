@@ -9,7 +9,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Step2dev\LazyAdmin\Search\SearchRegistry;
 
-#[Layout('lazy::livewire-layout', ['title' => 'Search'])]
+#[Layout('lazy::livewire-layout', ['title' => 'lazy-admin::search.title'])]
 class Page extends Component
 {
     #[Url(as: 'q', history: true)]

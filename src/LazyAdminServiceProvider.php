@@ -321,7 +321,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                             : $page->slug,
                         'description' => $page->path(),
                         'url' => route($prefix.'.page.index', ['search' => $page->slug]),
-                        'type' => __('Page'),
+                        'type' => __('lazy-admin::search.types.page'),
                     ];
                 }
 
@@ -342,6 +342,10 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     return [];
                 }
 
+                $showRoute = $prefix.'.user.show';
+                $indexRoute = $prefix.'.user.index';
+                $hasShowRoute = RouteFacade::has($showRoute);
+
                 return $model::query()
                     ->where(fn ($builder) => $builder
                         ->where('name', 'like', '%'.$query.'%')
@@ -351,8 +355,10 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ->map(fn ($user): array => [
                         'title' => (string) $user->getAttribute('name'),
                         'description' => (string) $user->getAttribute('email'),
-                        'url' => route($prefix.'.user.show', $user),
-                        'type' => __('User'),
+                        'url' => $hasShowRoute
+                            ? route($showRoute, $user->getKey())
+                            : route($indexRoute),
+                        'type' => __('lazy-admin::search.types.user'),
                     ])
                     ->all();
             },
@@ -372,7 +378,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                         'title' => $section['label'],
                         'description' => $section['description'],
                         'url' => route($prefix.'.setting.index', ['section' => $section['id']]),
-                        'type' => __('Setting'),
+                        'type' => __('lazy-admin::search.types.setting'),
                     ])
                     ->values()
                     ->all();
