@@ -78,6 +78,9 @@ it('seeds default roles and permissions idempotently', function (): void {
             'roles.view',
             'permissions.view',
             'permissions.delete',
+            'pages.view',
+            'pages.publish',
+            'pages.preview',
         );
 
     $superadmin = Role::findByName('superadmin', 'web');

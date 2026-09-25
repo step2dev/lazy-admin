@@ -16,7 +16,7 @@ class BreadcrumbManager extends Collection
 
     public function render(): View
     {
-        return view('lazy::breadcrumb-trail', [
+        return lazyView('lazy::breadcrumb-trail', [
             'items' => $this->isEmpty() ? null : $this->map(fn (array $item): array => [
                 'title' => $item['label'],
                 'url' => $item['route'],

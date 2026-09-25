@@ -3,9 +3,9 @@
 namespace Step2dev\LazyAdmin\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Route;
 use ReflectionException;
 use Step2dev\LazyAdmin\Controllers\LoginController;
+use Step2dev\LazyAdmin\Facades\Route;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 

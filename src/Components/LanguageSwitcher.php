@@ -37,7 +37,7 @@ class LanguageSwitcher extends Component
      */
     public function render(): Factory|View
     {
-        return view('lazy::language-switcher', [
+        return lazyView('lazy::language-switcher', [
             'supportedLocales' => $this->locales,
             'flags' => $this->flags,
         ]);

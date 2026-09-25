@@ -11,7 +11,7 @@ class Footer extends LazyComponent
     public function render(): Closure|View
     {
         return function (array $data) {
-            return view('lazy::footer', $this->mergeData($data))->render();
+            return lazyView('lazy::footer', $this->mergeData($data))->render();
         };
     }
 }

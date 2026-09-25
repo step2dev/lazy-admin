@@ -51,6 +51,6 @@ class Setting extends Component
 
     public function render(): View
     {
-        return view()->make('lazy::pages.settings.settings');
+        return lazyView('lazy::pages.settings.settings');
     }
 }
