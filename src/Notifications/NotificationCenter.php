@@ -4,6 +4,8 @@ namespace Step2dev\LazyAdmin\Notifications;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
+use Stringable;
 
 class NotificationCenter
 {
@@ -62,28 +64,76 @@ class NotificationCenter
 
     public function title(object $notification): string
     {
-        $title = data_get($notification, 'data.title');
-
-        if (is_string($title) && $title !== '') {
+        if ($title = $this->localizedString(data_get($notification, 'data.title'))) {
             return $title;
         }
 
-        $fallback = __('Notification');
+        if ($subject = $this->localizedString(data_get($notification, 'data.subject'))) {
+            return $subject;
+        }
 
-        return is_string($fallback) && $fallback !== '' ? $fallback : 'Notification';
+        if ($type = $this->localizedString(data_get($notification, 'data.type'))) {
+            return Str::headline($type);
+        }
+
+        if ($type = $this->localizedString(data_get($notification, 'type'))) {
+            return Str::headline(class_basename($type));
+        }
+
+        $fallback = $this->localizedString(__('Notification'));
+
+        return $fallback ?? 'Notification';
     }
 
     public function message(object $notification): ?string
     {
-        $message = data_get($notification, 'data.message');
-
-        return is_string($message) && $message !== '' ? $message : null;
+        return $this->localizedString(data_get($notification, 'data.message'))
+            ?? $this->localizedString(data_get($notification, 'data.content'));
     }
 
     public function url(object $notification): ?string
     {
-        $url = data_get($notification, 'data.url');
+        return $this->localizedString(data_get($notification, 'data.url'));
+    }
 
-        return is_string($url) && $url !== '' ? $url : null;
+    private function localizedString(mixed $value): ?string
+    {
+        if (is_string($value)) {
+            $value = trim($value);
+
+            return $value !== '' ? $value : null;
+        }
+
+        if ($value instanceof Stringable) {
+            $value = trim((string) $value);
+
+            return $value !== '' ? $value : null;
+        }
+
+        if (! is_array($value)) {
+            return null;
+        }
+
+        $locales = array_values(array_unique(array_filter([
+            app()->getLocale(),
+            config('app.fallback_locale'),
+            'en',
+        ], 'is_string')));
+
+        foreach ($locales as $locale) {
+            $candidate = $value[$locale] ?? null;
+
+            if (is_string($candidate) && trim($candidate) !== '') {
+                return trim($candidate);
+            }
+        }
+
+        foreach ($value as $candidate) {
+            if (is_string($candidate) && trim($candidate) !== '') {
+                return trim($candidate);
+            }
+        }
+
+        return null;
     }
 }
