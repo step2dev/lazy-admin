@@ -12,7 +12,7 @@
         @endif
 
         @include('lazy::users.partials.form', [
-            'action' => route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.update', $user),
+            'action' => route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.update', $user->getKey()),
             'method' => 'PUT',
             'submitLabel' => __('Save changes'),
         ])
@@ -24,7 +24,7 @@
             <p class="mt-2 text-sm opacity-70">{{ __('This action cannot be undone.') }}</p>
 
             <form method="POST"
-                  action="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.destroy', $user) }}"
+                  action="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.destroy', $user->getKey()) }}"
                   class="mt-4"
                   onsubmit="return confirm('{{ __('Delete this user?') }}')">
                 @csrf
