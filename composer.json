@@ -50,7 +50,7 @@
         "spatie/laravel-permission": "^7.0",
         "step2dev/lazy-breadcrumb": "dev-main",
         "step2dev/lazy-setting": "dev-main",
-        "step2dev/lazy-ui": "2.x-dev",
+        "step2dev/lazy-ui": "dev-2.x-dev",
         "step2dev/lazy-menu": "dev-main",
         "step2dev/lazy-page": "dev-main",
         "spatie/laravel-activitylog": "^5.1"
