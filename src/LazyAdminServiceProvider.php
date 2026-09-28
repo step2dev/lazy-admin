@@ -18,8 +18,6 @@ use Step2dev\LazyAdmin\Commands\CreateAdminCommand;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
 use Step2dev\LazyAdmin\Commands\LazyAdminCommand;
 use Step2dev\LazyAdmin\Components\BaseLayout;
-use Step2dev\LazyAdmin\Components\Card;
-use Step2dev\LazyAdmin\Components\Dropdown;
 use Step2dev\LazyAdmin\Components\EmptyState;
 use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
@@ -128,8 +126,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 Header::class,
                 Layout::class,
                 BaseLayout::class,
-                Card::class,
-                Dropdown::class,
                 EmptyState::class,
                 AdminTable::class,
                 LanguageSwitcher::class
