@@ -122,7 +122,6 @@ it('fully migrates admin dropdown consumers to Lazy UI', function (): void {
         ->not->toContain('class="card-body');
 });
 
-
 it('keeps third-wave migrated views free of server-side Blade logic', function (): void {
     $root = dirname(__DIR__, 2).'/resources/views';
 
