@@ -205,7 +205,6 @@ it('does not depend on application-specific logo or avatar files', function (): 
         ->and($header)->toContain('aria-label="{{ __(\'Lazy Admin\') }}"');
 });
 
-
 it('does not render empty menu badges', function (): void {
     $html = $this
         ->blade('<x-lazy-menu-label :item="[\'label\' => \'Dashboard\', \'badge\' => null]" />')
