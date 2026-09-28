@@ -2,6 +2,9 @@
 
 namespace Step2dev\LazyAdmin\Tests\Feature;
 
+use Step2dev\LazyAdmin\Components\Card;
+use Step2dev\LazyAdmin\Components\Dropdown;
+
 it('targets Lazy UI 2.x development branch', function (): void {
     $composer = json_decode(
         file_get_contents(dirname(__DIR__, 2).'/composer.json'),
@@ -79,10 +82,9 @@ it('keeps second-wave migrated views on Lazy UI controls', function (): void {
     }
 });
 
-
 it('uses Lazy UI Card and Dropdown without admin shadow components', function (): void {
-    expect(class_exists(\Step2dev\LazyAdmin\Components\Card::class))->toBeFalse()
-        ->and(class_exists(\Step2dev\LazyAdmin\Components\Dropdown::class))->toBeFalse();
+    expect(class_exists(Card::class))->toBeFalse()
+        ->and(class_exists(Dropdown::class))->toBeFalse();
 
     $this
         ->blade('<x-lazy-card href="/admin" hover title="Dashboard">42</x-lazy-card>')
