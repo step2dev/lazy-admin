@@ -2,6 +2,9 @@
 
 namespace Step2dev\LazyAdmin\Tests\Feature;
 
+use Step2dev\LazyAdmin\Components\Card;
+use Step2dev\LazyAdmin\Components\Dropdown;
+
 it('targets Lazy UI 2.x development branch', function (): void {
     $composer = json_decode(
         file_get_contents(dirname(__DIR__, 2).'/composer.json'),
@@ -77,4 +80,44 @@ it('keeps second-wave migrated views on Lazy UI controls', function (): void {
             ->not->toMatch('/class="[^"]*\\bbadge(?:-|\\s)/')
             ->not->toMatch('/class="[^"]*\\balert(?:-|\\s)/');
     }
+});
+
+it('uses Lazy UI Card and Dropdown without admin shadow components', function (): void {
+    expect(class_exists(Card::class))->toBeFalse()
+        ->and(class_exists(Dropdown::class))->toBeFalse();
+
+    $this
+        ->blade('<x-lazy-card href="/admin" hover title="Dashboard">42</x-lazy-card>')
+        ->assertSee('<a', false)
+        ->assertSee('href="/admin"', false)
+        ->assertSee('hover:shadow-md', false)
+        ->assertSee('card-body');
+
+    $this
+        ->blade('<x-lazy-dropdown end width="w-80" :content-defaults="false" content-class="z-50 border border-base-300">Menu</x-lazy-dropdown>')
+        ->assertSee('dropdown-end')
+        ->assertSee('w-80')
+        ->assertSee('z-50')
+        ->assertSee('border-base-300');
+});
+
+it('fully migrates admin dropdown consumers to Lazy UI', function (): void {
+    $root = dirname(__DIR__, 2).'/resources/views';
+
+    foreach ([
+        'language-switcher.blade.php',
+        'notifications/bell.blade.php',
+    ] as $view) {
+        $source = file_get_contents($root.'/'.$view);
+
+        expect($source)
+            ->toContain('<x-lazy-dropdown')
+            ->not->toMatch('/class="[^"]*\\bdropdown(?:-|\\s)/');
+    }
+
+    $dashboard = file_get_contents($root.'/dashboard/index.blade.php');
+
+    expect($dashboard)
+        ->toContain('<x-lazy-card')
+        ->not->toContain('class="card-body');
 });
