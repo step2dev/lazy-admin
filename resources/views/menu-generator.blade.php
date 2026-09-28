@@ -3,6 +3,6 @@
     :class="sidebarCompact ? 'menu-compact' : ''"
 >
     @foreach($menuItems as $item)
-        @include('lazy::menu-item', ['item' => $item])
+        <x-lazy-menu-item :item="$item" />
     @endforeach
 </ul>
