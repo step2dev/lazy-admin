@@ -4,10 +4,10 @@
             end
             width="w-80"
             :content-defaults="false"
-            content-class="dropdown-content z-50 mt-3 rounded-box border border-base-300 bg-base-100 p-2 shadow-xl"
+            content-class="z-50 mt-3 rounded-box border border-base-300 bg-base-100 p-2 shadow-xl"
         >
             <x-slot:trigger>
-                <x-lazy-btn ghost circle aria-label="{{ __('Notifications') }}">
+                <x-lazy-btn type="button" ghost circle tabindex="0" aria-label="{{ __('Notifications') }}">
                     <span class="indicator">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
