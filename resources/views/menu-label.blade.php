@@ -35,12 +35,13 @@
     @endif
 
     @if(isset($item['badge']))
-        <span
-            class="badge badge-accent transition-all duration-200"
+        <x-lazy-badge
+            accent
+            class="transition-all duration-200"
             :class="sidebarCompact
                 ? 'badge-xs absolute -right-3 -top-2 px-1'
                 : 'hidden'"
-        >{{ is_numeric($item['badge']) && (int) $item['badge'] > 99 ? '99+' : $item['badge'] }}</span>
+        >{{ is_numeric($item['badge']) && (int) $item['badge'] > 99 ? '99+' : $item['badge'] }}</x-lazy-badge>
     @endif
 </span>
 
@@ -53,9 +54,10 @@
 </span>
 
 @if(isset($item['badge']))
-    <span
-        class="badge badge-accent ml-auto"
+    <x-lazy-badge
+        accent
+        class="ml-auto"
         x-show="! sidebarCompact"
         x-transition.opacity
-    >{{ is_numeric($item['badge']) && (int) $item['badge'] > 99 ? '99+' : $item['badge'] }}</span>
+    >{{ is_numeric($item['badge']) && (int) $item['badge'] > 99 ? '99+' : $item['badge'] }}</x-lazy-badge>
 @endif
