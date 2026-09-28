@@ -181,7 +181,7 @@
                                                     primary
                                                     sm
                                                     name="permissions[]"
-                                                    :value="$permission->name"
+                                                    :value="$permissionItem['permission']->name"
                                                     :checked="$permissionItem['checked']"
                                                     :disabled="! $permissionsEditable"
                                                 />
@@ -272,7 +272,7 @@
                                                 <x-lazy-input
                                                     type="text"
                                                     name="name"
-                                                    :value="$permissionItem['permission']->name"
+                                                    :value="$permission->name"
                                                     sm
                                                     class="min-w-0 flex-1"
                                                     required
@@ -281,7 +281,7 @@
                                                 <x-lazy-btn sm type="submit" :label="__('Save')" />
                                             @else
                                                 <span class="min-w-0 flex-1 break-all font-medium">
-                                                    {{ $permissionItem['permission']->name }}
+                                                    {{ $permission->name }}
                                                 </span>
                                             @endif
 
