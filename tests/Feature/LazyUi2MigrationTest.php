@@ -13,7 +13,7 @@ it('targets Lazy UI 2.x development branch', function (): void {
         JSON_THROW_ON_ERROR,
     );
 
-    expect($composer['require']['step2dev/lazy-ui'] ?? null)->toBe('2.x-dev');
+    expect($composer['require']['step2dev/lazy-ui'] ?? null)->toBe('dev-2.x-dev');
 });
 
 it('renders Lazy UI 2.x semantic controls used by admin views', function (): void {
