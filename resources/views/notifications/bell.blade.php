@@ -36,7 +36,7 @@
 
             @forelse($notifications as $notification)
                 <x-lazy-btn
-                    :wire:click="'markRead('.IlluminateSupportJs::from($notification->id)->toHtml().')'"
+                    wire:click="markRead('{{ $notification->id }}')"
                     ghost
                     block
                     class="h-auto justify-start p-3 text-left"
