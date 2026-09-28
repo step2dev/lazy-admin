@@ -1,6 +1,11 @@
 <div>
     @if($available)
-        <x-lazy-dropdown>
+        <x-lazy-dropdown
+            end
+            width="w-80"
+            :content-defaults="false"
+            content-class="dropdown-content z-50 mt-3 rounded-box border border-base-300 bg-base-100 p-2 shadow-xl"
+        >
             <x-slot:trigger>
                 <x-lazy-btn ghost circle aria-label="{{ __('Notifications') }}">
                     <span class="indicator">
@@ -31,7 +36,7 @@
 
             @forelse($notifications as $notification)
                 <x-lazy-btn
-                    :wire:click="'markRead('.\Illuminate\Support\Js::from($notification->id)->toHtml().')'"
+                    :wire:click="'markRead('.IlluminateSupportJs::from($notification->id)->toHtml().')'"
                     ghost
                     block
                     class="h-auto justify-start p-3 text-left"
