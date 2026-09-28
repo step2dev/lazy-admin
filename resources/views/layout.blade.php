@@ -113,7 +113,7 @@
     </div>
     @if($footer)
         <footer
-            class="footer bg-base-200 items-center p-4">
+            class="footer sm:footer-horizontal bg-base-200 items-center p-4">
             {{ $footer }}
         </footer>
     @else

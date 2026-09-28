@@ -5,8 +5,11 @@ use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
 
 return [
     'home' => env('LAZY_ADMIN_HOME', '/'),
-    'logo' => env('LAZY_ADMIN_LOGO', '/main.svg'),
-    'avatar' => env('LAZY_ADMIN_AVATAR', '/img/admin.png'),
+    // Set a URL/path to replace the built-in Lazy Admin mark.
+    'logo' => env('LAZY_ADMIN_LOGO'),
+
+    // Optional global avatar fallback. When empty, user initials are rendered.
+    'avatar' => env('LAZY_ADMIN_AVATAR'),
 
     'scripts' => [
         'resources/lazy/js/lazy.js',
