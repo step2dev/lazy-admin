@@ -12,7 +12,7 @@
             controlled
             rotate
             class="menu-toggle hidden md:inline-grid"
-            :class="{ 'swap-active': ! sidebarCompact }"
+            x-bind:class="{ 'swap-active': ! sidebarCompact }"
             aria-label="{{ __('Toggle sidebar') }}"
         >
             <x-slot:on>
