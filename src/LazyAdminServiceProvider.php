@@ -205,6 +205,24 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        View::composer('lazy::header', static function ($view): void {
+            $guard = (string) config('lazy.auth.guard', 'web');
+            $user = Auth::guard($guard)->user();
+
+            $view->with([
+                'user' => $user,
+                'dashboardUrl' => Route::has('admin.dashboard')
+                    ? route('admin.dashboard')
+                    : url((string) config('lazy.admin.home', '/')),
+                'profileUrl' => Route::has('profile.show') ? route('profile.show') : null,
+                'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
+                'avatarUrl' => $user
+                    ? (data_get($user, 'avatar') ?: config('lazy.admin.avatar', '/img/admin.png'))
+                    : null,
+                'workerType' => $user ? data_get($user, 'worker_type') : null,
+            ]);
+        });
+
         View::composer('lazy::breadcrumb-trail', static function ($view): void {
             $data = $view->getData();
             $items = $data['items'] ?? Breadcrumbs::generate(
