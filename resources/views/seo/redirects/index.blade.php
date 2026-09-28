@@ -110,72 +110,67 @@
                         @csrf
                         @method('PUT')
 
-                        <input
+                        <x-lazy-input
                             type="text"
                             name="old_url"
-                            value="{{ $redirect->old_url }}"
-                            class="input input-bordered w-full"
-                            @disabled(! $canEdit)
+                            :value="$redirect->old_url"
+                            :disabled="! $canEdit"
                             required
                         />
 
-                        <input
+                        <x-lazy-input
                             type="text"
                             name="new_url"
-                            value="{{ $redirect->new_url }}"
-                            class="input input-bordered w-full"
-                            placeholder="{{ __('Gone (410)') }}"
-                            @disabled(! $canEdit)
+                            :value="$redirect->new_url"
+                            :placeholder="__('Gone (410)')"
+                            :disabled="! $canEdit"
                         />
 
-                        <select name="status_code" class="select select-bordered w-full" @disabled(! $canEdit)>
+                        <x-lazy-select name="status_code" :disabled="! $canEdit">
                             @foreach ($allowedStatusCodes as $statusCode)
                                 <option value="{{ $statusCode }}" @selected((int) $redirect->status_code === $statusCode)>
                                     {{ $statusCode }}
                                 </option>
                             @endforeach
-                        </select>
+                        </x-lazy-select>
 
                         <div class="flex gap-2">
                             @if ($canEdit)
-                                <button type="submit" class="btn btn-primary flex-1">
-                                    {{ __('Save') }}
-                                </button>
+                                <x-lazy-btn primary type="submit" class="flex-1" :label="__('Save')" />
                             @endif
 
                             @if ($canDelete)
-                                <button
+                                <x-lazy-btn
+                                    ghost
                                     type="submit"
                                     form="delete-seo-redirect-{{ $redirect->getKey() }}"
-                                    class="btn btn-ghost text-error"
+                                    class="text-error"
                                     title="{{ __('Delete') }}"
-                                >
-                                    ×
-                                </button>
+                                >×</x-lazy-btn>
                             @endif
                         </div>
 
                         <div class="flex flex-wrap items-center gap-x-5 gap-y-2 xl:col-span-4">
                             <label class="label gap-3">
-                                <input
-                                    type="checkbox"
+                                <x-lazy-checkbox
+                                    primary
+                                    sm
                                     name="enabled"
                                     value="1"
-                                    class="checkbox checkbox-primary checkbox-sm"
-                                    @checked($redirect->enabled)
-                                    @disabled(! $canEdit)
+                                    :checked="(bool) $redirect->enabled"
+                                    :disabled="! $canEdit"
                                 />
                                 <span class="label-text">{{ __('Enabled') }}</span>
                             </label>
 
                             <label class="label gap-3">
-                                <input
-                                    type="checkbox"
+                                <x-lazy-checkbox
+                                    primary
+                                    sm
                                     name="is_regex"
                                     value="1"
-                                    class="checkbox checkbox-primary checkbox-sm"
-                                    @checked($redirect->is_regex)
-                                    @disabled(! $canEdit)
+                                    :checked="(bool) $redirect->is_regex"
+                                    :disabled="! $canEdit"
                                 />
                                 <span class="label-text">{{ __('Regex') }}</span>
                             </label>
