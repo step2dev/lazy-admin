@@ -60,37 +60,35 @@ class AccessController extends Controller
                 'href' => route($routePrefix.'.access.index', ['role' => $role->getRouteKey()]),
                 'active' => $active,
                 'superAdmin' => $role->name === $superAdminRole,
-                'classes' => implode(' ', array_filter([
-                    'block rounded-2xl border px-5 py-4 transition duration-150',
+                'classes' => 'block rounded-2xl border px-5 py-4 transition duration-150 '.(
                     $active
                         ? 'border-primary bg-base-100 shadow-sm ring-1 ring-primary/20'
-                        : 'border-base-300 bg-base-200/40 hover:border-base-content/25 hover:bg-base-200/70',
-                ])),
+                        : 'border-base-300 bg-base-200/40 hover:border-base-content/25 hover:bg-base-200/70'
+                ),
             ];
         });
 
-        $permissionGroups = $permissions
-            ->groupBy(static fn ($permission): string => str_contains($permission->name, '.')
+        $permissionGroups = [];
+
+        foreach ($permissions as $permission) {
+            $group = str_contains($permission->name, '.')
                 ? str($permission->name)->before('.')->headline()->toString()
-                : __('Other'))
-            ->map(function ($group) use ($selectedRole, $selectedIsSuperAdmin, $permissionsEditable) {
-                return $group->map(function ($permission) use ($selectedRole, $selectedIsSuperAdmin, $permissionsEditable): array {
-                    return [
-                        'permission' => $permission,
-                        'label' => str_contains($permission->name, '.')
-                            ? str($permission->name)->after('.')->replace('.', ' · ')->toString()
-                            : $permission->name,
-                        'checked' => $selectedIsSuperAdmin
-                            || ($selectedRole && $selectedRole->hasPermissionTo($permission)),
-                        'classes' => implode(' ', array_filter([
-                            'flex min-h-20 items-center gap-4 rounded-2xl border p-4 transition',
-                            $permissionsEditable
-                                ? 'cursor-pointer border-base-300 bg-base-200/20 hover:border-primary/40'
-                                : 'cursor-default border-base-300 bg-base-200/10 opacity-75',
-                        ])),
-                    ];
-                });
-            });
+                : __('Other');
+
+            $permissionGroups[$group][] = [
+                'permission' => $permission,
+                'label' => str_contains($permission->name, '.')
+                    ? str($permission->name)->after('.')->replace('.', ' · ')->toString()
+                    : $permission->name,
+                'checked' => $selectedIsSuperAdmin
+                    || ($selectedRole && $selectedRole->hasPermissionTo($permission)),
+                'classes' => 'flex min-h-20 items-center gap-4 rounded-2xl border p-4 transition '.(
+                    $permissionsEditable
+                        ? 'cursor-pointer border-base-300 bg-base-200/20 hover:border-primary/40'
+                        : 'cursor-default border-base-300 bg-base-200/10 opacity-75'
+                ),
+            ];
+        }
 
         return lazyView('lazy::access.index', [
             'roles' => $roles,
