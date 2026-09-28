@@ -7,6 +7,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
 use Spatie\Activitylog\Models\Activity;
@@ -45,6 +46,7 @@ use Step2dev\LazyAdmin\Integrations\SeoRedirectsIntegration;
 use Step2dev\LazyAdmin\Localization\Contracts\LocalizationInterface;
 use Step2dev\LazyAdmin\Localization\LocalizationManager;
 use Step2dev\LazyAdmin\Middleware\LazyAdminMiddleware;
+use Step2dev\LazyAdmin\Navigation\MenuItemPresenter;
 use Step2dev\LazyAdmin\Notifications\NotificationCenter;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2dev\LazyAdmin\Search\SearchRegistry;
@@ -151,6 +153,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         $this->app->singleton(DashboardRegistry::class);
         $this->app->singleton(SearchRegistry::class);
         $this->app->singleton(NotificationCenter::class);
+        $this->app->singleton(MenuItemPresenter::class);
 
         if (SeoRedirectsIntegration::available()) {
             $this->registerSeoRedirectPermissions();
@@ -172,6 +175,11 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        View::composer('lazy::menu-generator', static function ($view): void {
+            $items = $view->getData()['menuItems'] ?? [];
+            $view->with('menuItems', app(MenuItemPresenter::class)->presentMany($items));
+        });
+
         Livewire::addPersistentMiddleware([LazyAdminMiddleware::class]);
 
         Livewire::component('settings.setting', Setting::class);
