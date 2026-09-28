@@ -205,7 +205,6 @@ it('does not depend on application-specific logo or avatar files', function (): 
         ->and($header)->toContain('aria-label="{{ __(\'Lazy Admin\') }}"');
 });
 
-
 it('prefers the saved admin logo over config fallback', function (): void {
     $source = file_get_contents(dirname(__DIR__, 2).'/src/LazyAdminServiceProvider.php');
 
