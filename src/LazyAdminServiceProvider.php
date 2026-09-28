@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
 use Spatie\Activitylog\Models\Activity;
@@ -51,6 +53,7 @@ use Step2dev\LazyAdmin\Notifications\NotificationCenter;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2dev\LazyAdmin\Search\SearchRegistry;
 use Step2dev\LazyAdmin\Settings\SettingsRegistry;
+use Step2Dev\LazyBreadcrumb\Breadcrumbs;
 use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
 use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
 use Step2dev\LazyMenu\LazyMenuServiceProvider;
@@ -202,11 +205,11 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        \Illuminate\Support\Facades\View::composer('lazy::breadcrumb-trail', static function ($view): void {
+        View::composer('lazy::breadcrumb-trail', static function ($view): void {
             $data = $view->getData();
-            $items = $data['items'] ?? \Step2Dev\LazyBreadcrumb\Breadcrumbs::generate(
-                \Illuminate\Support\Facades\Route::current()?->getName(),
-                \Illuminate\Support\Facades\Route::current()?->parameters() ?? [],
+            $items = $data['items'] ?? Breadcrumbs::generate(
+                Route::current()?->getName(),
+                Route::current()?->parameters() ?? [],
             );
 
             $view->with('breadcrumbItems', collect($items ?? [])->map(static fn (array $item): array => [
