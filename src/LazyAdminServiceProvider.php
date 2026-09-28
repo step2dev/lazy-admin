@@ -212,7 +212,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 Route::current()?->parameters() ?? [],
             );
 
-            $view->with('breadcrumbItems', collect($items ?? [])->map(static fn (array $item): array => [
+            $view->with('breadcrumbItems', collect($items)->map(static fn (array $item): array => [
                 'label' => $item['title'] ?? $item['label'] ?? '',
                 'href' => $item['url'] ?? $item['route'] ?? null,
             ])->all());
