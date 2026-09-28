@@ -63,7 +63,6 @@ it('keeps second-wave migrated views on Lazy UI controls', function (): void {
         'seo/redirects/index.blade.php',
         'pages/users/table.blade.php',
         'pages/partials/form.blade.php',
-        'language-switcher.blade.php',
         'menu-label.blade.php',
     ];
 
