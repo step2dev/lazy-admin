@@ -3,18 +3,9 @@
 
 @if ($items)
     <nav aria-label="{{ __('Breadcrumb') }}">
-        <x-lazy-breadcrumbs class="breadcrumbs text-sm">
-            <ul>
-                @foreach ($items as $item)
-                    <li>
-                        @if ($loop->last)
-                            <span aria-current="page">{{ $item['title'] }}</span>
-                        @else
-                            <a href="{{ $item['url'] }}">{{ $item['title'] }}</a>
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
-        </x-lazy-breadcrumbs>
+        <x-lazy-breadcrumbs :items="collect($items)->map(fn (array $item) => [
+            'label' => $item['title'],
+            'href' => $item['url'],
+        ])->all()" />
     </nav>
 @endif
