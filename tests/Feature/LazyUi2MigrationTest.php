@@ -213,3 +213,25 @@ it('prefers the saved admin logo over config fallback', function (): void {
         ->toContain("Storage::disk('public')->url($stored)")
         ->toContain("config('lazy.admin.logo')");
 });
+
+
+it('does not render placeholder badges for menu items without a badge', function (): void {
+    $html = $this
+        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Dashboard\', \'badge\' => null]" />')
+        ->content();
+
+    expect($html)
+        ->toContain('Dashboard')
+        ->not->toContain('badge-accent');
+});
+
+it('still renders real menu badges', function (): void {
+    $html = $this
+        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Inbox\', \'badge\' => 7]" />')
+        ->content();
+
+    expect($html)
+        ->toContain('Inbox')
+        ->toContain('badge-accent')
+        ->toContain('7');
+});
