@@ -14,7 +14,8 @@
             x-bind:class="sidebarCompact
                 ? 'badge-xs absolute -right-3 -top-2 px-1'
                 : 'hidden'"
-        >{{ $badge }}</x-lazy-badge>
+            :label="$badge"
+        />
     @endif
 </span>
 
@@ -32,5 +33,6 @@
         class="ml-auto"
         x-show="! sidebarCompact"
         x-transition.opacity
-    >{{ $badge }}</x-lazy-badge>
+        :label="$badge"
+    />
 @endif
