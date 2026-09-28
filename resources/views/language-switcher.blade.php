@@ -5,10 +5,10 @@
         class="z-[9999]"
         width="w-56"
         :content-defaults="false"
-        content-class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 max-h-96 overflow-y-auto shadow-2xl"
+        content-class="bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 max-h-96 overflow-y-auto shadow-2xl"
     >
         <x-slot:trigger>
-            <x-lazy-btn type="button" ghost class="gap-1 normal-case">
+            <x-lazy-btn type="button" ghost tabindex="0" class="gap-1 normal-case">
                 <svg class="inline-block h-4 w-4 fill-current md:h-5 md:w-5" xmlns="http://www.w3.org/2000/svg" width="20"
                      height="20" viewBox="0 0 512 512">
                     <path d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"></path>
