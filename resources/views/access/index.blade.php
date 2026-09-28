@@ -33,9 +33,7 @@
         </div>
 
         @if (session('status'))
-            <div class="alert alert-success shadow-sm">
-                {{ session('status') }}
-            </div>
+            <x-lazy-alert success class="shadow-sm" :message="session('status')" />
         @endif
 
         <div @class([
@@ -58,19 +56,19 @@
                             >
                                 @csrf
 
-                                <input
+                                <x-lazy-input
                                     type="text"
                                     name="name"
-                                    value="{{ old('name') }}"
-                                    class="input input-bordered min-w-0 flex-1"
+                                    :value="old('name')"
+                                    class="min-w-0 flex-1"
                                     placeholder="support-moderator"
                                     required
                                 />
 
-                                <button type="submit" class="btn btn-primary shrink-0">
+                                <x-lazy-btn primary type="submit" class="shrink-0">
                                     <span class="text-lg leading-none">＋</span>
                                     {{ __('Create') }}
-                                </button>
+                                </x-lazy-btn>
                             </form>
                         </section>
                     @endif
@@ -108,9 +106,7 @@
                                         </div>
 
                                         @if ($isSuperAdmin)
-                                            <span class="badge badge-warning badge-outline shrink-0">
-                                                {{ __('locked') }}
-                                            </span>
+                                            <x-lazy-badge warning outline class="shrink-0" :label="__('locked')" />
                                         @endif
                                     </div>
                                 </a>
@@ -159,11 +155,12 @@
                                     @if ($canEditRoles && ! $selectedIsSuperAdmin)
                                         <label class="form-control w-full max-w-sm">
                                             <span class="label-text mb-1 text-xs opacity-55">{{ __('Role name') }}</span>
-                                            <input
+                                            <x-lazy-input
                                                 type="text"
                                                 name="name"
-                                                value="{{ old('name', $selectedRole->name) }}"
-                                                class="input input-bordered input-sm text-lg font-semibold"
+                                                :value="old('name', $selectedRole->name)"
+                                                sm
+                                                class="text-lg font-semibold"
                                                 required
                                             />
                                         </label>
@@ -173,9 +170,7 @@
                                     @endif
 
                                     @if ($selectedIsSuperAdmin)
-                                        <span class="badge badge-warning badge-outline">
-                                            {{ __('locked') }}
-                                        </span>
+                                        <x-lazy-badge warning outline :label="__('locked')" />
                                     @endif
                                 </div>
 
@@ -190,19 +185,20 @@
 
                             <div class="flex flex-wrap gap-2">
                                 @if ($canDeleteRoles && ! $selectedIsSuperAdmin)
-                                    <button
+                                    <x-lazy-btn
+                                        ghost
+                                        sm
                                         type="submit"
                                         form="delete-selected-role"
-                                        class="btn btn-ghost btn-sm text-error"
-                                    >
-                                        {{ __('Delete role') }}
-                                    </button>
+                                        class="text-error"
+                                        :label="__('Delete role')"
+                                    />
                                 @endif
 
                                 @if ($canEditRoles && ! $selectedIsSuperAdmin)
-                                    <button type="submit" class="btn btn-primary min-w-28">
+                                    <x-lazy-btn primary type="submit" class="min-w-28">
                                         ✓ {{ __('Save') }}
-                                    </button>
+                                    </x-lazy-btn>
                                 @endif
                             </div>
                         </div>
