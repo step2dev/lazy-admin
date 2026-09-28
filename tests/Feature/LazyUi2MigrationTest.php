@@ -55,3 +55,28 @@ it('keeps migrated admin views off manual component classes', function (): void 
             ->not->toMatch('/class="[^"]*\bbadge(?:-|\s)/');
     }
 });
+
+
+it('keeps second-wave migrated views on Lazy UI controls', function (): void {
+    $root = dirname(__DIR__, 2).'/resources/views';
+
+    $views = [
+        'seo/redirects/index.blade.php',
+        'pages/users/table.blade.php',
+        'pages/partials/form.blade.php',
+        'language-switcher.blade.php',
+        'menu-label.blade.php',
+    ];
+
+    foreach ($views as $view) {
+        $source = file_get_contents($root.'/'.$view);
+
+        expect($source)
+            ->not->toMatch('/class="[^"]*\\bbtn(?:-|\\s)/')
+            ->not->toMatch('/class="[^"]*\\binput(?:-|\\s)/')
+            ->not->toMatch('/class="[^"]*\\bselect(?:-|\\s)/')
+            ->not->toMatch('/class="[^"]*\\bcheckbox(?:-|\\s)/')
+            ->not->toMatch('/class="[^"]*\\bbadge(?:-|\\s)/')
+            ->not->toMatch('/class="[^"]*\\balert(?:-|\\s)/');
+    }
+});
