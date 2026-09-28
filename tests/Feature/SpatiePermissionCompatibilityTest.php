@@ -20,4 +20,3 @@ it('supports Spatie permission 7 and 8 without changing the admin authorization 
         ->and(app(AuthorizationManager::class)->roleModel())->toBe(Role::class)
         ->and(app(AuthorizationManager::class)->permissionModel())->toBe(Permission::class);
 });
-
