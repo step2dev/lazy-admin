@@ -1,5 +1,5 @@
 <footer
-    class="footer bg-base-200 items-center p-4">
+    class="footer sm:footer-horizontal bg-base-200 items-center p-4">
     <div class="grid-flow-col items-center">
         <a href="{{ $companyUrl }}">{{ $companyName }}</a> &copy; {{ date('Y') }}
     </div>
