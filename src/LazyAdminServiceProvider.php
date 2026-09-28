@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
 use Spatie\Activitylog\Models\Activity;
@@ -23,6 +25,8 @@ use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
+use Step2dev\LazyAdmin\Components\MenuItem;
+use Step2dev\LazyAdmin\Components\MenuLabel;
 use Step2dev\LazyAdmin\Components\Table as AdminTable;
 use Step2dev\LazyAdmin\Controllers\AccessController;
 use Step2dev\LazyAdmin\Controllers\PageController;
@@ -49,6 +53,7 @@ use Step2dev\LazyAdmin\Notifications\NotificationCenter;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2dev\LazyAdmin\Search\SearchRegistry;
 use Step2dev\LazyAdmin\Settings\SettingsRegistry;
+use Step2Dev\LazyBreadcrumb\Breadcrumbs;
 use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
 use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
 use Step2dev\LazyMenu\LazyMenuServiceProvider;
@@ -128,7 +133,9 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 BaseLayout::class,
                 EmptyState::class,
                 AdminTable::class,
-                LanguageSwitcher::class
+                LanguageSwitcher::class,
+                MenuItem::class,
+                MenuLabel::class
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
             ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')
@@ -198,6 +205,37 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        View::composer('lazy::header', static function ($view): void {
+            $guard = (string) config('lazy.auth.guard', 'web');
+            $user = Auth::guard($guard)->user();
+
+            $view->with([
+                'user' => $user,
+                'dashboardUrl' => Route::has('admin.dashboard')
+                    ? route('admin.dashboard')
+                    : url((string) config('lazy.admin.home', '/')),
+                'profileUrl' => Route::has('profile.show') ? route('profile.show') : null,
+                'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
+                'avatarUrl' => $user
+                    ? (data_get($user, 'avatar') ?: config('lazy.admin.avatar', '/img/admin.png'))
+                    : null,
+                'workerType' => $user ? data_get($user, 'worker_type') : null,
+            ]);
+        });
+
+        View::composer('lazy::breadcrumb-trail', static function ($view): void {
+            $data = $view->getData();
+            $items = $data['items'] ?? Breadcrumbs::generate(
+                Route::current()?->getName(),
+                Route::current()?->parameters() ?? [],
+            );
+
+            $view->with('breadcrumbItems', collect($items)->map(static fn (array $item): array => [
+                'label' => $item['title'] ?? $item['label'] ?? '',
+                'href' => $item['url'] ?? $item['route'] ?? null,
+            ])->all());
+        });
+
         /** @var Router $router */
         $router = $this->app['router'];
         $router->mixin(new AdminRouter);

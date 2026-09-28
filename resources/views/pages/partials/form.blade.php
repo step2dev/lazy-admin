@@ -39,24 +39,22 @@
             </div>
 
             <div class="p-4">
-                @foreach ($locales as $locale)
-                    @php($translation = $page->translate($locale))
-
+                @foreach ($translationItems as $translationItem)
                     <div
-                        x-show="locale === '{{ $locale }}'"
+                        x-show="locale === '{{ $translationItem['locale'] }}'"
                         x-cloak
                         class="space-y-4"
-                        data-lazy-page-locale-panel="{{ $locale }}"
+                        data-lazy-page-locale-panel="{{ $translationItem['locale'] }}"
                     >
                         <label class="form-control">
-                            <span class="label-text mb-1 text-sm">{{ __('Title') }} ({{ strtoupper($locale) }})</span>
+                            <span class="label-text mb-1 text-sm">{{ __('Title') }} ({{ strtoupper($translationItem['locale']) }})</span>
                             <x-lazy-input
                                 sm
-                                name="translations[{{ $locale }}][title]"
-                                :value="old("translations.$locale.title", $translation?->title)"
-                                :color="$errors->has("translations.$locale.title") ? 'error' : ''"
+                                name="translations[{{ $translationItem['locale'] }}][title]"
+                                :value="old('translations.'.$translationItem['locale'].'.title', $translationItem['translation']?->title)"
+                                :color="$errors->has('translations.'.$translationItem['locale'].'.title') ? 'error' : ''"
                             />
-                            @error("translations.$locale.title")
+                            @error('translations.'.$translationItem['locale'].'.title')
                                 <span class="mt-1 text-xs text-error">{{ $message }}</span>
                             @enderror
                         </label>
@@ -65,24 +63,24 @@
                             <span class="label-text mb-1 text-sm">{{ __('Description') }}</span>
                             <x-lazy-textarea
                                 rows="4"
-                                id="lazy-page-description-{{ $locale }}"
-                                name="translations[{{ $locale }}][description]"
+                                id="lazy-page-description-{{ $translationItem['locale'] }}"
+                                name="translations[{{ $translationItem['locale'] }}][description]"
                                 data-lazy-page-editor="description"
-                                data-locale="{{ $locale }}"
+                                data-locale="{{ $translationItem['locale'] }}"
                                 class="min-h-24"
-                            >{{ old("translations.$locale.description", $translation?->description) }}</x-lazy-textarea>
+                            >{{ old('translations.'.$translationItem['locale'].'.description', $translationItem['translation']?->description) }}</x-lazy-textarea>
                         </label>
 
                         <label class="form-control">
                             <span class="label-text mb-1 text-sm">{{ __('Content') }}</span>
                             <x-lazy-textarea
                                 rows="22"
-                                id="lazy-page-content-{{ $locale }}"
-                                name="translations[{{ $locale }}][content]"
+                                id="lazy-page-content-{{ $translationItem['locale'] }}"
+                                name="translations[{{ $translationItem['locale'] }}][content]"
                                 data-lazy-page-editor="content"
-                                data-locale="{{ $locale }}"
+                                data-locale="{{ $translationItem['locale'] }}"
                                 class="min-h-[28rem] font-mono"
-                            >{{ old("translations.$locale.content", $translation?->content) }}</x-lazy-textarea>
+                            >{{ old('translations.'.$translationItem['locale'].'.content', $translationItem['translation']?->content) }}</x-lazy-textarea>
                         </label>
                     </div>
                 @endforeach

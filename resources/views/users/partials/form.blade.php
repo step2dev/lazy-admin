@@ -60,8 +60,6 @@
     </label>
 
     @if ($roles !== [])
-        @php($selectedRoles = old('roles', $user->exists && method_exists($user, 'roles') ? $user->roles()->pluck('name')->all() : []))
-
         <fieldset>
             <legend class="mb-2 font-medium">{{ __('Roles') }}</legend>
 
@@ -71,7 +69,7 @@
                         <x-lazy-checkbox
                             name="roles[]"
                             :value="$role"
-                            :checked="in_array($role, $selectedRoles, true)"
+                            :checked="in_array($role, old('roles', $selectedRoles), true)"
                         />
                         <span>{{ $role }}</span>
                     </label>

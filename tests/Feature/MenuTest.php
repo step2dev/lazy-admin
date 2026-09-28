@@ -55,8 +55,10 @@ it('builds the step2dev menu lazily once and filters permissions', function (): 
     expect($html)->toContain('href="http://localhost/admin"')
         ->toContain('href="http://localhost/admin/posts"')
         ->toContain('href="http://localhost/admin/categories/7"')
-        ->toContain('Dashboard', 'Nested', 'Posts', 'Category', '>5</span>', 'x-data="{ open:', '<svg viewBox=')
-        ->not->toContain('Restricted', '>99</span>');
+        ->toContain('Dashboard', 'Nested', 'Posts', 'Category', 'x-data="{ open:', '<svg viewBox=')
+        ->toMatch('/<span[^>]*badge[^>]*>\s*5\s*<\/span>/')
+        ->not->toContain('Restricted')
+        ->not->toMatch('/<span[^>]*badge[^>]*>\s*99\s*<\/span>/');
     expect(substr_count($html, '<svg viewBox='))->toBe(3);
 });
 

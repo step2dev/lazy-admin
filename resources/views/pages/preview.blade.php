@@ -12,15 +12,14 @@
             />
         </div>
 
-        @foreach ($locales as $locale)
-            @php($translation = $page->translate($locale))
+        @foreach ($translationItems as $translationItem)
             <section class="rounded-box border border-base-300 p-6">
-                <x-lazy-badge outline class="mb-4">{{ strtoupper($locale) }}</x-lazy-badge>
-                <h2 class="text-3xl font-semibold">{{ $translation?->title ?: __('Untitled') }}</h2>
-                @if ($translation?->description)
-                    <p class="mt-3 opacity-70">{{ $translation->description }}</p>
+                <x-lazy-badge outline class="mb-4">{{ strtoupper($translationItem['locale']) }}</x-lazy-badge>
+                <h2 class="text-3xl font-semibold">{{ $translationItem['translation']?->title ?: __('Untitled') }}</h2>
+                @if ($translationItem['translation']?->description)
+                    <p class="mt-3 opacity-70">{{ $translationItem['translation']->description }}</p>
                 @endif
-                <div class="prose mt-6 max-w-none">{!! $translation?->content !!}</div>
+                <div class="prose mt-6 max-w-none">{!! $translationItem['translation']?->content !!}</div>
             </section>
         @endforeach
     </div>

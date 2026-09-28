@@ -1,30 +1,5 @@
 <x-lazy-layout>
-    @php
-        $routePrefix = trim(config('lazy.admin.route.name', 'admin.'), '.');
-        $superAdminRole = (string) config('lazy.admin.permissions.super_admin_role', 'superadmin');
-        $enforcePermissions = (bool) config('lazy.admin.permissions.enforce', true);
-        $user = auth()->user();
-
-        $canViewRoles = ! $enforcePermissions || $user?->can('roles.view');
-        $canCreateRoles = ! $enforcePermissions || $user?->can('roles.create');
-        $canEditRoles = ! $enforcePermissions || $user?->can('roles.edit');
-        $canDeleteRoles = ! $enforcePermissions || $user?->can('roles.delete');
-
-        $canViewPermissions = ! $enforcePermissions || $user?->can('permissions.view');
-        $canCreatePermissions = ! $enforcePermissions || $user?->can('permissions.create');
-        $canEditPermissions = ! $enforcePermissions || $user?->can('permissions.edit');
-        $canDeletePermissions = ! $enforcePermissions || $user?->can('permissions.delete');
-
-        $selectedIsSuperAdmin = $selectedRole?->name === $superAdminRole;
-
-        $permissionGroups = $permissions->groupBy(
-            static fn ($permission) => str_contains($permission->name, '.')
-                ? str($permission->name)->before('.')->headline()->toString()
-                : __('Other')
-        );
-    @endphp
-
-    <div class="mx-auto max-w-[1500px] space-y-6">
+<div class="mx-auto max-w-[1500px] space-y-6">
         <div class="flex flex-col gap-2">
             <h1 class="text-2xl font-semibold">{{ __('Access') }}</h1>
             <p class="text-sm opacity-60">
@@ -36,11 +11,7 @@
             <x-lazy-alert success class="shadow-sm" :message="session('status')" />
         @endif
 
-        <div @class([
-            'grid gap-8',
-            'xl:grid-cols-[380px_minmax(0,1fr)]' => $canViewRoles,
-            'grid-cols-1' => ! $canViewRoles,
-        ])>
+        <div class="{{ $layoutClass }}">
             @if ($canViewRoles)
                 <aside class="space-y-6">
                     @if ($canCreateRoles)
@@ -79,33 +50,23 @@
                         </div>
 
                         <div class="space-y-3">
-                            @forelse ($roles as $role)
-                                @php
-                                    $isActiveRole = $selectedRole
-                                        && (string) $selectedRole->getRouteKey() === (string) $role->getRouteKey();
-                                    $isSuperAdmin = $role->name === $superAdminRole;
-                                @endphp
-
+                            @forelse ($roleItems as $roleItem)
                                 <a
-                                    href="{{ route($routePrefix.'.access.index', ['role' => $role->getRouteKey()]) }}"
-                                    @class([
-                                        'block rounded-2xl border px-5 py-4 transition duration-150',
-                                        'border-primary bg-base-100 shadow-sm ring-1 ring-primary/20' => $isActiveRole,
-                                        'border-base-300 bg-base-200/40 hover:border-base-content/25 hover:bg-base-200/70' => ! $isActiveRole,
-                                    ])
+                                    href="{{ $roleItem['href'] }}"
+                                    class="{{ $roleItem['classes'] }}"
                                 >
                                     <div class="flex items-center justify-between gap-3">
                                         <div class="min-w-0">
                                             <div class="truncate text-lg font-semibold">
-                                                {{ $role->name }}
+                                                {{ $roleItem['role']->name }}
                                             </div>
 
                                             <div class="mt-1 text-sm opacity-55">
-                                                {{ __('guard: :guard', ['guard' => $role->guard_name]) }}
+                                                {{ __('guard: :guard', ['guard' => $roleItem['role']->guard_name]) }}
                                             </div>
                                         </div>
 
-                                        @if ($isSuperAdmin)
+                                        @if ($roleItem['superAdmin'])
                                             <x-lazy-badge warning outline class="shrink-0" :label="__('locked')" />
                                         @endif
                                     </div>
@@ -209,40 +170,28 @@
                                     <div class="mb-5">
                                         <h3 class="text-lg font-semibold">{{ $group }}</h3>
                                         <div class="text-sm opacity-50">
-                                            {{ trans_choice(':count permission|:count permissions', $groupPermissions->count(), ['count' => $groupPermissions->count()]) }}
+                                            {{ trans_choice(':count permission|:count permissions', count($groupPermissions), ['count' => count($groupPermissions)]) }}
                                         </div>
                                     </div>
 
                                     <div class="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
-                                        @foreach ($groupPermissions as $permission)
-                                            @php
-                                                $permissionName = str_contains($permission->name, '.')
-                                                    ? str($permission->name)->after('.')->replace('.', ' · ')->toString()
-                                                    : $permission->name;
-                                                $permissionChecked = $selectedIsSuperAdmin
-                                                    || $selectedRole->hasPermissionTo($permission);
-                                            @endphp
-
-                                            <label @class([
-                                                'flex min-h-20 items-center gap-4 rounded-2xl border p-4 transition',
-                                                'cursor-pointer border-base-300 bg-base-200/20 hover:border-primary/40' => $canEditRoles && ! $selectedIsSuperAdmin,
-                                                'cursor-default border-base-300 bg-base-200/10 opacity-75' => ! $canEditRoles || $selectedIsSuperAdmin,
-                                            ])>
+                                        @foreach ($groupPermissions as $permissionItem)
+                                            <label class="{{ $permissionItem['classes'] }}">
                                                 <x-lazy-checkbox
                                                     primary
                                                     sm
                                                     name="permissions[]"
-                                                    :value="$permission->name"
-                                                    :checked="$permissionChecked"
-                                                    :disabled="! $canEditRoles || $selectedIsSuperAdmin"
+                                                    :value="$permissionItem['permission']->name"
+                                                    :checked="$permissionItem['checked']"
+                                                    :disabled="! $permissionsEditable"
                                                 />
 
                                                 <span class="min-w-0">
                                                     <span class="block break-words font-medium">
-                                                        {{ $permissionName }}
+                                                        {{ $permissionItem['label'] }}
                                                     </span>
                                                     <span class="mt-1 block text-xs opacity-45">
-                                                        {{ $permission->name }}
+                                                        {{ $permissionItem['permission']->name }}
                                                     </span>
                                                 </span>
                                             </label>
@@ -271,15 +220,17 @@
                 @endif
 
                 @if ($canViewPermissions)
-                    <details class="collapse collapse-arrow rounded-3xl border border-base-300 bg-base-100/40">
-                        <summary class="collapse-title text-lg font-semibold">
+                    <x-lazy-collapse
+                        class="rounded-3xl border border-base-300 bg-base-100/40"
+                        summary-class="text-lg font-semibold"
+                        content-class="space-y-5"
+                    >
+                        <x-slot:summary>
                             {{ __('Permission catalog') }}
                             <span class="ml-2 text-sm font-normal opacity-50">
                                 {{ __(':count total', ['count' => $permissions->count()]) }}
                             </span>
-                        </summary>
-
-                        <div class="collapse-content space-y-5">
+                        </x-slot:summary>
                             <p class="text-sm opacity-60">
                                 {{ __('Create, rename or remove reusable permissions. Role assignments are managed above.') }}
                             </p>
@@ -360,8 +311,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                        </div>
-                    </details>
+                    </x-lazy-collapse>
                 @endif
             </main>
         </div>

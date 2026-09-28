@@ -37,6 +37,10 @@ class SeoRedirectController extends Controller
             'redirects' => $redirects,
             'search' => $search,
             'allowedStatusCodes' => $this->allowedStatusCodes(),
+            'routePrefix' => trim((string) config('lazy.admin.route.name', 'admin.'), '.'),
+            'canCreate' => $this->canAbility('seo_redirects.create'),
+            'canEdit' => $this->canAbility('seo_redirects.edit'),
+            'canDelete' => $this->canAbility('seo_redirects.delete'),
         ]);
     }
 
@@ -148,10 +152,15 @@ class SeoRedirectController extends Controller
 
     private function authorizeAbility(string $ability): void
     {
+        abort_unless($this->canAbility($ability), 403);
+    }
+
+    private function canAbility(string $ability): bool
+    {
         $user = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
         $enforce = (bool) config('lazy.admin.permissions.enforce', true);
 
-        abort_unless($user && (! $enforce || $user->can($ability)), 403);
+        return (bool) ($user && (! $enforce || $user->can($ability)));
     }
 
     private function redirectToIndex(string $status): RedirectResponse
