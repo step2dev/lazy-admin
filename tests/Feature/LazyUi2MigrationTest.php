@@ -214,7 +214,6 @@ it('prefers the saved admin logo over config fallback', function (): void {
         ->toContain("config('lazy.admin.logo')");
 });
 
-
 it('does not render placeholder badges for menu items without a badge', function (): void {
     $html = $this
         ->blade('<x-lazy-menu-label :item="[\'label\' => \'Dashboard\', \'badge\' => null]" />')
