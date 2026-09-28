@@ -170,7 +170,7 @@
                                     <div class="mb-5">
                                         <h3 class="text-lg font-semibold">{{ $group }}</h3>
                                         <div class="text-sm opacity-50">
-                                            {{ trans_choice(':count permission|:count permissions', $groupPermissions->count(), ['count' => $groupPermissions->count()]) }}
+                                            {{ trans_choice(':count permission|:count permissions', count($groupPermissions), ['count' => count($groupPermissions)]) }}
                                         </div>
                                     </div>
 
@@ -181,7 +181,7 @@
                                                     primary
                                                     sm
                                                     name="permissions[]"
-                                                    :value="$permissionItem['permission']->name"
+                                                    :value="$permission->name"
                                                     :checked="$permissionItem['checked']"
                                                     :disabled="! $permissionsEditable"
                                                 />
