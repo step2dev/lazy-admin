@@ -163,7 +163,7 @@
                 <div x-show="advanced" x-cloak class="space-y-3 border-t border-base-300 p-4">
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Stable key') }}</span>
-                        <input class="input input-bordered input-sm w-full @error('key') input-error @enderror" name="key" value="{{ old('key', $page->key) }}">
+                        <x-lazy-input sm name="key" :value="old('key', $page->key)" :color="$errors->has('key') ? 'error' : ''" />
                         @error('key')
                             <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
@@ -171,28 +171,28 @@
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Template') }}</span>
-                        <input class="input input-bordered input-sm w-full" name="template" value="{{ old('template', $page->template) }}">
+                        <x-lazy-input sm name="template" :value="old('template', $page->template)" />
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Publish at') }}</span>
-                        <input class="input input-bordered input-sm w-full" type="datetime-local" name="published_at" value="{{ old('published_at', $page->published_at?->format('Y-m-d\TH:i')) }}">
+                        <x-lazy-input sm type="datetime-local" name="published_at" :value="old('published_at', $page->published_at?->format('Y-m-d\TH:i'))" />
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Expire at') }}</span>
-                        <input class="input input-bordered input-sm w-full" type="datetime-local" name="expires_at" value="{{ old('expires_at', $page->expires_at?->format('Y-m-d\TH:i')) }}">
+                        <x-lazy-input sm type="datetime-local" name="expires_at" :value="old('expires_at', $page->expires_at?->format('Y-m-d\TH:i'))" />
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Position') }}</span>
-                        <input class="input input-bordered input-sm w-full" type="number" min="0" name="position" value="{{ old('position', $page->position ?? 0) }}">
+                        <x-lazy-input sm type="number" min="0" name="position" :value="old('position', $page->position ?? 0)" />
                     </label>
                 </div>
             </section>
 
             <section class="rounded-box border border-base-300 bg-base-100 p-4">
-                <button class="btn btn-primary btn-sm w-full" type="submit">{{ $submitLabel }}</button>
+                <x-lazy-btn primary sm block type="submit" :label="$submitLabel" />
             </section>
         </aside>
     </div>
