@@ -3,7 +3,9 @@
         @if (! config('lazy.admin.permissions.enforce', true) || auth(config('lazy.auth.guard', 'web'))->user()?->can('pages.preview'))
             <x-lazy-btn
                 :href="route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.preview', $page)"
-                outline info sm
+                outline
+                info
+                sm
                 :label="__('Preview')"
             />
         @endif
@@ -11,7 +13,7 @@
 
     <div class="mx-auto max-w-7xl">
         @if (session('status'))
-            <div class="alert alert-success mb-4">{{ session('status') }}</div>
+            <x-lazy-alert success class="mb-4" :message="session('status')" />
         @endif
 
         @include('lazy::pages.partials.form', [

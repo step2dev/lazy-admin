@@ -7,11 +7,11 @@
 
     <label class="form-control">
         <span class="label-text">{{ __('Name') }}</span>
-        <input
+        <x-lazy-input
             type="text"
             name="name"
-            value="{{ old('name', $user->name) }}"
-            class="input input-bordered @error('name') input-error @enderror"
+            :value="old('name', $user->name)"
+            :color="$errors->has('name') ? 'error' : ''"
             required
         />
         @error('name')
@@ -21,11 +21,11 @@
 
     <label class="form-control">
         <span class="label-text">{{ __('Email') }}</span>
-        <input
+        <x-lazy-input
             type="email"
             name="email"
-            value="{{ old('email', $user->email) }}"
-            class="input input-bordered @error('email') input-error @enderror"
+            :value="old('email', $user->email)"
+            :color="$errors->has('email') ? 'error' : ''"
             required
         />
         @error('email')
@@ -37,11 +37,11 @@
         <span class="label-text">
             {{ $user->exists ? __('New password') : __('Password') }}
         </span>
-        <input
+        <x-lazy-input
             type="password"
             name="password"
-            class="input input-bordered @error('password') input-error @enderror"
-            @unless($user->exists) required @endunless
+            :color="$errors->has('password') ? 'error' : ''"
+            :required="! $user->exists"
             autocomplete="new-password"
         />
         @error('password')
@@ -51,11 +51,10 @@
 
     <label class="form-control">
         <span class="label-text">{{ __('Confirm password') }}</span>
-        <input
+        <x-lazy-input
             type="password"
             name="password_confirmation"
-            class="input input-bordered"
-            @unless($user->exists) required @endunless
+            :required="! $user->exists"
             autocomplete="new-password"
         />
     </label>
@@ -69,12 +68,10 @@
             <div class="grid gap-2 sm:grid-cols-2">
                 @foreach ($roles as $role)
                     <label class="flex items-center gap-2">
-                        <input
-                            type="checkbox"
+                        <x-lazy-checkbox
                             name="roles[]"
-                            value="{{ $role }}"
-                            class="checkbox"
-                            @checked(in_array($role, $selectedRoles, true))
+                            :value="$role"
+                            :checked="in_array($role, $selectedRoles, true)"
                         />
                         <span>{{ $role }}</span>
                     </label>
@@ -88,6 +85,6 @@
     @endif
 
     <div class="flex justify-end">
-        <button type="submit" class="btn btn-primary">{{ $submitLabel }}</button>
+        <x-lazy-btn primary type="submit" :label="$submitLabel" />
     </div>
 </form>

@@ -2,13 +2,15 @@
     <div class="mx-auto max-w-3xl">
         <div class="mb-6 flex items-center justify-between">
             <h1 class="text-2xl font-semibold">{{ __('Edit user') }}</h1>
-            <a class="btn btn-ghost" href="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.index') }}">
-                {{ __('Back') }}
-            </a>
+            <x-lazy-btn
+                ghost
+                :href="route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.user.index')"
+                :label="__('Back')"
+            />
         </div>
 
         @if (session('status'))
-            <div class="alert alert-success mb-6">{{ session('status') }}</div>
+            <x-lazy-alert success class="mb-6" :message="session('status')" />
         @endif
 
         @include('lazy::users.partials.form', [
@@ -17,7 +19,7 @@
             'submitLabel' => __('Save changes'),
         ])
 
-        <div class="divider my-8"></div>
+        <x-lazy-divider class="my-8" />
 
         <div class="rounded-box border border-error/30 p-6">
             <h2 class="text-lg font-semibold text-error">{{ __('Delete user') }}</h2>
@@ -30,7 +32,7 @@
                 @csrf
                 @method('DELETE')
 
-                <button type="submit" class="btn btn-error">{{ __('Delete user') }}</button>
+                <x-lazy-btn error type="submit" :label="__('Delete user')" />
             </form>
         </div>
     </div>
