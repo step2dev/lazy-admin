@@ -23,6 +23,8 @@ use Step2dev\LazyAdmin\Components\Footer;
 use Step2dev\LazyAdmin\Components\Header;
 use Step2dev\LazyAdmin\Components\LanguageSwitcher;
 use Step2dev\LazyAdmin\Components\Layout;
+use Step2dev\LazyAdmin\Components\MenuItem;
+use Step2dev\LazyAdmin\Components\MenuLabel;
 use Step2dev\LazyAdmin\Components\Table as AdminTable;
 use Step2dev\LazyAdmin\Controllers\AccessController;
 use Step2dev\LazyAdmin\Controllers\PageController;
@@ -128,7 +130,9 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 BaseLayout::class,
                 EmptyState::class,
                 AdminTable::class,
-                LanguageSwitcher::class
+                LanguageSwitcher::class,
+                MenuItem::class,
+                MenuLabel::class
             )
             ->sharesDataWithAllViews('companyName', 'Step2Dev')
             ->sharesDataWithAllViews('companyUrl', 'https://step2.dev')
