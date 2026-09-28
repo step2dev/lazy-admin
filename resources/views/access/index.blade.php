@@ -228,13 +228,13 @@
                                                 'cursor-pointer border-base-300 bg-base-200/20 hover:border-primary/40' => $canEditRoles && ! $selectedIsSuperAdmin,
                                                 'cursor-default border-base-300 bg-base-200/10 opacity-75' => ! $canEditRoles || $selectedIsSuperAdmin,
                                             ])>
-                                                <input
-                                                    type="checkbox"
+                                                <x-lazy-checkbox
+                                                    primary
+                                                    sm
                                                     name="permissions[]"
-                                                    value="{{ $permission->name }}"
-                                                    class="checkbox checkbox-primary checkbox-sm"
-                                                    @checked($permissionChecked)
-                                                    @disabled(! $canEditRoles || $selectedIsSuperAdmin)
+                                                    :value="$permission->name"
+                                                    :checked="$permissionChecked"
+                                                    :disabled="! $canEditRoles || $selectedIsSuperAdmin"
                                                 />
 
                                                 <span class="min-w-0">
@@ -292,17 +292,17 @@
                                 >
                                     @csrf
 
-                                    <input
+                                    <x-lazy-input
                                         type="text"
                                         name="name"
-                                        class="input input-bordered min-w-0 flex-1"
+                                        class="min-w-0 flex-1"
                                         placeholder="reports.view"
                                         required
                                     />
 
-                                    <button type="submit" class="btn btn-primary">
+                                    <x-lazy-btn primary type="submit">
                                         ＋ {{ __('Create permission') }}
-                                    </button>
+                                    </x-lazy-btn>
                                 </form>
                             @endif
 
@@ -318,17 +318,16 @@
                                             @method('PUT')
 
                                             @if ($canEditPermissions)
-                                                <input
+                                                <x-lazy-input
                                                     type="text"
                                                     name="name"
-                                                    value="{{ $permission->name }}"
-                                                    class="input input-bordered input-sm min-w-0 flex-1"
+                                                    :value="$permission->name"
+                                                    sm
+                                                    class="min-w-0 flex-1"
                                                     required
                                                 />
 
-                                                <button type="submit" class="btn btn-sm">
-                                                    {{ __('Save') }}
-                                                </button>
+                                                <x-lazy-btn sm type="submit" :label="__('Save')" />
                                             @else
                                                 <span class="min-w-0 flex-1 break-all font-medium">
                                                     {{ $permission->name }}
@@ -336,14 +335,14 @@
                                             @endif
 
                                             @if ($canDeletePermissions)
-                                                <button
+                                                <x-lazy-btn
+                                                    ghost
+                                                    sm
                                                     type="submit"
                                                     form="delete-permission-{{ $permission->getKey() }}"
-                                                    class="btn btn-ghost btn-sm text-error"
+                                                    class="text-error"
                                                     title="{{ __('Delete') }}"
-                                                >
-                                                    ×
-                                                </button>
+                                                >×</x-lazy-btn>
                                             @endif
                                         </form>
 
