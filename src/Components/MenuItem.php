@@ -44,6 +44,6 @@ class MenuItem extends Component
 
     public function render(): View
     {
-        return view('lazy::menu-item');
+        return lazyView('lazy::menu-item');
     }
 }
