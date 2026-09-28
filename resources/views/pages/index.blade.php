@@ -7,34 +7,35 @@
             </div>
 
             @if (!config('lazy.admin.permissions.enforce', true) || auth(config('lazy.auth.guard', 'web'))->user()?->can('pages.create'))
-                <a class="btn btn-primary" href="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.create') }}">
-                    {{ __('Create page') }}
-                </a>
+                <x-lazy-btn
+                    primary
+                    :href="route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.create')"
+                    :label="__('Create page')"
+                />
             @endif
         </div>
 
         @if (session('status'))
-            <div class="alert alert-success">{{ session('status') }}</div>
+            <x-lazy-alert success :message="session('status')" />
         @endif
 
         <form method="GET" class="grid gap-3 md:grid-cols-4">
-            <input class="input input-bordered" type="search" name="search" value="{{ request('search') }}" placeholder="{{ __('Search pages') }}">
+            <x-lazy-input type="search" name="search" :value="request('search')" :placeholder="__('Search pages')" />
 
-            <select class="select select-bordered" name="status">
-                <option value="">{{ __('All statuses') }}</option>
+            <x-lazy-select name="status" :placeholder="__('All statuses')">
                 @foreach ($statuses as $status)
                     <option value="{{ $status->value }}" @selected(request('status') === $status->value)>
                         {{ ucfirst($status->value) }}
                     </option>
                 @endforeach
-            </select>
+            </x-lazy-select>
 
             <label class="flex items-center gap-2">
-                <input class="checkbox" type="checkbox" name="trashed" value="1" @checked(request()->boolean('trashed'))>
+                <x-lazy-checkbox name="trashed" value="1" :checked="request()->boolean('trashed')" />
                 <span>{{ __('Trash') }}</span>
             </label>
 
-            <button class="btn btn-outline" type="submit">{{ __('Filter') }}</button>
+            <x-lazy-btn outline type="submit" :label="__('Filter')" />
         </form>
 
         <div class="overflow-x-auto rounded-box border border-base-300">
@@ -58,7 +59,7 @@
                                 @endif
                             </td>
                             <td><code>{{ $page->path() }}</code></td>
-                            <td><span class="badge badge-outline">{{ $page->status->value }}</span></td>
+                            <td><x-lazy-badge outline :label="$page->status->value" /></td>
                             <td>{{ $page->updated_at?->format('Y-m-d H:i') }}</td>
                             <td>
                                 <div class="flex justify-end gap-2">
@@ -66,19 +67,25 @@
                                         @if (!config('lazy.admin.permissions.enforce', true) || auth(config('lazy.auth.guard', 'web'))->user()?->can('pages.restore'))
                                             <form method="POST" action="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.restore', $page->id) }}">
                                                 @csrf
-                                                <button class="btn btn-sm btn-outline" type="submit">{{ __('Restore') }}</button>
+                                                <x-lazy-btn sm outline type="submit" :label="__('Restore')" />
                                             </form>
                                         @endif
                                     @else
                                         @if (!config('lazy.admin.permissions.enforce', true) || auth(config('lazy.auth.guard', 'web'))->user()?->can('pages.preview'))
-                                            <a class="btn btn-sm btn-ghost" href="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.preview', $page) }}">
-                                                {{ __('Preview') }}
-                                            </a>
+                                            <x-lazy-btn
+                                                sm
+                                                ghost
+                                                :href="route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.preview', $page)"
+                                                :label="__('Preview')"
+                                            />
                                         @endif
                                         @if (!config('lazy.admin.permissions.enforce', true) || auth(config('lazy.auth.guard', 'web'))->user()?->can('pages.edit'))
-                                            <a class="btn btn-sm btn-outline" href="{{ route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.edit', $page) }}">
-                                                {{ __('Edit') }}
-                                            </a>
+                                            <x-lazy-btn
+                                                sm
+                                                outline
+                                                :href="route(trim(config('lazy.admin.route.name', 'admin.'), '.').'.page.edit', $page)"
+                                                :label="__('Edit')"
+                                            />
                                         @endif
                                     @endif
                                 </div>
