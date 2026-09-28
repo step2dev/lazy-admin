@@ -7,7 +7,11 @@
     @else
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             @foreach($widgets as $widget)
-                <x-lazy-card :href="$widget['url']" :hover="(bool) $widget['url']">
+                <x-lazy-card
+                    :href="$widget['url']"
+                    :hover="(bool) $widget['url']"
+                    class="border border-base-300 bg-base-100 shadow-sm"
+                >
                     <span class="text-sm font-medium opacity-70">{{ $widget['label'] }}</span>
                     <strong class="text-3xl font-semibold">{{ $widget['value'] }}</strong>
                     @if($widget['description'])
