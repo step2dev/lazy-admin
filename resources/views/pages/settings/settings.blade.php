@@ -63,7 +63,7 @@
                     <span wire:loading wire:target="save" role="status">{{ __('Saving…') }}</span>
                 </x-lazy-btn>
             @else
-                <span class="badge badge-ghost">{{ __('Read only') }}</span>
+                <x-lazy-badge ghost :label="__('Read only')" />
             @endif
         </div>
     </footer>
