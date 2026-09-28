@@ -1,11 +1,27 @@
 <header class="navbar bg-base-200">
-    <div class="flex-auto items-center justify-start px-4">
-        <a href="{{ $dashboardUrl }}" class="flex items-center space-x-2">
-            <img
-                src="{{ config('lazy.admin.logo', '/main.svg') }}"
-                alt="{{ config('app.name') }}"
-                class="h-14"
-            />
+    <div class="flex flex-auto items-center justify-start px-4">
+        <a href="{{ $dashboardUrl }}" class="flex items-center space-x-2" aria-label="{{ config('app.name') }}">
+            @if($logoUrl)
+                <img
+                    src="{{ $logoUrl }}"
+                    alt="{{ config('app.name') }}"
+                    class="h-10 max-w-40 object-contain"
+                />
+            @else
+                <svg
+                    class="h-10 w-10 shrink-0"
+                    viewBox="0 0 48 48"
+                    role="img"
+                    aria-label="{{ __('Lazy Admin') }}"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <rect width="48" height="48" rx="12" class="fill-primary"></rect>
+                    <path
+                        d="M13 12h6v19h11v5H13V12Zm20 0h5l7 24h-6l-1.3-5h-7.4L29 36h-6l7-24h3Zm1 7.3L31.6 26h4.8L34 19.3Z"
+                        class="fill-primary-content"
+                    ></path>
+                </svg>
+            @endif
         </a>
 
         <x-lazy-swap
@@ -53,7 +69,7 @@
         </x-lazy-swap>
     </div>
 
-    <div class="flex-none gap-2">
+    <div class="flex flex-none items-center gap-2">
         <livewire:lazy-admin.header-search />
         <livewire:lazy-admin.notification-bell />
 
@@ -84,7 +100,14 @@
                         </div>
 
                         <x-lazy-btn type="button" ghost circle>
-                            <x-lazy-avatar class="w-10 rounded-full" :src="$avatarUrl" :alt="$user->name" />
+                            <x-lazy-avatar
+                                class="w-10 rounded-full bg-primary text-primary-content"
+                                :src="$avatarUrl"
+                                :alt="$user->name"
+                                :placeholder-enabled="blank($avatarUrl)"
+                            >
+                                <span class="text-sm font-semibold">{{ $avatarInitials }}</span>
+                            </x-lazy-avatar>
                         </x-lazy-btn>
                     </div>
                 </x-slot:trigger>
