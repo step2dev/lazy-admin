@@ -174,3 +174,34 @@ it('renders Lazy UI collapse and swap in migrated admin chrome', function (): vo
         ->assertSee('swap-off')
         ->assertDontSee('type="checkbox"', false);
 });
+
+
+it('keeps admin chrome compatible with daisyUI 5 layout utilities', function (): void {
+    $root = dirname(__DIR__, 2).'/resources/views';
+
+    $header = file_get_contents($root.'/header.blade.php');
+    $footer = file_get_contents($root.'/footer.blade.php');
+    $layout = file_get_contents($root.'/layout.blade.php');
+
+    expect($header)
+        ->toContain('class="flex flex-auto items-center justify-start px-4"')
+        ->toContain('class="flex flex-none items-center gap-2"')
+        ->toContain(':placeholder-enabled="blank($avatarUrl)"')
+        ->toContain('$avatarInitials');
+
+    expect($footer)
+        ->toContain('sm:footer-horizontal');
+
+    expect($layout)
+        ->toContain('sm:footer-horizontal');
+});
+
+it('does not depend on application-specific logo or avatar files', function (): void {
+    $config = require dirname(__DIR__, 2).'/config/lazy/admin.php';
+    $header = file_get_contents(dirname(__DIR__, 2).'/resources/views/header.blade.php');
+
+    expect($config['logo'])->toBeNull()
+        ->and($config['avatar'])->toBeNull()
+        ->and($header)->toContain('@if($logoUrl)')
+        ->and($header)->toContain('aria-label="{{ __(\'Lazy Admin\') }}"');
+});
