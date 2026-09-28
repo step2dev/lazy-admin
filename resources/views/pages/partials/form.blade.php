@@ -3,7 +3,7 @@
     action="{{ $action }}"
     class="space-y-4"
     x-data="{
-        locale: '{{ old('original_locale', $page->original_locale ?: ($translationItem['locale']s[0] ?? app()->getLocale())) }}',
+        locale: '{{ old('original_locale', $page->original_locale ?: ($locales[0] ?? app()->getLocale())) }}',
         advanced: false,
     }"
     x-init="$nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
@@ -23,15 +23,15 @@
                     </div>
 
                     <x-lazy-join>
-                        @foreach ($translationItem['locale']s as $translationItem['locale'])
+                        @foreach ($locales as $locale)
                             <x-lazy-btn
                                 type="button"
                                 sm
                                 class="min-w-12"
-                                :class="locale === '{{ $translationItem['locale'] }}' ? 'btn-active btn-neutral' : 'btn-ghost border border-base-300'"
-                                @click="locale = '{{ $translationItem['locale'] }}'; $nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
+                                :class="locale === '{{ $locale }}' ? 'btn-active btn-neutral' : 'btn-ghost border border-base-300'"
+                                @click="locale = '{{ $locale }}'; $nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
                             >
-                                {{ strtoupper($translationItem['locale']) }}
+                                {{ strtoupper($locale) }}
                             </x-lazy-btn>
                         @endforeach
                     </x-lazy-join>
@@ -51,10 +51,10 @@
                             <x-lazy-input
                                 sm
                                 name="translations[{{ $translationItem['locale'] }}][title]"
-                                :value="old("translations.$translationItem['locale'].title", $translationItem['translation']?->title)"
-                                :color="$errors->has("translations.$translationItem['locale'].title") ? 'error' : ''"
+                                :value="old('translations.'.$translationItem['locale'].'.title', $translationItem['translation']?->title)"
+                                :color="$errors->has('translations.'.$translationItem['locale'].'.title') ? 'error' : ''"
                             />
-                            @error("translations.$translationItem['locale'].title")
+                            @error('translations.'.$translationItem['locale'].'.title')
                                 <span class="mt-1 text-xs text-error">{{ $message }}</span>
                             @enderror
                         </label>
@@ -68,7 +68,7 @@
                                 data-lazy-page-editor="description"
                                 data-locale="{{ $translationItem['locale'] }}"
                                 class="min-h-24"
-                            >{{ old("translations.$translationItem['locale'].description", $translationItem['translation']?->description) }}</x-lazy-textarea>
+                            >{{ old('translations.'.$translationItem['locale'].'.description', $translationItem['translation']?->description) }}</x-lazy-textarea>
                         </label>
 
                         <label class="form-control">
@@ -80,7 +80,7 @@
                                 data-lazy-page-editor="content"
                                 data-locale="{{ $translationItem['locale'] }}"
                                 class="min-h-[28rem] font-mono"
-                            >{{ old("translations.$translationItem['locale'].content", $translationItem['translation']?->content) }}</x-lazy-textarea>
+                            >{{ old('translations.'.$translationItem['locale'].'.content', $translationItem['translation']?->content) }}</x-lazy-textarea>
                         </label>
                     </div>
                 @endforeach
@@ -125,8 +125,8 @@
                             x-model="locale"
                             @change="$nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
                         >
-                            @foreach ($translationItem['locale']s as $translationItem['locale'])
-                                <option value="{{ $translationItem['locale'] }}">{{ strtoupper($translationItem['locale']) }}</option>
+                            @foreach ($locales as $locale)
+                                <option value="{{ $locale }}">{{ strtoupper($locale) }}</option>
                             @endforeach
                         </x-lazy-select>
                     </label>
