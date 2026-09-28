@@ -55,9 +55,13 @@ class PageController extends Controller
     {
         $this->authorizePageAction('pages.create');
 
+        $page = new Page;
+        $locales = $this->locales();
+
         return lazyView('lazy::pages.create', [
-            'page' => new Page,
-            'locales' => $this->locales(),
+            'page' => $page,
+            'locales' => $locales,
+            'translationItems' => $this->translationItems($page, $locales),
             'parents' => $this->parentOptions(),
             'statuses' => PageStatus::cases(),
         ]);
@@ -85,9 +89,13 @@ class PageController extends Controller
     {
         $this->authorizePageAction('pages.edit');
 
+        $page->load('translations');
+        $locales = $this->locales();
+
         return lazyView('lazy::pages.edit', [
-            'page' => $page->load('translations'),
-            'locales' => $this->locales(),
+            'page' => $page,
+            'locales' => $locales,
+            'translationItems' => $this->translationItems($page, $locales),
             'parents' => $this->parentOptions($page),
             'statuses' => PageStatus::cases(),
         ]);
@@ -115,9 +123,13 @@ class PageController extends Controller
     {
         $this->authorizePageAction('pages.preview');
 
+        $page->load(['translations', 'parent']);
+        $locales = $this->locales();
+
         return lazyView('lazy::pages.preview', [
-            'page' => $page->load(['translations', 'parent']),
-            'locales' => $this->locales(),
+            'page' => $page,
+            'locales' => $locales,
+            'translationItems' => $this->translationItems($page, $locales),
         ]);
     }
 
@@ -166,6 +178,17 @@ class PageController extends Controller
         }
 
         return array_values(array_unique($locales));
+    }
+
+    private function translationItems(Page $page, array $locales): array
+    {
+        return array_map(
+            static fn (string $locale): array => [
+                'locale' => $locale,
+                'translation' => $page->translate($locale),
+            ],
+            $locales,
+        );
     }
 
     /**
