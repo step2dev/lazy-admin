@@ -175,7 +175,6 @@ it('renders Lazy UI collapse and swap in migrated admin chrome', function (): vo
         ->assertDontSee('type="checkbox"', false);
 });
 
-
 it('keeps admin chrome compatible with daisyUI 5 layout utilities', function (): void {
     $root = dirname(__DIR__, 2).'/resources/views';
 
