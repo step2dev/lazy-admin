@@ -7,24 +7,6 @@
         <span>{{ __($item['group']) }}</span>
     </li>
 @else
-    @php
-        $target = $item['url'] ?? $item['route'] ?? null;
-        $href = $target && Route::has($target)
-            ? route($target, $item['parameters'] ?? [])
-            : ($target ?? '#');
-        $hasChildren = ! empty($item['children']);
-        $active = $item['active']
-            ?? ($target && Route::has($target) && request()->routeIs($target));
-        $label = __($item['label'] ?? '');
-        $isNamedRoute = is_string($target) && Route::has($target);
-        $external = ! $isNamedRoute
-            && is_string($target)
-            && preg_match('/^https?:\/\//i', $target) === 1
-            && parse_url($target, PHP_URL_HOST) !== request()->getHost();
-
-        $linkTarget = $item['target'] ?? ($external ? '_blank' : null);
-    @endphp
-
     <li
         class="nav-item hover-bordered relative"
         @if($hasChildren)
@@ -39,7 +21,7 @@
                 ])
                 :class="sidebarCompact ? 'justify-center px-2' : ''"
             >
-                @if($target)
+                @if(($item['url'] ?? $item['route'] ?? null))
                     <a
                         href="{{ $href }}"
                         @if($linkTarget) target="{{ $linkTarget }}" @endif
@@ -47,7 +29,7 @@
                         title="{{ $label }}"
                         class="flex min-w-0 flex-1 items-center gap-2"
                     >
-                        @include('lazy::menu-label', ['item' => $item])
+                        <x-lazy-menu-label :item="$item" />
                     </a>
                 @else
                     <button
@@ -56,7 +38,7 @@
                         class="flex min-w-0 flex-1 items-center gap-2 text-left"
                         @click="if (sidebarCompact) { toggleSidebar(); } else { open = ! open; }"
                     >
-                        @include('lazy::menu-label', ['item' => $item])
+                        <x-lazy-menu-label :item="$item" />
                     </button>
                 @endif
 
@@ -94,7 +76,7 @@
                 x-transition:leave-end="opacity-0 transform scale-95"
             >
                 @foreach($item['children'] as $child)
-                    @include('lazy::menu-item', ['item' => $child])
+                    <x-lazy-menu-item :item="$child" />
                 @endforeach
             </ul>
         @else
@@ -109,7 +91,7 @@
                 ])
                 :class="sidebarCompact ? 'justify-center px-2' : ''"
             >
-                @include('lazy::menu-label', ['item' => $item])
+                <x-lazy-menu-label :item="$item" />
             </a>
         @endif
     </li>
