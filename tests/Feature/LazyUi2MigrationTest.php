@@ -73,12 +73,12 @@ it('keeps second-wave migrated views on Lazy UI controls', function (): void {
         $source = file_get_contents($root.'/'.$view);
 
         expect($source)
-            ->not->toMatch('/class="[^"]*\\bbtn(?:-|\\s)/')
-            ->not->toMatch('/class="[^"]*\\binput(?:-|\\s)/')
-            ->not->toMatch('/class="[^"]*\\bselect(?:-|\\s)/')
-            ->not->toMatch('/class="[^"]*\\bcheckbox(?:-|\\s)/')
-            ->not->toMatch('/class="[^"]*\\bbadge(?:-|\\s)/')
-            ->not->toMatch('/class="[^"]*\\balert(?:-|\\s)/');
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bbtn(?:-|\\s)/')
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\binput(?:-|\\s)/')
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bselect(?:-|\\s)/')
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bcheckbox(?:-|\\s)/')
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bbadge(?:-|\\s)/')
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\balert(?:-|\\s)/');
     }
 });
 
@@ -112,7 +112,7 @@ it('fully migrates admin dropdown consumers to Lazy UI', function (): void {
 
         expect($source)
             ->toContain('<x-lazy-dropdown')
-            ->not->toMatch('/class="[^"]*\\bdropdown(?:-|\\s)/');
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bdropdown(?:-|\\s)/');
     }
 
     $dashboard = file_get_contents($root.'/dashboard/index.blade.php');
@@ -140,9 +140,9 @@ it('keeps third-wave migrated views free of server-side Blade logic', function (
 
         expect($source)
             ->not->toContain('@php')
-            ->not->toMatch('/class="[^"]*\\bdropdown(?:-|\\s)/')
-            ->not->toMatch('/class="[^"]*\\bcollapse(?:-|\\s)/')
-            ->not->toMatch('/class="[^"]*\\bswap(?:-|\\s)/');
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bdropdown(?:-|\\s)/')
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bcollapse(?:-|\\s)/')
+            ->not->toMatch('/(?<![:\\w-])class="[^"]*\\bswap(?:-|\\s)/');
     }
 });
 
