@@ -69,8 +69,10 @@ class MenuItemPresenter
                 $active ? 'active' : null,
             ])),
             'iconView' => $iconView,
+            'iconViewExists' => is_string($iconView) && view()->exists($iconView),
             'svgIcon' => $svgIcon,
             'rawSvgIcon' => $svgIcon !== null,
+            'hasCssIcon' => is_string($item['icon'] ?? null) && trim((string) $item['icon']) !== '',
             'badgeLabel' => $badge !== null
                 ? (is_numeric($badge) && (int) $badge > 99 ? '99+' : (string) $badge)
                 : null,
