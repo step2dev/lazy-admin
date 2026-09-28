@@ -121,3 +121,57 @@ it('fully migrates admin dropdown consumers to Lazy UI', function (): void {
         ->toContain('<x-lazy-card')
         ->not->toContain('class="card-body');
 });
+
+
+it('keeps third-wave migrated views free of server-side Blade logic', function (): void {
+    $root = dirname(__DIR__, 2).'/resources/views';
+
+    foreach ([
+        'header.blade.php',
+        'menu-item.blade.php',
+        'menu-label.blade.php',
+        'access/index.blade.php',
+        'breadcrumb-trail.blade.php',
+        'pages/preview.blade.php',
+        'pages/partials/form.blade.php',
+        'users/partials/form.blade.php',
+        'seo/redirects/index.blade.php',
+    ] as $view) {
+        $source = file_get_contents($root.'/'.$view);
+
+        expect($source)
+            ->not->toContain('@php')
+            ->not->toMatch('/class="[^"]*\\bdropdown(?:-|\\s)/')
+            ->not->toMatch('/class="[^"]*\\bcollapse(?:-|\\s)/')
+            ->not->toMatch('/class="[^"]*\\bswap(?:-|\\s)/');
+    }
+});
+
+it('renders PHP-backed menu components', function (): void {
+    $this
+        ->blade('<x-lazy-menu-item :item="[\'url\' => \'https://example.com/docs\', \'label\' => \'Docs\']" />')
+        ->assertSee('https://example.com/docs', false)
+        ->assertSee('Docs')
+        ->assertSee('target="_blank"', false)
+        ->assertSee('rel="noopener noreferrer"', false);
+
+    $this
+        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Inbox\', \'badge\' => 120]" />')
+        ->assertSee('Inbox')
+        ->assertSee('99+');
+});
+
+it('renders Lazy UI collapse and swap in migrated admin chrome', function (): void {
+    $this
+        ->blade('<x-lazy-collapse summary-class="font-semibold"><x-slot:summary>Catalog</x-slot:summary>Body</x-lazy-collapse>')
+        ->assertSee('collapse-arrow')
+        ->assertSee('Catalog')
+        ->assertSee('Body');
+
+    $this
+        ->blade('<x-lazy-swap controlled rotate><x-slot:on>On</x-slot:on><x-slot:off>Off</x-slot:off></x-lazy-swap>')
+        ->assertSee('swap-rotate')
+        ->assertSee('swap-on')
+        ->assertSee('swap-off')
+        ->assertDontSee('type="checkbox"', false);
+});
