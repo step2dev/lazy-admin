@@ -1,6 +1,6 @@
 @if(config('lazy.localization.multi_language', false))
     <div title="Change Language" class="dropdown dropdown-end z-[9999]">
-        <div tabindex="0" class="btn btn-ghost gap-1 normal-case">
+        <x-lazy-btn type="button" ghost class="gap-1 normal-case">
             <svg class="inline-block h-4 w-4 fill-current md:h-5 md:w-5" xmlns="http://www.w3.org/2000/svg" width="20"
                  height="20" viewBox="0 0 512 512">
                 <path d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"></path>
@@ -11,7 +11,7 @@
                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
                 <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
             </svg>
-        </div>
+        </x-lazy-btn>
         <div
             class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 max-h-96 w-56 overflow-y-auto shadow-2xl">
             <ul class="menu gap-1 p-3" tabindex="0">
