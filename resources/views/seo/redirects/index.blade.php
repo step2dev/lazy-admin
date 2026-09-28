@@ -1,15 +1,5 @@
 <x-lazy-layout>
-    @php
-        $routePrefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
-        $enforcePermissions = (bool) config('lazy.admin.permissions.enforce', true);
-        $user = auth((string) config('lazy.auth.guard', 'web'))->user();
-
-        $canCreate = ! $enforcePermissions || $user?->can('seo_redirects.create');
-        $canEdit = ! $enforcePermissions || $user?->can('seo_redirects.edit');
-        $canDelete = ! $enforcePermissions || $user?->can('seo_redirects.delete');
-    @endphp
-
-    <div class="mx-auto max-w-[1500px] space-y-6">
+<div class="mx-auto max-w-[1500px] space-y-6">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
                 <div class="text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
