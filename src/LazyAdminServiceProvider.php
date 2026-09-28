@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
 use Spatie\Activitylog\Models\Activity;
@@ -214,9 +215,25 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     : url((string) config('lazy.admin.home', '/')),
                 'profileUrl' => Route::has('profile.show') ? route('profile.show') : null,
                 'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
+                'logoUrl' => filled(config('lazy.admin.logo')) ? config('lazy.admin.logo') : null,
                 'avatarUrl' => $user
-                    ? (data_get($user, 'avatar') ?: config('lazy.admin.avatar', '/img/admin.png'))
+                    ? (data_get($user, 'avatar')
+                        ?: data_get($user, 'profile_photo_url')
+                        ?: config('lazy.admin.avatar'))
                     : null,
+                'avatarInitials' => $user
+                    ? Str::of((string) (data_get($user, 'name') ?: data_get($user, 'email')))
+                        ->trim()
+                        ->when(
+                            str_contains((string) (data_get($user, 'name') ?: data_get($user, 'email')), '@'),
+                            fn ($value) => $value->before('@')->replace(['.', '_', '-'], ' ')
+                        )
+                        ->explode(' ')
+                        ->filter()
+                        ->take(2)
+                        ->map(fn (string $part): string => Str::upper(Str::substr($part, 0, 1)))
+                        ->implode('')
+                    : '',
                 'workerType' => $user ? data_get($user, 'worker_type') : null,
             ]);
         });
