@@ -46,9 +46,12 @@ class MenuLabel extends Component
 
         if (array_key_exists('badge', $item)) {
             $value = $item['badge'];
-            $this->badge = is_numeric($value) && (int) $value > 99
-                ? '99+'
-                : (string) $value;
+
+            if ($value !== null && $value !== '') {
+                $this->badge = is_numeric($value) && (int) $value > 99
+                    ? '99+'
+                    : (string) $value;
+            }
         }
     }
 
