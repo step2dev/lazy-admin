@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
 use Livewire\LivewireServiceProvider;
@@ -215,7 +216,25 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     : url((string) config('lazy.admin.home', '/')),
                 'profileUrl' => Route::has('profile.show') ? route('profile.show') : null,
                 'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
-                'logoUrl' => filled(config('lazy.admin.logo')) ? config('lazy.admin.logo') : null,
+                'logoUrl' => (static function (): ?string {
+                    $stored = setting('admin.logo');
+
+                    if (is_string($stored) && $stored !== '') {
+                        if (
+                            str_starts_with($stored, 'http://')
+                            || str_starts_with($stored, 'https://')
+                            || str_starts_with($stored, '/')
+                        ) {
+                            return $stored;
+                        }
+
+                        return Storage::disk('public')->url($stored);
+                    }
+
+                    $configured = config('lazy.admin.logo');
+
+                    return filled($configured) ? (string) $configured : null;
+                })(),
                 'avatarUrl' => $user
                     ? (data_get($user, 'avatar')
                         ?: data_get($user, 'profile_photo_url')
