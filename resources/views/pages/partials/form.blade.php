@@ -22,18 +22,19 @@
                         <p class="text-xs opacity-60">{{ __('Edit translated page content.') }}</p>
                     </div>
 
-                    <div class="join">
+                    <x-lazy-join>
                         @foreach ($locales as $locale)
-                            <button
+                            <x-lazy-btn
                                 type="button"
-                                class="btn btn-sm join-item min-w-12"
+                                sm
+                                class="min-w-12"
                                 :class="locale === '{{ $locale }}' ? 'btn-active btn-neutral' : 'btn-ghost border border-base-300'"
                                 @click="locale = '{{ $locale }}'; $nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
                             >
                                 {{ strtoupper($locale) }}
-                            </button>
+                            </x-lazy-btn>
                         @endforeach
-                    </div>
+                    </x-lazy-join>
                 </div>
             </div>
 
@@ -49,11 +50,12 @@
                     >
                         <label class="form-control">
                             <span class="label-text mb-1 text-sm">{{ __('Title') }} ({{ strtoupper($locale) }})</span>
-                            <input
-                                class="input input-bordered input-sm w-full @error("translations.$locale.title") input-error @enderror"
+                            <x-lazy-input
+                                sm
                                 name="translations[{{ $locale }}][title]"
-                                value="{{ old("translations.$locale.title", $translation?->title) }}"
-                            >
+                                :value="old("translations.$locale.title", $translation?->title)"
+                                :color="$errors->has("translations.$locale.title") ? 'error' : ''"
+                            />
                             @error("translations.$locale.title")
                                 <span class="mt-1 text-xs text-error">{{ $message }}</span>
                             @enderror
@@ -61,26 +63,26 @@
 
                         <label class="form-control">
                             <span class="label-text mb-1 text-sm">{{ __('Description') }}</span>
-                            <textarea
-                                class="textarea textarea-bordered min-h-24 w-full"
+                            <x-lazy-textarea
                                 rows="4"
                                 id="lazy-page-description-{{ $locale }}"
                                 name="translations[{{ $locale }}][description]"
                                 data-lazy-page-editor="description"
                                 data-locale="{{ $locale }}"
-                            >{{ old("translations.$locale.description", $translation?->description) }}</textarea>
+                                class="min-h-24"
+                            >{{ old("translations.$locale.description", $translation?->description) }}</x-lazy-textarea>
                         </label>
 
                         <label class="form-control">
                             <span class="label-text mb-1 text-sm">{{ __('Content') }}</span>
-                            <textarea
-                                class="textarea textarea-bordered min-h-[28rem] w-full font-mono"
+                            <x-lazy-textarea
                                 rows="22"
                                 id="lazy-page-content-{{ $locale }}"
                                 name="translations[{{ $locale }}][content]"
                                 data-lazy-page-editor="content"
                                 data-locale="{{ $locale }}"
-                            >{{ old("translations.$locale.content", $translation?->content) }}</textarea>
+                                class="min-h-[28rem] font-mono"
+                            >{{ old("translations.$locale.content", $translation?->content) }}</x-lazy-textarea>
                         </label>
                     </div>
                 @endforeach
@@ -94,12 +96,13 @@
                 <div class="space-y-3">
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Slug') }}</span>
-                        <input
-                            class="input input-bordered input-sm w-full @error('slug') input-error @enderror"
+                        <x-lazy-input
+                            sm
                             name="slug"
-                            value="{{ old('slug', $page->slug) }}"
+                            :value="old('slug', $page->slug)"
+                            :color="$errors->has('slug') ? 'error' : ''"
                             required
-                        >
+                        />
                         @error('slug')
                             <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
@@ -107,19 +110,19 @@
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Status') }}</span>
-                        <select class="select select-bordered select-sm w-full" name="status">
+                        <x-lazy-select sm name="status">
                             @foreach ($statuses as $status)
                                 <option value="{{ $status->value }}" @selected(old('status', $page->status?->value ?? 'draft') === $status->value)>
                                     {{ ucfirst($status->value) }}
                                 </option>
                             @endforeach
-                        </select>
+                        </x-lazy-select>
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Original locale') }}</span>
-                        <select
-                            class="select select-bordered select-sm w-full"
+                        <x-lazy-select
+                            sm
                             name="original_locale"
                             x-model="locale"
                             @change="$nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
@@ -127,19 +130,18 @@
                             @foreach ($locales as $locale)
                                 <option value="{{ $locale }}">{{ strtoupper($locale) }}</option>
                             @endforeach
-                        </select>
+                        </x-lazy-select>
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Parent page') }}</span>
-                        <select class="select select-bordered select-sm w-full" name="parent_id">
-                            <option value="">{{ __('No parent') }}</option>
+                        <x-lazy-select sm name="parent_id" :placeholder="__('No parent')">
                             @foreach ($parents as $parent)
                                 <option value="{{ $parent->id }}" @selected((string) old('parent_id', $page->parent_id) === (string) $parent->id)>
                                     {{ $parent->path() }}
                                 </option>
                             @endforeach
-                        </select>
+                        </x-lazy-select>
                         @error('parent_id')
                             <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
@@ -161,7 +163,7 @@
                 <div x-show="advanced" x-cloak class="space-y-3 border-t border-base-300 p-4">
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Stable key') }}</span>
-                        <input class="input input-bordered input-sm w-full @error('key') input-error @enderror" name="key" value="{{ old('key', $page->key) }}">
+                        <x-lazy-input sm name="key" :value="old('key', $page->key)" :color="$errors->has('key') ? 'error' : ''" />
                         @error('key')
                             <span class="mt-1 text-xs text-error">{{ $message }}</span>
                         @enderror
@@ -169,28 +171,28 @@
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Template') }}</span>
-                        <input class="input input-bordered input-sm w-full" name="template" value="{{ old('template', $page->template) }}">
+                        <x-lazy-input sm name="template" :value="old('template', $page->template)" />
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Publish at') }}</span>
-                        <input class="input input-bordered input-sm w-full" type="datetime-local" name="published_at" value="{{ old('published_at', $page->published_at?->format('Y-m-d\TH:i')) }}">
+                        <x-lazy-input sm type="datetime-local" name="published_at" :value="old('published_at', $page->published_at?->format('Y-m-d\TH:i'))" />
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Expire at') }}</span>
-                        <input class="input input-bordered input-sm w-full" type="datetime-local" name="expires_at" value="{{ old('expires_at', $page->expires_at?->format('Y-m-d\TH:i')) }}">
+                        <x-lazy-input sm type="datetime-local" name="expires_at" :value="old('expires_at', $page->expires_at?->format('Y-m-d\TH:i'))" />
                     </label>
 
                     <label class="form-control">
                         <span class="label-text mb-1 text-sm">{{ __('Position') }}</span>
-                        <input class="input input-bordered input-sm w-full" type="number" min="0" name="position" value="{{ old('position', $page->position ?? 0) }}">
+                        <x-lazy-input sm type="number" min="0" name="position" :value="old('position', $page->position ?? 0)" />
                     </label>
                 </div>
             </section>
 
             <section class="rounded-box border border-base-300 bg-base-100 p-4">
-                <button class="btn btn-primary btn-sm w-full" type="submit">{{ $submitLabel }}</button>
+                <x-lazy-btn primary sm block type="submit" :label="$submitLabel" />
             </section>
         </aside>
     </div>

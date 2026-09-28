@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between gap-4">
         <div>
             @if ($createRoute)
-                <a class="btn btn-primary" href="{{ route($createRoute) }}">{{ __('Create user') }}</a>
+                <x-lazy-btn primary :href="route($createRoute)" :label="__('Create user')" />
             @endif
         </div>
     </div>
@@ -10,25 +10,25 @@
     <div class="flex flex-wrap items-end gap-4">
         <label class="flex flex-col gap-1">
             <span>{{ __('Search') }}</span>
-            <input type="search" wire:model.live.debounce.300ms="search" class="input input-bordered" placeholder="{{ __('Name or email') }}" />
+            <x-lazy-input type="search" wire:model.live.debounce.300ms="search" :placeholder="__('Name or email')" />
         </label>
         <label class="flex flex-col gap-1">
             <span>{{ __('Created from') }}</span>
-            <input type="date" wire:model.live="createdFrom" class="input input-bordered" />
+            <x-lazy-input type="date" wire:model.live="createdFrom" />
         </label>
         <label class="flex flex-col gap-1">
             <span>{{ __('Created until') }}</span>
-            <input type="date" wire:model.live="createdUntil" class="input input-bordered" />
+            <x-lazy-input type="date" wire:model.live="createdUntil" />
         </label>
         <label class="flex flex-col gap-1">
             <span>{{ __('Per page') }}</span>
-            <select wire:model.live="perPage" class="select select-bordered">
+            <x-lazy-select wire:model.live="perPage">
                 @foreach ([10, 20, 30, 50, 100] as $size)
                     <option value="{{ $size }}">{{ $size }}</option>
                 @endforeach
-            </select>
+            </x-lazy-select>
         </label>
-        <button type="button" wire:click="resetFilters" class="btn btn-ghost">{{ __('Reset filters') }}</button>
+        <x-lazy-btn type="button" wire:click="resetFilters" ghost :label="__('Reset filters')" />
     </div>
     <div wire:loading role="status">{{ __('Loading…') }}</div>
     <div class="overflow-x-auto" wire:loading.class="opacity-50">
@@ -67,9 +67,11 @@
                         <td>
                             <div class="flex items-center gap-2">
                                 @if ($showRoute)
-                                    <a
-                                        class="btn btn-secondary btn-sm btn-square"
-                                        href="{{ route($showRoute, $user->getKey()) }}"
+                                    <x-lazy-btn
+                                        secondary
+                                        sm
+                                        square
+                                        :href="route($showRoute, $user->getKey())"
                                         title="{{ __('View') }}"
                                         aria-label="{{ __('View') }}"
                                     >
@@ -78,13 +80,15 @@
                                             <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
                                             <circle cx="12" cy="12" r="3"></circle>
                                         </svg>
-                                    </a>
+                                    </x-lazy-btn>
                                 @endif
 
                                 @if ($editRoute)
-                                    <a
-                                        class="btn btn-warning btn-sm btn-square"
-                                        href="{{ route($editRoute, $user->getKey()) }}"
+                                    <x-lazy-btn
+                                        warning
+                                        sm
+                                        square
+                                        :href="route($editRoute, $user->getKey())"
                                         title="{{ __('Edit') }}"
                                         aria-label="{{ __('Edit') }}"
                                     >
@@ -93,7 +97,7 @@
                                             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                         </svg>
-                                    </a>
+                                    </x-lazy-btn>
                                 @endif
 
                                 @if ($destroyRoute)
@@ -102,9 +106,11 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button
+                                        <x-lazy-btn
+                                            error
+                                            sm
+                                            square
                                             type="submit"
-                                            class="btn btn-error btn-sm btn-square"
                                             title="{{ __('Delete') }}"
                                             aria-label="{{ __('Delete') }}"
                                         >
@@ -115,7 +121,7 @@
                                                 <line x1="10" y1="11" x2="10" y2="17"></line>
                                                 <line x1="14" y1="11" x2="14" y2="17"></line>
                                             </svg>
-                                        </button>
+                                        </x-lazy-btn>
                                     </form>
                                 @endif
                             </div>
