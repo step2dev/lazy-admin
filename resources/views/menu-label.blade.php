@@ -1,9 +1,9 @@
 <span class="relative inline-flex h-6 w-6 shrink-0 items-center justify-center" aria-hidden="true">
-    @if(is_string($item['iconView']) && view()->exists($item['iconView']))
+    @if($item['iconViewExists'])
         <span class="[&>svg]:h-6 [&>svg]:w-6">@include($item['iconView'])</span>
     @elseif($item['rawSvgIcon'])
         <span class="[&>svg]:h-6 [&>svg]:w-6">{!! $item['svgIcon'] !!}</span>
-    @elseif(filled($item['icon'] ?? null))
+    @elseif($item['hasCssIcon'])
         <i class="{{ $item['icon'] }}"></i>
     @endif
 
