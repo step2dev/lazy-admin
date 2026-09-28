@@ -204,3 +204,25 @@ it('does not depend on application-specific logo or avatar files', function (): 
         ->and($header)->toContain('@if($logoUrl)')
         ->and($header)->toContain('aria-label="{{ __(\'Lazy Admin\') }}"');
 });
+
+
+it('does not render empty menu badges', function (): void {
+    $html = $this
+        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Dashboard\', \'badge\' => null]" />')
+        ->content();
+
+    expect($html)
+        ->toContain('Dashboard')
+        ->not->toContain('badge-accent');
+});
+
+it('renders non-empty menu badges', function (): void {
+    $html = $this
+        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Inbox\', \'badge\' => 7]" />')
+        ->content();
+
+    expect($html)
+        ->toContain('Inbox')
+        ->toContain('badge-accent')
+        ->toContain('7');
+});
