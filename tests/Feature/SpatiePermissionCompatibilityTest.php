@@ -3,9 +3,9 @@
 namespace Step2dev\LazyAdmin\Tests\Feature;
 
 use Composer\InstalledVersions;
-use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 
 it('supports Spatie permission 7 and 8 without changing the admin authorization contract', function (): void {
     $version = InstalledVersions::getPrettyVersion('spatie/laravel-permission');
