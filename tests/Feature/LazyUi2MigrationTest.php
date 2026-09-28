@@ -56,7 +56,6 @@ it('keeps migrated admin views off manual component classes', function (): void 
     }
 });
 
-
 it('keeps second-wave migrated views on Lazy UI controls', function (): void {
     $root = dirname(__DIR__, 2).'/resources/views';
 
