@@ -1,50 +1,29 @@
-@if(isset($item['group']))
+@if($item['isGroup'])
     <li
         class="menu-title overflow-hidden transition-all duration-200"
         x-show="! sidebarCompact"
         x-transition.opacity
     >
-        <span>{{ __($item['group']) }}</span>
+        <span>{{ $item['groupLabel'] }}</span>
     </li>
 @else
-    @php
-        $target = $item['url'] ?? $item['route'] ?? null;
-        $href = $target && Route::has($target)
-            ? route($target, $item['parameters'] ?? [])
-            : ($target ?? '#');
-        $hasChildren = ! empty($item['children']);
-        $active = $item['active']
-            ?? ($target && Route::has($target) && request()->routeIs($target));
-        $label = __($item['label'] ?? '');
-        $isNamedRoute = is_string($target) && Route::has($target);
-        $external = ! $isNamedRoute
-            && is_string($target)
-            && preg_match('/^https?:\/\//i', $target) === 1
-            && parse_url($target, PHP_URL_HOST) !== request()->getHost();
-
-        $linkTarget = $item['target'] ?? ($external ? '_blank' : null);
-    @endphp
-
     <li
         class="nav-item hover-bordered relative"
-        @if($hasChildren)
-            x-data="{ open: {{ $active ? 'true' : 'false' }} }"
+        @if($item['hasChildren'])
+            x-data="{ open: {{ $item['active'] ? 'true' : 'false' }} }"
         @endif
     >
-        @if($hasChildren)
+        @if($item['hasChildren'])
             <div
-                @class([
-                    'nav-link flex items-center gap-2 transition-all transform',
-                    'active' => $active,
-                ])
+                class="{{ $item['parentNavClass'] }}"
                 :class="sidebarCompact ? 'justify-center px-2' : ''"
             >
-                @if($target)
+                @if($item['target'])
                     <a
-                        href="{{ $href }}"
-                        @if($linkTarget) target="{{ $linkTarget }}" @endif
-                        @if($linkTarget === '_blank') rel="noopener noreferrer" @endif
-                        title="{{ $label }}"
+                        href="{{ $item['href'] }}"
+                        @if($item['linkTarget']) target="{{ $item['linkTarget'] }}" @endif
+                        @if($item['linkTarget'] === '_blank') rel="noopener noreferrer" @endif
+                        title="{{ $item['labelText'] }}"
                         class="flex min-w-0 flex-1 items-center gap-2"
                     >
                         @include('lazy::menu-label', ['item' => $item])
@@ -52,7 +31,7 @@
                 @else
                     <button
                         type="button"
-                        title="{{ $label }}"
+                        title="{{ $item['labelText'] }}"
                         class="flex min-w-0 flex-1 items-center gap-2 text-left"
                         @click="if (sidebarCompact) { toggleSidebar(); } else { open = ! open; }"
                     >
@@ -63,8 +42,8 @@
                 <button
                     type="button"
                     class="flex h-8 w-8 shrink-0 items-center justify-center"
-                    aria-label="{{ __('Toggle :item submenu', ['item' => $label]) }}"
-                    title="{{ __('Toggle :item submenu', ['item' => $label]) }}"
+                    aria-label="{{ __('Toggle :item submenu', ['item' => $item['labelText']]) }}"
+                    title="{{ __('Toggle :item submenu', ['item' => $item['labelText']]) }}"
                     @click="if (sidebarCompact) { toggleSidebar(); } else { open = ! open; }"
                     x-show="! sidebarCompact"
                 >
@@ -99,14 +78,11 @@
             </ul>
         @else
             <a
-                href="{{ $href }}"
-                @if($linkTarget) target="{{ $linkTarget }}" @endif
-                @if($linkTarget === '_blank') rel="noopener noreferrer" @endif
-                title="{{ $label }}"
-                @class([
-                    'nav-link flex gap-2 transition-all transform',
-                    'active' => $active,
-                ])
+                href="{{ $item['href'] }}"
+                @if($item['linkTarget']) target="{{ $item['linkTarget'] }}" @endif
+                @if($item['linkTarget'] === '_blank') rel="noopener noreferrer" @endif
+                title="{{ $item['labelText'] }}"
+                class="{{ $item['navClass'] }}"
                 :class="sidebarCompact ? 'justify-center px-2' : ''"
             >
                 @include('lazy::menu-label', ['item' => $item])
