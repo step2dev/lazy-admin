@@ -1,10 +1,9 @@
-@php($authGuard = (string) config('lazy.auth.guard', 'web'))
 <header class="navbar bg-base-200">
     <div class="flex-auto items-center justify-start px-4">
-        <a href="{{ Route::has('admin.dashboard') ? route('admin.dashboard') : url(config('lazy.admin.home', '/')) }}" class="flex items-center space-x-2">
+        <a href="{{ $dashboardUrl }}" class="flex items-center space-x-2">
             <img
-                src="{{ config('lazy.admin.logo', '/main.svg') }}"
-                alt="{{ config('app.name') }}"
+                src="{{ $logoUrl }}"
+                alt="{{ $appName }}"
                 class="h-14"
             />
         </a>
@@ -60,54 +59,46 @@
             <x-lazy-language-switcher/>
         @endif
 
-        @auth($authGuard)
-            @php($user = auth($authGuard)->user())
+        @if($user)
+            <x-lazy-dropdown end width="w-52" content-class="mt-3 shadow">
+                <x-slot:trigger>
+                    <x-lazy-btn type="button" ghost tabindex="0" class="h-auto gap-2 normal-case">
+                        <span class="hidden flex-col justify-center px-2 md:flex">
+                            <span class="text-right text-base capitalize subpixel-antialiased">
+                                {{ $userName }}
+                            </span>
 
-            <div class="dropdown dropdown-end">
-                <div class="row flex cursor-pointer" tabindex="0" role="button">
-                    <div class="hidden flex-col justify-center px-2 md:flex">
-                        <span class="text-right text-base capitalize subpixel-antialiased">
-                            {{ $user->name }}
+                            @if(filled($workerType))
+                                <span class="text-right font-serif text-sm lowercase">
+                                    {{ $workerType }}
+                                </span>
+                            @endif
                         </span>
 
-                        @if(filled(data_get($user, 'worker_type')))
-                            <span class="text-right font-serif text-sm lowercase">
-                                {{ data_get($user, 'worker_type') }}
-                            </span>
-                        @endif
-                    </div>
+                        <x-lazy-avatar
+                            :src="$avatarUrl"
+                            :alt="$userName"
+                            class="w-10 rounded-full"
+                        />
+                    </x-lazy-btn>
+                </x-slot:trigger>
 
-                    <div class="btn btn-ghost btn-circle avatar">
-                        <div class="w-10 rounded-full">
-                            <img
-                                src="{{ data_get($user, 'avatar') ?: config('lazy.admin.avatar', '/img/admin.png') }}"
-                                alt="{{ $user->name }}"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <ul
-                    tabindex="0"
-                    class="menu dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
-                >
-                    @if(Route::has('profile.show'))
-                        <li>
-                            <a href="{{ route('profile.show') }}">{{ __('Profile') }}</a>
-                        </li>
-                    @endif
-
-                    @if(Route::has('admin.setting.index'))
-                        <li>
-                            <a href="{{ route('admin.setting.index') }}">{{ __('Settings') }}</a>
-                        </li>
-                    @endif
-
+                @if($profileUrl)
                     <li>
-                        <x-lazy-btn-logout/>
+                        <a href="{{ $profileUrl }}">{{ __('Profile') }}</a>
                     </li>
-                </ul>
-            </div>
-        @endauth
+                @endif
+
+                @if($settingsUrl)
+                    <li>
+                        <a href="{{ $settingsUrl }}">{{ __('Settings') }}</a>
+                    </li>
+                @endif
+
+                <li>
+                    <x-lazy-btn-logout/>
+                </li>
+            </x-lazy-dropdown>
+        @endif
     </div>
 </header>
