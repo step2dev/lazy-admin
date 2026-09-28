@@ -54,6 +54,6 @@ class MenuLabel extends Component
 
     public function render(): View
     {
-        return view('lazy::menu-label');
+        return lazyView('lazy::menu-label');
     }
 }
