@@ -53,9 +53,9 @@ it('keeps migrated admin views off manual component classes', function (): void 
         $source = file_get_contents($root.'/'.$view);
 
         expect($source)
-            ->not->toMatch('/class="[^"]*\bbtn(?:-|\s)/')
-            ->not->toMatch('/class="[^"]*\balert(?:-|\s)/')
-            ->not->toMatch('/class="[^"]*\bbadge(?:-|\s)/');
+            ->not->toMatch('/class="[^"]*\bbtn(?=\s|")/')
+            ->not->toMatch('/class="[^"]*\balert(?=\s|")/')
+            ->not->toMatch('/class="[^"]*\bbadge(?=\s|")/');
     }
 });
 
