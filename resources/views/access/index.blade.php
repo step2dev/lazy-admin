@@ -51,8 +51,6 @@
 
                         <div class="space-y-3">
                             @forelse ($roleItems as $roleItem)
-                                @php($role = $roleItem['role'])
-
                                 <a
                                     href="{{ $roleItem['href'] }}"
                                     class="{{ $roleItem['classes'] }}"
@@ -60,11 +58,11 @@
                                     <div class="flex items-center justify-between gap-3">
                                         <div class="min-w-0">
                                             <div class="truncate text-lg font-semibold">
-                                                {{ $role->name }}
+                                                {{ $roleItem['role']->name }}
                                             </div>
 
                                             <div class="mt-1 text-sm opacity-55">
-                                                {{ __('guard: :guard', ['guard' => $role->guard_name]) }}
+                                                {{ __('guard: :guard', ['guard' => $roleItem['role']->guard_name]) }}
                                             </div>
                                         </div>
 
@@ -178,14 +176,12 @@
 
                                     <div class="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
                                         @foreach ($groupPermissions as $permissionItem)
-                                            @php($permission = $permissionItem['permission'])
-
                                             <label class="{{ $permissionItem['classes'] }}">
                                                 <x-lazy-checkbox
                                                     primary
                                                     sm
                                                     name="permissions[]"
-                                                    :value="$permission->name"
+                                                    :value="$permissionItem['permission']->name"
                                                     :checked="$permissionItem['checked']"
                                                     :disabled="! $permissionsEditable"
                                                 />
@@ -195,7 +191,7 @@
                                                         {{ $permissionItem['label'] }}
                                                     </span>
                                                     <span class="mt-1 block text-xs opacity-45">
-                                                        {{ $permission->name }}
+                                                        {{ $permissionItem['permission']->name }}
                                                     </span>
                                                 </span>
                                             </label>
@@ -276,7 +272,7 @@
                                                 <x-lazy-input
                                                     type="text"
                                                     name="name"
-                                                    :value="$permission->name"
+                                                    :value="$permissionItem['permission']->name"
                                                     sm
                                                     class="min-w-0 flex-1"
                                                     required
@@ -285,7 +281,7 @@
                                                 <x-lazy-btn sm type="submit" :label="__('Save')" />
                                             @else
                                                 <span class="min-w-0 flex-1 break-all font-medium">
-                                                    {{ $permission->name }}
+                                                    {{ $permissionItem['permission']->name }}
                                                 </span>
                                             @endif
 
