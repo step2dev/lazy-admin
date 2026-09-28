@@ -202,6 +202,19 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        \Illuminate\Support\Facades\View::composer('lazy::breadcrumb-trail', static function ($view): void {
+            $data = $view->getData();
+            $items = $data['items'] ?? \Step2Dev\LazyBreadcrumb\Breadcrumbs::generate(
+                \Illuminate\Support\Facades\Route::current()?->getName(),
+                \Illuminate\Support\Facades\Route::current()?->parameters() ?? [],
+            );
+
+            $view->with('breadcrumbItems', collect($items ?? [])->map(static fn (array $item): array => [
+                'label' => $item['title'] ?? $item['label'] ?? '',
+                'href' => $item['url'] ?? $item['route'] ?? null,
+            ])->all());
+        });
+
         /** @var Router $router */
         $router = $this->app['router'];
         $router->mixin(new AdminRouter);
