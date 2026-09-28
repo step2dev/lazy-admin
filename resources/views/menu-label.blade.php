@@ -11,7 +11,7 @@
         <x-lazy-badge
             accent
             class="transition-all duration-200"
-            :class="sidebarCompact
+            x-bind:class="sidebarCompact
                 ? 'badge-xs absolute -right-3 -top-2 px-1'
                 : 'hidden'"
         >{{ $badge }}</x-lazy-badge>
