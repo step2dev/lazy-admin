@@ -34,6 +34,7 @@ class UserController extends Controller
         return lazyView('lazy::users.create', [
             'user' => $model,
             'roles' => $this->availableRoles($model),
+            'selectedRoles' => [],
         ]);
     }
 
@@ -83,6 +84,7 @@ class UserController extends Controller
         return lazyView('lazy::users.edit', [
             'user' => $model,
             'roles' => $this->availableRoles($model),
+            'selectedRoles' => $this->selectedRoles($model),
         ]);
     }
 
@@ -202,6 +204,13 @@ class UserController extends Controller
         return $this->authorization->roles()
             ->pluck('name')
             ->all();
+    }
+
+    protected function selectedRoles(Model $user): array
+    {
+        return method_exists($user, 'roles')
+            ? $user->roles()->pluck('name')->all()
+            : [];
     }
 
     protected function syncRoles(Model $user, array $roles): void
