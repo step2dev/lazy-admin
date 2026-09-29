@@ -28,7 +28,7 @@
                                 type="button"
                                 sm
                                 class="min-w-12"
-                                :class="locale === '{{ $locale }}' ? 'btn-active btn-neutral' : 'btn-ghost border border-base-300'"
+                                x-bind:class="locale === '{{ $locale }}' ? 'btn-active btn-neutral' : 'btn-ghost border border-base-300'"
                                 @click="locale = '{{ $locale }}'; $nextTick(() => $dispatch('lazy-page-locale-changed', { locale }))"
                             >
                                 {{ strtoupper($locale) }}
