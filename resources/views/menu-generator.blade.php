@@ -1,5 +1,5 @@
 <ul
-    class="menu bg-base-200 w-full overflow-visible transition-all duration-200 lg:menu-normal"
+    class="menu w-full gap-1 overflow-visible bg-base-200 px-2 transition-all duration-200 lg:menu-normal"
     :class="sidebarCompact ? 'menu-compact' : ''"
 >
     @foreach($menuItems as $item)
