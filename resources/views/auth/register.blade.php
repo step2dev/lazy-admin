@@ -30,6 +30,18 @@
             <x-lazy-input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="mt-2 w-full" />
         </div>
 
+        @if(class_exists(\Laravel\Jetstream\Jetstream::class) && \Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
+            <label class="flex items-start gap-3">
+                <x-lazy-checkbox name="terms" id="terms" required />
+                <span class="text-sm opacity-70">
+                    {!! __('I agree to the :terms_of_service and :privacy_policy', [
+                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="link link-primary">'.__('Terms of Service').'</a>',
+                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="link link-primary">'.__('Privacy Policy').'</a>',
+                    ]) !!}
+                </span>
+            </label>
+        @endif
+
         <x-lazy-btn primary block type="submit" :label="__('Register')" />
 
         @if(Route::has('login'))
