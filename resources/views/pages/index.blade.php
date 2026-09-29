@@ -38,8 +38,8 @@
             <x-lazy-btn outline type="submit" :label="__('Filter')" />
         </form>
 
-        <div class="overflow-x-auto rounded-box border border-base-300">
-            <table class="table">
+        <div class="overflow-x-auto rounded-2xl border border-base-300 bg-base-100 shadow-sm">
+            <x-lazy-table class="w-full">
                 <thead>
                     <tr>
                         <th>{{ __('Title') }}</th>
@@ -95,7 +95,7 @@
                         <tr><td colspan="5" class="text-center opacity-60">{{ __('No pages found.') }}</td></tr>
                     @endforelse
                 </tbody>
-            </table>
+            </x-lazy-table>
         </div>
 
         {{ $pages->links() }}
