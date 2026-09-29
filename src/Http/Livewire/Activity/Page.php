@@ -25,6 +25,12 @@ class Page extends Component
     #[Url(history: true)]
     public string $event = '';
 
+    #[Url(as: 'from', history: true)]
+    public string $dateFrom = '';
+
+    #[Url(as: 'until', history: true)]
+    public string $dateUntil = '';
+
     public function updatedSearch(): void
     {
         $this->resetPage();
@@ -32,6 +38,22 @@ class Page extends Component
 
     public function updatedEvent(): void
     {
+        $this->resetPage();
+    }
+
+    public function updatedDateFrom(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatedDateUntil(): void
+    {
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset('search', 'event', 'dateFrom', 'dateUntil');
         $this->resetPage();
     }
 
@@ -64,6 +86,8 @@ class Page extends Component
 
         $search = trim($this->search);
         $event = trim($this->event);
+        $dateFrom = trim($this->dateFrom);
+        $dateUntil = trim($this->dateUntil);
 
         $activities = $modelClass::query()
             ->with(['causer', 'subject'])
@@ -74,6 +98,8 @@ class Page extends Component
                 });
             })
             ->when($event !== '', fn ($query) => $query->where('event', $event))
+            ->when($dateFrom !== '', fn ($query) => $query->whereDate('created_at', '>=', $dateFrom))
+            ->when($dateUntil !== '', fn ($query) => $query->whereDate('created_at', '<=', $dateUntil))
             ->latest('id')
             ->paginate(25);
 
