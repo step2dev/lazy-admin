@@ -15,11 +15,11 @@
             <div class="flex flex-col gap-5">
                 <x-lazy-form-input id="settings-name" wire:model="settings.name" maxlength="255" hr
                                    :label="__('Name')" aria-label="{{ __('Name') }}"
-                                   class="input-bordered" :placeholder="__('Site name')" />
+                                   :placeholder="__('Site name')" />
 
                 <x-lazy-form-textarea id="settings-description" wire:model="settings.description" rows="5" hr
                                       :label="__('Description')" aria-label="{{ __('Description') }}"
-                                      class="textarea textarea-bordered resize-y" :placeholder="__('A short description of your site')" />
+                                      class="resize-y" :placeholder="__('A short description of your site')" />
             </div>
         </section>
 
@@ -40,7 +40,7 @@
             <div class="flex flex-col gap-2">
                 <x-lazy-form-image id="settings-logo" wire:model="logo" accept="image/*" hr
                                    :label="__('Upload logo')" aria-label="{{ __('Upload logo') }}"
-                                   class="file-input file-input-bordered min-w-0 text-sm"
+                                   class="min-w-0 text-sm"
                                    aria-describedby="settings-logo-help" />
                 <p id="settings-logo-help" class="text-xs opacity-70">{{ __('Image file, up to 1 MB.') }}</p>
                 <p wire:loading wire:target="logo" role="status" class="text-sm opacity-70">{{ __('Uploading…') }}</p>
