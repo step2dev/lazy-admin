@@ -13,7 +13,7 @@
 
         <div class="{{ $layoutClass }}">
             @if ($canViewRoles)
-                <aside class="space-y-6">
+                <aside class="space-y-4 lg:sticky lg:top-24 lg:self-start">
                     @if ($canCreateRoles)
                         <section class="space-y-3">
                             <div class="text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
@@ -114,8 +114,8 @@
 
                                 <div class="mt-2 flex flex-wrap items-center gap-3">
                                     @if ($canEditRoles && ! $selectedIsSuperAdmin)
-                                        <label class="form-control w-full max-w-sm">
-                                            <span class="label-text mb-1 text-xs opacity-55">{{ __('Role name') }}</span>
+                                        <label class="w-full max-w-sm">
+                                            <span class="mb-1 block text-xs font-medium opacity-55">{{ __('Role name') }}</span>
                                             <x-lazy-input
                                                 type="text"
                                                 name="name"
@@ -166,7 +166,7 @@
 
                         <div class="space-y-5">
                             @forelse ($permissionGroups as $group => $groupPermissions)
-                                <fieldset class="rounded-3xl border border-base-300 bg-base-100/40 p-5">
+                                <x-lazy-fieldset class="rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm">
                                     <div class="mb-5">
                                         <h3 class="text-lg font-semibold">{{ $group }}</h3>
                                         <div class="text-sm opacity-50">
@@ -197,7 +197,7 @@
                                             </label>
                                         @endforeach
                                     </div>
-                                </fieldset>
+                                </x-lazy-fieldset>
                             @empty
                                 <div class="rounded-3xl border border-dashed border-base-300 p-10 text-center opacity-60">
                                     {{ __('No permissions found.') }}
@@ -221,7 +221,7 @@
 
                 @if ($canViewPermissions)
                     <x-lazy-collapse
-                        class="rounded-3xl border border-base-300 bg-base-100/40"
+                        class="rounded-2xl border border-base-300 bg-base-100 shadow-sm"
                         summary-class="text-lg font-semibold"
                         content-class="space-y-5"
                     >
@@ -259,7 +259,7 @@
 
                             <div class="grid gap-3 lg:grid-cols-2">
                                 @foreach ($permissions as $permission)
-                                    <div class="rounded-2xl border border-base-300 p-4">
+                                    <x-lazy-card compact class="border border-base-300 bg-base-100 shadow-sm">
                                         <form
                                             method="POST"
                                             action="{{ route($routePrefix.'.permission.update', $permission) }}"
@@ -308,7 +308,7 @@
                                                 @method('DELETE')
                                             </form>
                                         @endif
-                                    </div>
+                                    </x-lazy-card>
                                 @endforeach
                             </div>
                     </x-lazy-collapse>
