@@ -55,32 +55,21 @@
                                         >{{ __('Forgot your password?') }}</a>
                                     @endif
                                 </div>
-                                {{--<div class="input-group" id="show_hide_password">
-                                    <x-input id="password" type="password" name="password" required
-                                                 autocomplete="current-password" class="border-end-0"
-                                                 placeholder="{{ __('Password') }}"
-                                                 class="mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400"ы/>
-                                    <a href="javascript:;" class="input-group-text bg-transparent">
-                                        <i class='bx bx-hide'></i>
-                                    </a>
-                                </div>--}}
+                                
                                 <x-lazy-input type="password" name="password" id="password"
                                                       placeholder="Your Password"
                                                       class="mt-2 block w-full rounded-md border border-gray-200 bg-white px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-600 dark:focus:border-blue-400"
                                 />
                             </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="remember_me" name="remember"
-                                       checked>
-                                <x-lazy-label for="password" :value="__('Remember me')"
-                                               class="text-sm text-gray-600 dark:text-gray-200"/>
-                            </div>
+                            <label class="mt-4 flex items-center gap-2">
+                                <x-lazy-checkbox id="remember_me" name="remember" :checked="true" />
+                                <span class="text-sm text-gray-600 dark:text-gray-200">{{ __('Remember me') }}</span>
+                            </label>
 
                             <div class="mt-6">
-                                <button
-                                    class="w-full transform rounded-md bg-indigo-500 px-4 py-2 tracking-wide text-white transition-colors duration-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                <x-lazy-btn primary block type="submit">
                                     <i class="bx bxs-lock-open"></i>{{ __('Log in') }}
-                                </button>
+                                </x-lazy-btn>
                             </div>
 {{--                                                        <x-lazy-divider class="text-indigo-500" :text="__('auth.or_sign_in_with_email')"/>--}}
                             @if (app('router')->has('auth.social.login'))
