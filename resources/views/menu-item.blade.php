@@ -8,7 +8,7 @@
     </li>
 @else
     <li
-        class="nav-item hover-bordered relative"
+        class="nav-item relative"
         @if($hasChildren)
             x-data="{ open: {{ $active ? 'true' : 'false' }} }"
         @endif
@@ -16,7 +16,7 @@
         @if($hasChildren)
             <div
                 @class([
-                    'nav-link flex items-center gap-2 transition-all transform',
+                    'nav-link flex items-center gap-2 rounded-xl transition-all',
                     'active' => $active,
                 ])
                 :class="sidebarCompact ? 'justify-center px-2' : ''"
@@ -65,7 +65,7 @@
             </div>
 
             <ul
-                class="bg-base-200 border-primary relative left-auto flex overflow-hidden border-b-2 flex-col"
+                class="relative left-auto ml-3 flex flex-col gap-1 overflow-hidden border-l border-base-300 bg-base-200 pl-2"
                 x-show="! sidebarCompact && open"
                 x-cloak
                 x-transition:enter="transition ease-out duration-200"
@@ -86,7 +86,7 @@
                 @if($linkTarget === '_blank') rel="noopener noreferrer" @endif
                 title="{{ $label }}"
                 @class([
-                    'nav-link flex gap-2 transition-all transform',
+                    'nav-link flex gap-2 rounded-xl transition-all',
                     'active' => $active,
                 ])
                 :class="sidebarCompact ? 'justify-center px-2' : ''"

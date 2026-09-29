@@ -38,9 +38,9 @@
     @else
         <x-lazy-header/>
     @endif
-    <div class="content flex flex-col md:flex-row">
+    <div class="content flex min-h-0 flex-1 flex-col md:flex-row">
         <aside
-            class="sidebar-menu border-primary bg-base-200 shrink-0 border-y-2 py-4 transform transition-all duration-200"
+            class="sidebar-menu shrink-0 border-b border-base-300 bg-base-200 py-3 transition-all duration-200 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:overflow-y-auto md:border-b-0 md:border-r"
             :class="sidebarCompact ? 'md:w-20' : 'md:w-64'"
             aria-label="Sidebar"
             :aria-expanded="(! sidebarCompact).toString()">
@@ -50,11 +50,11 @@
                 {!! Menu::render() !!}
             @endif
         </aside>
-        <div class="bg-base-100 min-h-full w-full overflow-x-auto transition-all">
+        <div class="min-h-full min-w-0 flex-1 bg-base-100 transition-all">
             <!-- Page Heading -->
             @if (! $header)
-                <div class="bg-base shadow dark:bg-indigo-900">
-                    <div class="mx-auto grid grid-cols-3 gap-4 content-center py-6 px-4 sm:px-6 lg:px-8">
+                <div class="border-b border-base-300 bg-base-100">
+                    <div class="mx-auto grid grid-cols-3 content-center gap-4 px-4 py-5 sm:px-6 lg:px-8">
                         <div class="min-w-0 col-span-3 lg:col-span-2">
                             <h2 class="text-xl font-semibold leading-tight">
                                 {{ $title ?: __(Route::currentRouteName()) }}
@@ -65,7 +65,7 @@
                                 @include('lazy::breadcrumb-trail')
                             @endif
                         </div>
-                        <div class="col-span-3 lg:col-span-1 flex justify-end flex-wrap lg:mt-0 lg:ml-4 ">
+                        <div class="col-span-3 flex flex-wrap justify-start gap-2 lg:col-span-1 lg:justify-end">
                             <x-lazy-join>
                                 @if($action)
                                     {{ $action }}
@@ -105,7 +105,7 @@
             @endif
             <!-- Page Heading -->
             <!-- Page Content -->
-            <main class="mx-auto min-h-full py-6 px-4 shadow sm:px-6 lg:px-8">
+            <main class="mx-auto min-h-full px-4 py-6 sm:px-6 lg:px-8">
                 {{ $slot }}
             </main>
             <!-- Page Content -->
