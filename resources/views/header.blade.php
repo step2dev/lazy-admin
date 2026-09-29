@@ -1,4 +1,4 @@
-<header class="navbar bg-base-200">
+<header class="navbar sticky top-0 z-40 min-h-16 border-b border-base-300 bg-base-200 px-0 shadow-sm">
     <div class="flex flex-auto items-center justify-start px-4">
         <a href="{{ $dashboardUrl }}" class="flex items-center space-x-2" aria-label="{{ config('app.name') }}">
             @if($logoUrl)
@@ -82,24 +82,24 @@
         @if($user)
             <x-lazy-dropdown
                 end
-                width="w-52"
-                content-class="mt-3 shadow"
+                width="w-56"
+                content-class="mt-3 border border-base-300 shadow-xl"
             >
                 <x-slot:trigger>
-                    <div class="row flex cursor-pointer" tabindex="0" role="button">
+                    <div class="row flex cursor-pointer items-center rounded-xl transition hover:bg-base-300/60" tabindex="0" role="button">
                         <div class="hidden flex-col justify-center px-2 md:flex">
-                            <span class="text-right text-base capitalize subpixel-antialiased">
+                            <span class="max-w-44 truncate text-right text-sm font-medium capitalize subpixel-antialiased">
                                 {{ $user->name }}
                             </span>
 
                             @if(filled($workerType))
-                                <span class="text-right font-serif text-sm lowercase">
+                                <span class="max-w-44 truncate text-right text-xs opacity-60">
                                     {{ $workerType }}
                                 </span>
                             @endif
                         </div>
 
-                        <x-lazy-btn type="button" ghost circle>
+                        <x-lazy-btn type="button" ghost circle aria-label="{{ __('Account menu') }}">
                             <x-lazy-avatar
                                 class="w-10 rounded-full bg-primary text-primary-content"
                                 :src="$avatarUrl"
