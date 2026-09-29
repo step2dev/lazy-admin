@@ -58,7 +58,7 @@ it('keeps sidebar behavior intact while polishing layout', function (): void {
 
     expect($item)
         ->toContain('toggleSidebar()')
-        ->toContain("x-data="{ open:");
+        ->toContain('x-data="{ open:');
 });
 
 it('removes remaining legacy manual controls from migrated views', function (): void {
