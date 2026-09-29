@@ -15,7 +15,7 @@
             <div class="divide-y divide-base-300">
                 @foreach($notifications as $notification)
                     <x-lazy-btn
-                        :wire:click="'markRead('.IlluminateSupportJs::from($notification->id)->toHtml().')'"
+                        :wire:click="'markRead('.\Illuminate\Support\Js::from($notification->id)->toHtml().')'"
                         ghost
                         block
                         class="h-auto rounded-none px-4 py-4 text-left first:rounded-t-xl last:rounded-b-xl"
