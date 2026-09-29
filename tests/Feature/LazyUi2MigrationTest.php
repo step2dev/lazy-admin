@@ -206,9 +206,8 @@ it('does not depend on application-specific logo or avatar files', function (): 
 });
 
 it('does not render empty menu badges', function (): void {
-    $html = $this
-        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Dashboard\', \'badge\' => null]" />')
-        ->content();
+    $html = (string) $this
+        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Dashboard\', \'badge\' => null]" />');
 
     expect($html)
         ->toContain('Dashboard')
@@ -216,9 +215,8 @@ it('does not render empty menu badges', function (): void {
 });
 
 it('renders non-empty menu badges', function (): void {
-    $html = $this
-        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Inbox\', \'badge\' => 7]" />')
-        ->content();
+    $html = (string) $this
+        ->blade('<x-lazy-menu-label :item="[\'label\' => \'Inbox\', \'badge\' => 7]" />');
 
     expect($html)
         ->toContain('Inbox')
