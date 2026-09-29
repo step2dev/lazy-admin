@@ -62,7 +62,7 @@
                         <x-lazy-alert success class="mb-5" :message="session('status')" />
                     @endif
 
-                    @if($errors->any())
+                    @if(isset($errors) && $errors->any())
                         <x-lazy-alert error class="mb-5">
                             <ul class="list-disc space-y-1 pl-5 text-sm">
                                 @foreach($errors->all() as $error)
