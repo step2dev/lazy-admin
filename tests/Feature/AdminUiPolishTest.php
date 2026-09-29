@@ -39,7 +39,7 @@ it('keeps the admin header sticky while preserving the existing sidebar toggle c
 
     expect($header)
         ->toContain('sticky top-0 z-40')
-        ->toContain("lazy-sidebar-toggle")
+        ->toContain('lazy-sidebar-toggle')
         ->toContain('sidebarCompact')
         ->toContain('<livewire:lazy-admin.header-search />');
 });
