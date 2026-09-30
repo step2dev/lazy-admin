@@ -1,7 +1,10 @@
 <?php
 
 return [
+    'title' => 'Settings',
+    'sections' => 'Settings sections',
     'general' => 'General',
+    'general_description' => 'Site name, description and logo.',
     'other' => 'Other',
     'general_settings' => 'General settings',
     'manage_site' => 'Manage the name, description and logo of your site.',
