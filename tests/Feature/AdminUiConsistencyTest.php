@@ -77,8 +77,8 @@ it('removes remaining legacy manual controls from migrated views', function (): 
     $authLayout = file_get_contents($root.'/auth/layout.blade.php');
 
     expect($authLayout)
-        ->toContain('lg:grid-cols-3')
-        ->toContain('lg:col-span-2')
+        ->toContain('lg:w-2/3')
+        ->toContain('lg:w-1/3')
         ->toContain('<x-lazy-language-switcher')
         ->toContain("__('Back')")
         ->toContain("config('lazy.auth.ui.back_button', true)")
