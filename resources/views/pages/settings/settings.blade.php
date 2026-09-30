@@ -49,6 +49,35 @@
                 @endif
             </div>
         </section>
+
+        <section aria-labelledby="login-background-title" class="flex flex-col gap-5 rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm sm:p-6 lg:col-span-3">
+            <div class="flex flex-col gap-1">
+                <h2 id="login-background-title" class="text-lg font-semibold">{{ __('Login background') }}</h2>
+                <p class="text-sm opacity-70">{{ __('Image shown on the left side of the login page.') }}</p>
+            </div>
+
+            <div class="overflow-hidden rounded-xl border border-dashed border-base-300 bg-base-200">
+                @if ($currentBackgroundUrl)
+                    <x-lazy-image :src="$currentBackgroundUrl" :alt="__('Current login background')" class="aspect-[16/7] w-full object-cover" />
+                @else
+                    <div class="flex aspect-[16/7] items-center justify-center p-6">
+                        <span class="text-sm opacity-60">{{ __('No background uploaded') }}</span>
+                    </div>
+                @endif
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <x-lazy-form-image id="settings-background" wire:model="background" accept="image/*" hr
+                                   :label="__('Upload background')" aria-label="{{ __('Upload background') }}"
+                                   class="min-w-0 text-sm"
+                                   aria-describedby="settings-background-help" />
+                <p id="settings-background-help" class="text-xs opacity-70">{{ __('Image file, up to 4 MB. Recommended: 1600×1200 or larger.') }}</p>
+                <p wire:loading wire:target="background" role="status" class="text-sm opacity-70">{{ __('Uploading…') }}</p>
+                @if ($background)
+                    <p class="break-words text-sm opacity-70">{{ __('Selected: :name', ['name' => $background->getClientOriginalName()]) }}</p>
+                @endif
+            </div>
+        </section>
     </div>
 
     </fieldset>
@@ -58,7 +87,7 @@
         <div class="flex items-center justify-end gap-3">
             @if($canEdit)
                 <span wire:dirty class="text-xs opacity-70">{{ __('Unsaved changes') }}</span>
-                <x-lazy-btn primary type="submit" wire:loading.attr="disabled" wire:target="save,logo">
+                <x-lazy-btn primary type="submit" wire:loading.attr="disabled" wire:target="save,logo,background">
                     <span wire:loading.remove wire:target="save">{{ __('Save changes') }}</span>
                     <span wire:loading wire:target="save" role="status">{{ __('Saving…') }}</span>
                 </x-lazy-btn>
