@@ -212,7 +212,25 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     : url((string) config('lazy.admin.home', '/')),
                 'profileUrl' => Route::has('profile.show') ? route('profile.show') : null,
                 'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
-                'logoUrl' => filled(config('lazy.admin.logo')) ? config('lazy.admin.logo') : null,
+                'logoUrl' => (static function (): ?string {
+                    $logo = setting('admin.logo', config('lazy.admin.logo'));
+
+                    if (! is_string($logo) || $logo === '') {
+                        return null;
+                    }
+
+                    if (
+                        str_starts_with($logo, 'http://')
+                        || str_starts_with($logo, 'https://')
+                        || str_starts_with($logo, '//')
+                        || str_starts_with($logo, 'data:')
+                        || str_starts_with($logo, '/')
+                    ) {
+                        return $logo;
+                    }
+
+                    return \Illuminate\Support\Facades\Storage::disk('public')->url($logo);
+                })(),
                 'avatarUrl' => $user
                     ? (data_get($user, 'avatar')
                         ?: data_get($user, 'profile_photo_url')
