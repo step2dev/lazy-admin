@@ -1,8 +1,8 @@
 @php
-    $brandTitle = config('lazy.auth.branding.title', config('app.name'));
-    $brandSubtitle = config('lazy.auth.branding.subtitle');
-    $brandLogo = config('lazy.auth.branding.logo');
-    $brandBackground = config('lazy.auth.branding.background');
+    $brandTitle = setting('admin.name', config('lazy.auth.branding.title', config('app.name')));
+    $brandSubtitle = setting('admin.description', config('lazy.auth.branding.subtitle'));
+    $brandLogo = setting('admin.logo', config('lazy.auth.branding.logo'));
+    $brandBackground = setting('admin.background', config('lazy.auth.branding.background'));
 
     $resolveAsset = static function (?string $value): ?string {
         if (! filled($value)) {
