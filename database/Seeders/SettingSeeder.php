@@ -37,6 +37,13 @@ class SettingSeeder extends Seeder
                 'value' => '/images/logo.png',
                 'deletable' => 0,
             ],
+            [
+                'group' => 'admin',
+                'key' => 'background',
+                'type' => 'image',
+                'value' => null,
+                'deletable' => 0,
+            ],
         ];
 
         foreach ($settings as $setting) {
