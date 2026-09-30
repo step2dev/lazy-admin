@@ -82,6 +82,8 @@ it('removes remaining legacy manual controls from migrated views', function (): 
         ->toContain('<x-lazy-language-switcher')
         ->toContain("__('Back')")
         ->toContain("config('lazy.auth.ui.back_button', true)")
+        ->toContain('{{ $brandTitle }}')
+        ->not->toContain('max-h-32 max-w-72')
         ->not->toContain('rounded-2xl border border-base-300 bg-base-100 p-6');
 
     expect($settings)
