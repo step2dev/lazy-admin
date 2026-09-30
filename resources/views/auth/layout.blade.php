@@ -49,18 +49,9 @@
 
                 <div class="relative z-10 flex w-full items-end px-10 py-12 xl:px-16 xl:py-14">
                     <div class="max-w-2xl text-white">
-                        @if($brandLogoUrl)
-                            <img
-                                src="{{ $brandLogoUrl }}"
-                                alt="{{ $brandTitle }}"
-                                class="mb-6 max-h-32 max-w-72 object-contain drop-shadow-lg"
-                                onerror="this.hidden=true"
-                            />
-                        @else
-                            <h1 class="text-4xl font-bold tracking-tight drop-shadow">
-                                {{ $brandTitle }}
-                            </h1>
-                        @endif
+                        <h1 class="text-4xl font-bold tracking-tight drop-shadow">
+                            {{ $brandTitle }}
+                        </h1>
 
                         @if(filled($brandSubtitle))
                             <p class="mt-4 max-w-xl text-base leading-7 text-white/85">
