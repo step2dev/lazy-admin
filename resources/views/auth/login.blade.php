@@ -1,7 +1,11 @@
 @php
     $title = __('Log in');
     $heading = __('Welcome back');
-    $description = config('lazy.auth.branding.subtitle', __('Sign in to access your account'));
+
+    $configuredSubtitle = config('lazy.auth.branding.subtitle');
+    $description = filled($configuredSubtitle)
+        ? $configuredSubtitle
+        : __('Sign in to access your account');
 @endphp
 
 @extends('lazy::auth.layout')
