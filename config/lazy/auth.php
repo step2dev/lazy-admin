@@ -23,6 +23,7 @@ return [
 
     'ui' => [
         'theme_switcher' => env('LAZY_AUTH_THEME_SWITCHER', true),
+        'back_button' => env('LAZY_AUTH_BACK_BUTTON', true),
         'register_link' => env('LAZY_AUTH_REGISTER_LINK', true),
         'forgot_password_link' => env('LAZY_AUTH_FORGOT_PASSWORD_LINK', true),
     ],
