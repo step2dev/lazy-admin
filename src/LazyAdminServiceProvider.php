@@ -33,6 +33,7 @@ use Step2dev\LazyAdmin\Controllers\PageController;
 use Step2dev\LazyAdmin\Controllers\PermissionController;
 use Step2dev\LazyAdmin\Controllers\RoleController;
 use Step2dev\LazyAdmin\Controllers\SeoRedirectController;
+use Step2dev\LazyAdmin\Controllers\UserController;
 use Step2dev\LazyAdmin\Dashboard\DashboardRegistry;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
 use Step2dev\LazyAdmin\Facades\Route as RouteFacade;
@@ -257,6 +258,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
         RouteFacade::admin(function (): void {
             RouteFacade::get('', DashboardPage::class)->name('dashboard');
+            RouteFacade::resource('user', UserController::class);
+            RouteFacade::get('setting', SettingsPage::class)->name('setting.index');
             RouteFacade::get('search', SearchPage::class)->name('search');
             RouteFacade::get('notifications', NotificationsPage::class)->name('notifications.index');
             RouteFacade::get('activity', ActivityPage::class)->name('activity.index');
