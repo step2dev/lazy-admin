@@ -1,38 +1,67 @@
-<x-lazy-base-layout :title="$title ?? config('lazy.auth.branding.title', config('app.name'))">
+@php
+    $brandTitle = config('lazy.auth.branding.title', config('app.name'));
+    $brandSubtitle = config('lazy.auth.branding.subtitle');
+    $brandLogo = config('lazy.auth.branding.logo');
+    $brandBackground = config('lazy.auth.branding.background');
+
+    $resolveAsset = static function (?string $value): ?string {
+        if (! filled($value)) {
+            return null;
+        }
+
+        if (
+            str_starts_with($value, 'http://')
+            || str_starts_with($value, 'https://')
+            || str_starts_with($value, '//')
+            || str_starts_with($value, 'data:')
+            || str_starts_with($value, '/')
+        ) {
+            return $value;
+        }
+
+        return asset($value);
+    };
+
+    $brandLogoUrl = $resolveAsset(is_string($brandLogo) ? $brandLogo : null);
+    $brandBackgroundUrl = $resolveAsset(is_string($brandBackground) ? $brandBackground : null);
+@endphp
+
+<x-lazy-base-layout :title="$title ?? $brandTitle">
     <div class="min-h-screen bg-base-200">
-        <div class="grid min-h-screen lg:grid-cols-[minmax(0,1.2fr)_minmax(24rem,0.8fr)]">
+        <div class="grid min-h-screen lg:grid-cols-2">
             <section
-                class="relative hidden overflow-hidden bg-base-300 lg:flex"
-                @if(config('lazy.auth.branding.background'))
-                    style="background-image: url('{{ config('lazy.auth.branding.background') }}'); background-size: cover; background-position: center;"
+                class="relative hidden min-h-screen overflow-hidden bg-base-300 lg:flex"
+                @if($brandBackgroundUrl)
+                    style="background-image: url('{{ $brandBackgroundUrl }}'); background-size: cover; background-position: center;"
                 @endif
             >
                 <div class="absolute inset-0 bg-base-300/75"></div>
 
                 <div class="relative z-10 flex w-full items-end p-12">
                     <div class="max-w-xl">
-                        @if(config('lazy.auth.branding.logo'))
+                        @if($brandLogoUrl)
                             <img
-                                src="{{ config('lazy.auth.branding.logo') }}"
-                                alt="{{ config('lazy.auth.branding.title', config('app.name')) }}"
+                                src="{{ $brandLogoUrl }}"
+                                alt="{{ $brandTitle }}"
                                 class="mb-6 max-h-16 max-w-64 object-contain"
+                                onerror="this.hidden=true"
                             />
                         @endif
 
                         <h1 class="text-4xl font-bold tracking-tight">
-                            {{ config('lazy.auth.branding.title', config('app.name')) }}
+                            {{ $brandTitle }}
                         </h1>
 
-                        @if(config('lazy.auth.branding.subtitle'))
+                        @if(filled($brandSubtitle))
                             <p class="mt-4 text-lg opacity-70">
-                                {{ config('lazy.auth.branding.subtitle') }}
+                                {{ $brandSubtitle }}
                             </p>
                         @endif
                     </div>
                 </div>
             </section>
 
-            <main class="relative flex items-center justify-center px-6 py-12 sm:px-10">
+            <main class="relative flex min-h-screen items-center justify-center px-6 py-12 sm:px-10">
                 @if(config('lazy.auth.ui.theme_switcher', true))
                     <div class="absolute right-5 top-5">
                         <x-lazy-theme-switcher />
@@ -41,16 +70,17 @@
 
                 <div class="w-full max-w-md">
                     <div class="mb-8 text-center lg:text-left">
-                        @if(config('lazy.auth.branding.logo'))
+                        @if($brandLogoUrl)
                             <img
-                                src="{{ config('lazy.auth.branding.logo') }}"
-                                alt="{{ config('lazy.auth.branding.title', config('app.name')) }}"
+                                src="{{ $brandLogoUrl }}"
+                                alt="{{ $brandTitle }}"
                                 class="mx-auto mb-5 max-h-14 max-w-56 object-contain lg:mx-0"
+                                onerror="this.hidden=true"
                             />
                         @endif
 
                         <h2 class="text-3xl font-semibold tracking-tight">
-                            {{ $heading ?? config('lazy.auth.branding.title', config('app.name')) }}
+                            {{ $heading ?? $brandTitle }}
                         </h2>
 
                         @isset($description)
@@ -72,7 +102,7 @@
                         </x-lazy-alert>
                     @endif
 
-                    <div class="rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm sm:p-8">
+                    <div class="w-full rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm sm:p-8">
                         @yield('content')
                     </div>
                 </div>
