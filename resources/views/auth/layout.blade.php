@@ -19,7 +19,7 @@
             return $value;
         }
 
-        return asset($value);
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($value);
     };
 
     $brandLogoUrl = $resolveAsset(is_string($brandLogo) ? $brandLogo : null);
