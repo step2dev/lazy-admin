@@ -23,9 +23,9 @@
     @endif
     @livewireStyles
 </head>
-<body class="min-h-screen bg-gray-100 font-sans antialiased">
+<body class="min-h-screen bg-base-200 font-sans antialiased">
 {{ $noscript ?? ''}}
-<div class="flex flex-col">
+<div class="flex min-h-screen flex-col">
     {{ $slot }}
 </div>
 @livewireScriptConfig
