@@ -25,6 +25,15 @@
     $brandLogoUrl = $resolveAsset(is_string($brandLogo) ? $brandLogo : null);
     $brandBackgroundUrl = $resolveAsset(is_string($brandBackground) ? $brandBackground : null);
     $resolvedHeading = $heading ?? null;
+
+    $backUrl = url('/');
+    $previousUrl = url()->previous();
+
+    if ($previousUrl !== url()->current()) {
+        $backUrl = $previousUrl;
+    } elseif (lazyLocalization()->isMultiLanguage()) {
+        $backUrl = lazyLocalization()->getLocalizedURL(lazyLocalization()->getLocale(), '/');
+    }
 @endphp
 
 <x-lazy-base-layout :title="$title ?? $brandTitle">
@@ -63,11 +72,40 @@
             </section>
 
             <main class="relative flex min-h-screen w-full items-center justify-center px-6 py-12 sm:px-10 lg:w-1/3">
-                @if(config('lazy.auth.ui.theme_switcher', true))
-                    <div class="absolute right-5 top-5">
+                <div class="absolute left-5 top-5 flex items-center gap-2">
+                    @if(config('lazy.auth.ui.back_button', true))
+                        <a
+                            href="{{ $backUrl }}"
+                            class="btn btn-ghost btn-sm gap-2"
+                            aria-label="{{ __('Back') }}"
+                            title="{{ __('Back') }}"
+                        >
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="m15 18-6-6 6-6"></path>
+                            </svg>
+                            <span class="hidden sm:inline">{{ __('Back') }}</span>
+                        </a>
+                    @endif
+                </div>
+
+                <div class="absolute right-5 top-5 flex items-center gap-2">
+                    @if(lazyLocalization()->isMultiLanguage())
+                        <x-lazy-language-switcher />
+                    @endif
+
+                    @if(config('lazy.auth.ui.theme_switcher', true))
                         <x-lazy-theme-switcher />
-                    </div>
-                @endif
+                    @endif
+                </div>
 
                 <div class="w-full max-w-md">
                     <div class="mb-8 text-center">
