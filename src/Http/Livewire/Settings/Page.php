@@ -9,7 +9,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Step2dev\LazyAdmin\Settings\SettingsRegistry;
 
-#[Layout('lazy::livewire-layout', ['title' => 'Settings'])]
+#[Layout('lazy::livewire-layout', ['title' => 'lazy-admin::settings.title'])]
 class Page extends Component
 {
     #[Url(as: 'section', history: true)]
