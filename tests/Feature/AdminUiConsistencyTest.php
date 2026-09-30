@@ -70,8 +70,16 @@ it('removes remaining legacy manual controls from migrated views', function (): 
     expect($login)
         ->toContain('<x-lazy-checkbox')
         ->toContain('<x-lazy-btn primary block')
+        ->toContain("Route::has('auth.social.login')")
         ->not->toContain('form-check-input')
         ->not->toContain('input-group');
+
+    $authLayout = file_get_contents($root.'/auth/layout.blade.php');
+
+    expect($authLayout)
+        ->toContain('lg:w-2/3')
+        ->toContain('lg:w-1/3')
+        ->not->toContain('rounded-2xl border border-base-300 bg-base-100 p-6');
 
     expect($settings)
         ->not->toContain('class="input-bordered"')
