@@ -24,36 +24,37 @@
 
     $brandLogoUrl = $resolveAsset(is_string($brandLogo) ? $brandLogo : null);
     $brandBackgroundUrl = $resolveAsset(is_string($brandBackground) ? $brandBackground : null);
+    $resolvedHeading = $heading ?? null;
 @endphp
 
 <x-lazy-base-layout :title="$title ?? $brandTitle">
     <div class="min-h-screen bg-base-200">
-        <div class="grid min-h-screen lg:grid-cols-2">
+        <div class="flex min-h-screen">
             <section
-                class="relative hidden min-h-screen overflow-hidden bg-base-300 lg:flex"
+                class="relative hidden min-h-screen overflow-hidden bg-base-300 bg-cover bg-center lg:flex lg:w-2/3"
                 @if($brandBackgroundUrl)
-                    style="background-image: url('{{ $brandBackgroundUrl }}'); background-size: cover; background-position: center;"
+                    style="background-image: url('{{ $brandBackgroundUrl }}');"
                 @endif
             >
-                <div class="absolute inset-0 bg-base-300/75"></div>
+                <div class="absolute inset-0 bg-black/35"></div>
 
-                <div class="relative z-10 flex w-full items-end p-12">
-                    <div class="max-w-xl">
+                <div class="relative z-10 flex w-full items-end px-10 py-12 xl:px-16 xl:py-14">
+                    <div class="max-w-2xl text-white">
                         @if($brandLogoUrl)
                             <img
                                 src="{{ $brandLogoUrl }}"
                                 alt="{{ $brandTitle }}"
-                                class="mb-6 max-h-16 max-w-64 object-contain"
+                                class="mb-6 max-h-32 max-w-72 object-contain drop-shadow-lg"
                                 onerror="this.hidden=true"
                             />
+                        @else
+                            <h1 class="text-4xl font-bold tracking-tight drop-shadow">
+                                {{ $brandTitle }}
+                            </h1>
                         @endif
 
-                        <h1 class="text-4xl font-bold tracking-tight">
-                            {{ $brandTitle }}
-                        </h1>
-
                         @if(filled($brandSubtitle))
-                            <p class="mt-4 text-lg opacity-70">
+                            <p class="mt-4 max-w-xl text-base leading-7 text-white/85">
                                 {{ $brandSubtitle }}
                             </p>
                         @endif
@@ -61,7 +62,7 @@
                 </div>
             </section>
 
-            <main class="relative flex min-h-screen items-center justify-center px-6 py-12 sm:px-10">
+            <main class="relative flex min-h-screen w-full items-center justify-center px-6 py-12 sm:px-10 lg:w-1/3">
                 @if(config('lazy.auth.ui.theme_switcher', true))
                     <div class="absolute right-5 top-5">
                         <x-lazy-theme-switcher />
@@ -69,22 +70,24 @@
                 @endif
 
                 <div class="w-full max-w-md">
-                    <div class="mb-8 text-center lg:text-left">
+                    <div class="mb-8 text-center">
                         @if($brandLogoUrl)
                             <img
                                 src="{{ $brandLogoUrl }}"
                                 alt="{{ $brandTitle }}"
-                                class="mx-auto mb-5 max-h-14 max-w-56 object-contain lg:mx-0"
+                                class="mx-auto mb-5 max-h-40 max-w-64 object-contain"
                                 onerror="this.hidden=true"
                             />
                         @endif
 
-                        <h2 class="text-3xl font-semibold tracking-tight">
-                            {{ $heading ?? $brandTitle }}
-                        </h2>
+                        @if(filled($resolvedHeading) || ! $brandLogoUrl)
+                            <h2 class="text-3xl font-semibold tracking-tight">
+                                {{ $resolvedHeading ?: $brandTitle }}
+                            </h2>
+                        @endif
 
                         @isset($description)
-                            <p class="mt-2 text-sm opacity-65">{{ $description }}</p>
+                            <p class="mt-3 text-sm opacity-70">{{ $description }}</p>
                         @endisset
                     </div>
 
@@ -102,9 +105,7 @@
                         </x-lazy-alert>
                     @endif
 
-                    <div class="w-full rounded-2xl border border-base-300 bg-base-100 p-6 shadow-sm sm:p-8">
-                        @yield('content')
-                    </div>
+                    @yield('content')
                 </div>
             </main>
         </div>
