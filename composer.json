@@ -23,18 +23,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/step2dev/lazy-breadcrumb"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/step2dev/lazy-setting"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/step2dev/lazy-ui"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/step2dev/lazy-menu.git"
         },
         {
