@@ -299,16 +299,16 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
         app(SettingsRegistry::class)->registerSection(
             id: 'general',
-            label: __('General'),
+            label: __('lazy-admin::settings.general'),
             component: 'settings.setting',
             permission: 'settings.view',
             priority: 10,
-            description: __('Site name, description and logo.'),
+            description: __('lazy-admin::settings.general_description'),
         );
 
         app(DashboardRegistry::class)->registerWidget(
             id: 'pages',
-            label: __('Pages'),
+            label: __('lazy-admin::admin.navigation.pages'),
             value: static fn (): int => Page::query()->count(),
             description: __('Total CMS pages'),
             route: $prefix.'.page.index',
@@ -459,8 +459,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         MenuFacade::register(function (MenuManager $menu): void {
             $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
-            $menu->group(__('Overview'));
-            $menu->addItem($prefix.'.dashboard', __('Dashboard'));
+            $menu->group(__('lazy-admin::admin.navigation.overview'));
+            $menu->addItem($prefix.'.dashboard', __('lazy-admin::admin.navigation.dashboard'));
         }, id: 'lazy-admin-dashboard', priority: 10);
 
         MenuFacade::register(function (MenuManager $menu): void {
@@ -469,14 +469,14 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
             if (! $enforce || $user?->can('settings.view') || $user?->can('activity.view')) {
-                $menu->group(__('System'));
+                $menu->group(__('lazy-admin::admin.navigation.system'));
 
                 if (! $enforce || $user?->can('settings.view')) {
-                    $menu->addItem($prefix.'.setting.index', __('Settings'));
+                    $menu->addItem($prefix.'.setting.index', __('lazy-admin::admin.navigation.settings'));
                 }
 
                 if (! $enforce || $user?->can('activity.view')) {
-                    $menu->addItem($prefix.'.activity.index', __('Activity log'));
+                    $menu->addItem($prefix.'.activity.index', __('lazy-admin::admin.navigation.activity_log'));
                 }
             }
         }, id: 'lazy-admin-system', priority: 90);
@@ -496,10 +496,10 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     ? $routeName
                     : url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/').'/seo/redirects');
 
-                $menu->group(__('SEO'));
+                $menu->group(__('lazy-admin::admin.navigation.seo'));
                 $menu->addItem(
                     $routeTarget,
-                    __('Redirects'),
+                    __('lazy-admin::admin.navigation.redirects'),
                 );
             }, id: 'lazy-admin-seo-redirects', priority: 70);
         }
@@ -511,7 +511,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             if (! $enforce || $user?->can('pages.view')) {
                 $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
-                $menu->group(__('Content'));
+                $menu->group(__('lazy-admin::admin.navigation.content'));
                 $menu->addItem(
                     $prefix.'.page.index',
                     __('Pages'),
@@ -531,10 +531,10 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
             $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
-            $menu->group(__('Access'));
+            $menu->group(__('lazy-admin::admin.navigation.access'));
             $menu->addItem(
                 $prefix.'.access.index',
-                __('Access'),
+                __('lazy-admin::admin.navigation.access'),
             );
         }, id: 'lazy-admin-access', priority: 80);
     }
