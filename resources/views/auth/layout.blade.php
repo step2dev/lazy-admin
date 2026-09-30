@@ -63,8 +63,8 @@
                         <a
                             href="{{ $backUrl }}"
                             class="btn btn-ghost btn-sm gap-2"
-                            aria-label="{{ __('Back') }}"
-                            title="{{ __('Back') }}"
+                            aria-label="{{ __('lazy-admin::auth.back') }}"
+                            title="{{ __('lazy-admin::auth.back') }}"
                         >
                             <svg
                                 class="h-4 w-4"
@@ -78,7 +78,7 @@
                             >
                                 <path d="m15 18-6-6 6-6"></path>
                             </svg>
-                            <span class="hidden sm:inline">{{ __('Back') }}</span>
+                            <span class="hidden sm:inline">{{ __('lazy-admin::auth.back') }}</span>
                         </a>
                     @endif
                 </div>
