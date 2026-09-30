@@ -1,10 +1,5 @@
 <x-lazy-form wire:submit="save" class="mx-auto flex w-full max-w-5xl flex-col gap-6">
     <fieldset @disabled(! $canEdit) class="contents">
-    <header class="flex flex-col gap-2">
-        <h1 class="text-2xl font-semibold tracking-tight">{{ __('lazy-admin::settings.general_settings') }}</h1>
-        <p class="text-sm opacity-70">{{ __('lazy-admin::settings.manage_site') }}</p>
-    </header>
-
     <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
         <section aria-labelledby="site-details-title" class="rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm sm:p-6 lg:col-span-2">
             <div class="mb-6 flex flex-col gap-1">
