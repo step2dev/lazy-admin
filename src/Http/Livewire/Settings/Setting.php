@@ -20,7 +20,11 @@ class Setting extends Component
 
     public mixed $logo = null;
 
+    public mixed $background = null;
+
     public ?string $currentLogoUrl = null;
+
+    public ?string $currentBackgroundUrl = null;
 
     public bool $canEdit = false;
 
@@ -40,7 +44,8 @@ class Setting extends Component
             ->all();
 
         $this->originalSettings = $this->settings;
-        $this->currentLogoUrl = $this->resolveLogoUrl(setting('admin.logo'));
+        $this->currentLogoUrl = $this->resolveImageUrl(setting('admin.logo'));
+        $this->currentBackgroundUrl = $this->resolveImageUrl(setting('admin.background'));
     }
 
     public function rules(): array
@@ -49,6 +54,7 @@ class Setting extends Component
             'settings.name' => ['nullable', 'string', 'max:255'],
             'settings.description' => ['nullable', 'string'],
             'logo' => ['nullable', 'image', 'max:1024'],
+            'background' => ['nullable', 'image', 'max:4096'],
         ];
     }
 
@@ -62,20 +68,31 @@ class Setting extends Component
             'name' => $this->originalSettings['name'] ?? null,
             'description' => $this->originalSettings['description'] ?? null,
             'logo' => setting('admin.logo'),
+            'background' => setting('admin.background'),
         ];
 
         setting()->set('admin.name', $this->settings['name'] ?? '');
         setting()->set('admin.description', $this->settings['description'] ?? '');
 
         $logoPath = $old['logo'];
+        $backgroundPath = $old['background'];
 
         if ($this->logo instanceof UploadedFile) {
             $logoPath = $this->logo->store('lazy-admin/settings', 'public');
 
             setting()->set('admin.logo', $logoPath, 'image');
-            $this->deleteStoredLogo($old['logo']);
+            $this->deleteStoredImage($old['logo']);
             $this->currentLogoUrl = Storage::disk('public')->url($logoPath);
             $this->logo = null;
+        }
+
+        if ($this->background instanceof UploadedFile) {
+            $backgroundPath = $this->background->store('lazy-admin/settings', 'public');
+
+            setting()->set('admin.background', $backgroundPath, 'image');
+            $this->deleteStoredImage($old['background']);
+            $this->currentBackgroundUrl = Storage::disk('public')->url($backgroundPath);
+            $this->background = null;
         }
 
         $this->originalSettings = $this->settings;
@@ -88,6 +105,7 @@ class Setting extends Component
                 'name' => $this->settings['name'] ?? '',
                 'description' => $this->settings['description'] ?? '',
                 'logo' => $logoPath,
+                'background' => $backgroundPath,
             ],
         );
     }
@@ -97,7 +115,7 @@ class Setting extends Component
         return lazyView('lazy::pages.settings.settings');
     }
 
-    private function resolveLogoUrl(mixed $value): ?string
+    private function resolveImageUrl(mixed $value): ?string
     {
         if (! is_string($value) || $value === '') {
             return null;
@@ -114,7 +132,7 @@ class Setting extends Component
         return Storage::disk('public')->url($value);
     }
 
-    private function deleteStoredLogo(mixed $value): void
+    private function deleteStoredImage(mixed $value): void
     {
         if (
             ! is_string($value)
