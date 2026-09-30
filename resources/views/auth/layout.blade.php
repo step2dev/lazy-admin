@@ -42,8 +42,8 @@
             >
                 <div class="absolute inset-0 bg-black/35"></div>
 
-                <div class="relative z-10 flex w-full items-end justify-center px-10 py-12 xl:px-16 xl:py-14">
-                    <div class="max-w-2xl text-center text-white">
+                <div class="relative z-10 flex w-full items-center px-10 py-12 xl:px-16 xl:py-14">
+                    <div class="max-w-2xl text-left text-white">
                         <h1 class="text-4xl font-bold tracking-tight drop-shadow">
                             {{ $brandTitle }}
                         </h1>
