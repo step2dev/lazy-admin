@@ -38,9 +38,9 @@
 
 <x-lazy-base-layout :title="$title ?? $brandTitle">
     <div class="min-h-screen bg-base-200">
-        <div class="flex min-h-screen">
+        <div class="grid min-h-screen lg:grid-cols-3">
             <section
-                class="relative hidden min-h-screen overflow-hidden bg-base-300 bg-cover bg-center lg:flex lg:w-2/3"
+                class="relative hidden min-h-screen overflow-hidden bg-base-300 bg-cover bg-center lg:col-span-2 lg:flex"
                 @if($brandBackgroundUrl)
                     style="background-image: url('{{ $brandBackgroundUrl }}');"
                 @endif
@@ -71,7 +71,7 @@
                 </div>
             </section>
 
-            <main class="relative flex min-h-screen w-full items-center justify-center px-6 py-12 sm:px-10 lg:w-1/3">
+            <main class="relative flex min-h-screen w-full items-center justify-center px-6 py-12 sm:px-10">
                 <div class="absolute left-5 top-5 flex items-center gap-2">
                     @if(config('lazy.auth.ui.back_button', true))
                         <a
