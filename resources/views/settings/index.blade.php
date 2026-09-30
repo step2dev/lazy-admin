@@ -3,11 +3,11 @@
         <x-lazy-card compact class="border border-base-300 bg-base-100 shadow-sm">
             <div class="mb-2 px-2">
                 <div class="text-xs font-semibold uppercase tracking-wider opacity-50">
-                    {{ __('Settings') }}
+                    {{ __('lazy-admin::settings.title') }}
                 </div>
             </div>
 
-            <nav class="flex flex-col gap-1" aria-label="{{ __('Settings sections') }}">
+            <nav class="flex flex-col gap-1" aria-label="{{ __('lazy-admin::settings.sections') }}">
                 @foreach($sections as $item)
                     @if($activeSection['id'] === $item['id'])
                         <x-lazy-btn
