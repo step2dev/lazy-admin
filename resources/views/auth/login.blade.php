@@ -1,11 +1,20 @@
 @php
     $title = __('Log in');
-    $heading = __('Welcome back');
+    $heading = null;
 
-    $configuredSubtitle = config('lazy.auth.branding.subtitle');
+    $configuredSubtitle = setting('admin.description', config('lazy.auth.branding.subtitle'));
     $description = filled($configuredSubtitle)
         ? $configuredSubtitle
         : __('Sign in to access your account');
+
+    $socialProviders = collect((array) config('lazy.socialite.services', []))
+        ->filter(fn (array $service): bool => (bool) ($service['enable'] ?? false))
+        ->keys()
+        ->values();
+
+    $socialLoginEnabled = (bool) config('lazy.socialite.enable', false)
+        && Route::has('auth.social.login')
+        && $socialProviders->isNotEmpty();
 @endphp
 
 @extends('lazy::auth.layout')
@@ -55,6 +64,29 @@
         </label>
 
         <x-lazy-btn primary block type="submit" :label="__('Log in')" />
+
+        @if($socialLoginEnabled)
+            <div class="pt-1">
+                <div class="divider text-xs uppercase tracking-wider opacity-50">
+                    {{ __('Or continue with') }}
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3">
+                    @foreach($socialProviders as $provider)
+                        <a
+                            href="{{ route('auth.social.login', ['driver' => $provider]) }}"
+                            class="btn btn-circle btn-ghost border border-base-300 bg-base-100"
+                            title="{{ __('Sign in with :provider', ['provider' => ucfirst($provider)]) }}"
+                            aria-label="{{ __('Sign in with :provider', ['provider' => ucfirst($provider)]) }}"
+                        >
+                            <span class="text-sm font-semibold uppercase">
+                                {{ mb_substr($provider, 0, 1) }}
+                            </span>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
 
         @if(config('lazy.auth.ui.register_link', true) && Route::has('register'))
             <p class="text-center text-sm opacity-70">
