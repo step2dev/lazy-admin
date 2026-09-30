@@ -84,10 +84,6 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             ])
             ->hasViews('lazy')
             ->hasTranslations()
-            ->hasMigrations([
-                'create_settings_table',
-            ])
-            ->runsMigrations()
             // ->publishesServiceProvider('LazyAsideServiceProvider')
             ->publishesServiceProvider('LazyAdminServiceProvider')
             //            ->hasAssets()
