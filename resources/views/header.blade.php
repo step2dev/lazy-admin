@@ -24,6 +24,19 @@
             @endif
         </a>
 
+        <x-lazy-btn
+            type="button"
+            ghost
+            circle
+            class="ml-2 md:hidden"
+            aria-label="{{ __('Open navigation') }}"
+            @click="$dispatch('lazy-sidebar-toggle')"
+        >
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M4 6h16v2H4V6Zm0 5h16v2H4v-2Zm0 5h16v2H4v-2Z"></path>
+            </svg>
+        </x-lazy-btn>
+
         <x-lazy-swap
             controlled
             rotate
