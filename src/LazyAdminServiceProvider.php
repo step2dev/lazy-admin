@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
@@ -229,7 +230,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                         return $logo;
                     }
 
-                    return \Illuminate\Support\Facades\Storage::disk('public')->url($logo);
+                    return Storage::disk('public')->url($logo);
                 })(),
                 'avatarUrl' => $user
                     ? (data_get($user, 'avatar')
