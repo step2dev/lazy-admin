@@ -64,9 +64,14 @@ it('renders the packaged login view with current lazy ui components', function (
         ->assertSee('name="password"', false);
 });
 
-it('registers core access routes independently from the host admin route file', function (): void {
+it('registers core admin routes independently from the host admin route file', function (): void {
     expect(Route::has('admin.access.index'))->toBeTrue()
         ->and(Route::has('admin.role.store'))->toBeTrue()
         ->and(Route::has('admin.permission.store'))->toBeTrue()
-        ->and(route('admin.access.index', absolute: false))->toBe('/admin/access');
+        ->and(Route::has('admin.setting.index'))->toBeTrue()
+        ->and(Route::has('admin.user.index'))->toBeTrue()
+        ->and(Route::has('admin.user.edit'))->toBeTrue()
+        ->and(route('admin.access.index', absolute: false))->toBe('/admin/access')
+        ->and(route('admin.setting.index', absolute: false))->toBe('/admin/setting')
+        ->and(route('admin.user.index', absolute: false))->toBe('/admin/user');
 });
