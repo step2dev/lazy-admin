@@ -26,14 +26,9 @@
     $brandBackgroundUrl = $resolveAsset(is_string($brandBackground) ? $brandBackground : null);
     $resolvedHeading = $heading ?? null;
 
-    $backUrl = url('/');
-    $previousUrl = url()->previous();
-
-    if ($previousUrl !== url()->current()) {
-        $backUrl = $previousUrl;
-    } elseif (lazyLocalization()->isMultiLanguage()) {
-        $backUrl = lazyLocalization()->getLocalizedURL(lazyLocalization()->getLocale(), '/');
-    }
+    $backUrl = lazyLocalization()->isMultiLanguage()
+        ? lazyLocalization()->getLocalizedURL(lazyLocalization()->getLocale(), '/')
+        : url('/');
 @endphp
 
 <x-lazy-base-layout :title="$title ?? $brandTitle">
