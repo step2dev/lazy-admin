@@ -30,8 +30,19 @@
                     <div class="grid grid-cols-12 gap-3">
                         @foreach($customWidgets as $widget)
                             <div
-                                class="col-span-12"
-                                style="grid-column: span {{ $widget['span'] }} / span {{ $widget['span'] }};"
+                                @class([
+                                    'col-span-12',
+                                    'md:col-span-3' => $widget['span'] <= 3,
+                                    'md:col-span-4' => $widget['span'] === 4,
+                                    'md:col-span-5' => $widget['span'] === 5,
+                                    'md:col-span-6' => $widget['span'] === 6,
+                                    'md:col-span-7' => $widget['span'] === 7,
+                                    'md:col-span-8' => $widget['span'] === 8,
+                                    'md:col-span-9' => $widget['span'] === 9,
+                                    'md:col-span-10' => $widget['span'] === 10,
+                                    'md:col-span-11' => $widget['span'] === 11,
+                                    'md:col-span-12' => $widget['span'] >= 12,
+                                ])
                                 wire:key="dashboard-custom-{{ $widget['id'] }}"
                             >
                                 @include($widget['view'], $widget['data'])
