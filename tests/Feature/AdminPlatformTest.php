@@ -31,6 +31,7 @@ it('allows modules to register dashboard widgets', function (): void {
         priority: 5,
         group: 'Commerce',
         tone: 'warning',
+        progress: fn (): float => 73.5,
     );
 
     $widget = collect($registry->widgetsFor(null))->firstWhere('id', 'orders');
@@ -41,7 +42,8 @@ it('allows modules to register dashboard widgets', function (): void {
         ->and($widget['value'])->toBe(42)
         ->and($widget['description'])->toBe('Open orders')
         ->and($widget['group'])->toBe('Commerce')
-        ->and($widget['tone'])->toBe('warning');
+        ->and($widget['tone'])->toBe('warning')
+        ->and($widget['progress'])->toBe(73.5);
 });
 
 it('allows modules to register global search providers', function (): void {
