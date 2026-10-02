@@ -1,0 +1,7 @@
+{
+  "name": "@step2dev/lazy-admin",
+  "private": true,
+  "dependencies": {
+    "@weblogin/trendchart-elements": "^1.1.0"
+  }
+}
