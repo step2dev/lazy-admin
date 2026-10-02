@@ -46,6 +46,29 @@ it('allows modules to register dashboard widgets', function (): void {
         ->and($widget['progress'])->toBe(73.5);
 });
 
+it('allows modules to register custom dashboard Blade widgets', function (): void {
+    $registry = new DashboardRegistry;
+
+    $registry->registerCustomWidget(
+        id: 'sales-chart',
+        view: 'dashboard.widgets.sales-chart',
+        data: fn (): array => ['values' => [10, 20, 30]],
+        group: 'Analytics',
+        span: 8,
+        priority: 15,
+    );
+
+    $widget = collect($registry->widgetsFor(null))->firstWhere('id', 'sales-chart');
+
+    expect($widget)
+        ->not->toBeNull()
+        ->and($widget['type'])->toBe('custom')
+        ->and($widget['view'])->toBe('dashboard.widgets.sales-chart')
+        ->and($widget['data'])->toBe(['values' => [10, 20, 30]])
+        ->and($widget['group'])->toBe('Analytics')
+        ->and($widget['span'])->toBe(8);
+});
+
 it('allows modules to register global search providers', function (): void {
     $registry = new SearchRegistry;
 
