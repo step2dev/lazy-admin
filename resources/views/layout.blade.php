@@ -40,6 +40,7 @@
         }"
         @lazy-sidebar-toggle.window="toggleSidebar()"
         class="contents"
+        style="--lazy-admin-header-height: {{ config('lazy.admin.layout.header_height', '4rem') }};"
     >
     @if($header)
         <header class="navbar bg-base-200">
