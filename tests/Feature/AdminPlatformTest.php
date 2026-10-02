@@ -29,6 +29,8 @@ it('allows modules to register dashboard widgets', function (): void {
         value: fn (): int => 42,
         description: 'Open orders',
         priority: 5,
+        group: 'Commerce',
+        tone: 'warning',
     );
 
     $widget = collect($registry->widgetsFor(null))->firstWhere('id', 'orders');
@@ -37,7 +39,9 @@ it('allows modules to register dashboard widgets', function (): void {
         ->not->toBeNull()
         ->and($widget['label'])->toBe('Orders')
         ->and($widget['value'])->toBe(42)
-        ->and($widget['description'])->toBe('Open orders');
+        ->and($widget['description'])->toBe('Open orders')
+        ->and($widget['group'])->toBe('Commerce')
+        ->and($widget['tone'])->toBe('warning');
 });
 
 it('allows modules to register global search providers', function (): void {
