@@ -40,7 +40,12 @@
         }"
         @lazy-sidebar-toggle.window="toggleSidebar()"
         class="contents"
-        style="--lazy-admin-header-height: {{ config('lazy.admin.layout.header_height', '4rem') }};"
+        data-lazy-admin-shell
+        style="
+            --lazy-admin-header-height: {{ config('lazy.admin.layout.header_height', '4rem') }};
+            --lazy-admin-page-heading-height: 0px;
+            --lazy-admin-content-sticky-offset: calc(var(--lazy-admin-header-height) + var(--lazy-admin-page-heading-height));
+        "
     >
     @if($header)
         <header class="navbar bg-base-200">
@@ -74,19 +79,31 @@
         <div class="min-h-full min-w-0 flex-1 bg-base-100 transition-all">
             <!-- Page Heading -->
             @if (! $header)
-                <div class="border-b border-base-300 bg-base-100">
-                    <div class="mx-auto grid grid-cols-3 content-center gap-4 px-4 py-5 sm:px-6 lg:px-8">
+                <div
+                    class="sticky z-30 border-b border-base-300 bg-base-100/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-base-100/90"
+                    style="top: var(--lazy-admin-header-height);"
+                    x-init="
+                        const shell = $el.closest('[data-lazy-admin-shell]');
+                        const syncHeight = () => shell?.style.setProperty('--lazy-admin-page-heading-height', $el.offsetHeight + 'px');
+                        syncHeight();
+                        const observer = new ResizeObserver(syncHeight);
+                        observer.observe($el);
+                    "
+                >
+                    <div class="mx-auto grid grid-cols-3 content-center gap-4 px-4 py-4 sm:px-6 lg:px-8">
                         <div class="min-w-0 col-span-3 lg:col-span-2">
                             <h2 class="text-xl font-semibold leading-tight">
                                 {{ $title ?: __(Route::currentRouteName()) }}
                             </h2>
+                            <div data-lazy-admin-page-description></div>
                             @if($breadcrumb)
                                 {{ $breadcrumb }}
                             @else
                                 @include('lazy::breadcrumb-trail')
                             @endif
                         </div>
-                        <div class="col-span-3 flex flex-wrap justify-start gap-2 lg:col-span-1 lg:justify-end">
+                        <div class="col-span-3 flex flex-wrap items-center justify-start gap-2 lg:col-span-1 lg:justify-end">
+                            <div data-lazy-admin-page-actions class="flex flex-wrap items-center justify-end gap-2"></div>
                             <x-lazy-join>
                                 @if($action)
                                     {{ $action }}
