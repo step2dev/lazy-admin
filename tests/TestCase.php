@@ -3,7 +3,9 @@
 namespace Step2dev\LazyAdmin\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithViews;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Step2dev\LazyAdmin\LazyAdminServiceProvider;
@@ -18,6 +20,20 @@ class TestCase extends Orchestra
     protected function setUp(): void
     {
         parent::setUp();
+
+        if (! Schema::hasTable('settings')) {
+            Schema::create('settings', function (Blueprint $table): void {
+                $table->id();
+                $table->string('group')->index();
+                $table->string('key')->index();
+                $table->string('type', 75)->index();
+                $table->mediumText('value')->nullable();
+                $table->json('options')->nullable();
+                $table->boolean('is_encrypted')->default(false)->index();
+                $table->unique(['group', 'key']);
+                $table->timestamps();
+            });
+        }
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Step2dev\\LazyAdmin\\Database\\Factories\\'.class_basename($modelName).'Factory'
