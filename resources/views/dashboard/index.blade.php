@@ -21,9 +21,62 @@
                     </span>
                 </div>
 
-                <div class="overflow-x-auto rounded-box border border-base-300 bg-base-200 shadow-xs">
-                    <div class="stats stats-vertical min-w-full bg-transparent lg:stats-horizontal">
+                @php($progressSection = $items->every(fn (array $widget) => $widget['progress'] !== null))
+
+                @if($progressSection)
+                    <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                         @foreach($items as $widget)
+                            @php($tone = $widget['tone'] ?? 'neutral')
+
+                            <a
+                                @if($widget['url']) href="{{ $widget['url'] }}" @endif
+                                class="card border border-base-300 bg-base-200 shadow-xs transition hover:bg-base-300/40"
+                            >
+                                <div class="card-body items-center gap-2 p-4 text-center">
+                                    <div
+                                        @class([
+                                            'radial-progress',
+                                            'text-base-content/60' => $tone === 'neutral',
+                                            'text-info' => $tone === 'info',
+                                            'text-success' => $tone === 'success',
+                                            'text-warning' => $tone === 'warning',
+                                            'text-error' => $tone === 'error',
+                                        ])
+                                        style="--value: {{ $widget['progress'] }};"
+                                        role="progressbar"
+                                        aria-valuenow="{{ $widget['progress'] }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100"
+                                    >
+                                        {{ number_format($widget['progress'], 0) }}%
+                                    </div>
+
+                                    <div class="font-semibold">{{ $widget['label'] }}</div>
+                                    <div class="text-2xl font-semibold tabular-nums">{{ $widget['value'] }}</div>
+
+                                    @if($widget['description'])
+                                        <div class="line-clamp-2 text-xs opacity-55">{{ $widget['description'] }}</div>
+                                    @endif
+
+                                    <progress
+                                        @class([
+                                            'progress mt-1 w-full',
+                                            'progress-info' => $tone === 'info',
+                                            'progress-success' => $tone === 'success',
+                                            'progress-warning' => $tone === 'warning',
+                                            'progress-error' => $tone === 'error',
+                                        ])
+                                        value="{{ $widget['progress'] }}"
+                                        max="100"
+                                    ></progress>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="overflow-x-auto rounded-box border border-base-300 bg-base-200 shadow-xs">
+                        <div class="stats stats-vertical min-w-full bg-transparent lg:stats-horizontal">
+                            @foreach($items as $widget)
                             @php($tone = $widget['tone'] ?? 'neutral')
 
                             <a
@@ -82,9 +135,10 @@
                                     </div>
                                 @endif
                             </a>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
-                </div>
+                @endif
             </section>
         @endforeach
     @endif
