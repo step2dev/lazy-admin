@@ -11,6 +11,7 @@ beforeEach(function (): void {
         (object) ['group' => 'admin', 'key' => 'name', 'value' => 'Example site'],
         (object) ['group' => 'admin', 'key' => 'description', 'value' => 'Example description'],
     ]));
+    $this->settingsStore->shouldReceive('get')->with('admin.background', null)->andReturn(null);
     $this->app->instance('setting', $this->settingsStore);
 });
 

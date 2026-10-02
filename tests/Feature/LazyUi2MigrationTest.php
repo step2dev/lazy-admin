@@ -118,8 +118,9 @@ it('fully migrates admin dropdown consumers to Lazy UI', function (): void {
     $dashboard = file_get_contents($root.'/dashboard/index.blade.php');
 
     expect($dashboard)
-        ->toContain('<x-lazy-card')
-        ->not->toContain('class="card-body');
+        ->toContain('dashboard-custom-{{ $widget[\'id\'] }}')
+        ->toContain('@include($widget[\'view\'], $widget[\'data\'])')
+        ->toContain('stats stats-vertical');
 });
 
 it('keeps third-wave migrated views free of server-side Blade logic', function (): void {
