@@ -8,6 +8,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Step2dev\LazyAdmin\LazyAdminServiceProvider;
 use Step2dev\LazyPage\LazyPageServiceProvider;
+use Step2Dev\LazySetting\LazySettingServiceProvider;
 use Step2dev\LazyUI\LazyUiServiceProvider;
 
 class TestCase extends Orchestra
@@ -44,6 +45,7 @@ class TestCase extends Orchestra
             ActivitylogServiceProvider::class,
             LazyUiServiceProvider::class,
             LazyPageServiceProvider::class,
+            LazySettingServiceProvider::class,
             LazyAdminServiceProvider::class,
         ];
     }
