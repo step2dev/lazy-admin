@@ -11,6 +11,10 @@ return [
     // Optional global avatar fallback. When empty, user initials are rendered.
     'avatar' => env('LAZY_ADMIN_AVATAR'),
 
+    'layout' => [
+        'header_height' => env('LAZY_ADMIN_HEADER_HEIGHT', '4rem'),
+    ],
+
     'scripts' => [
         'resources/lazy/js/lazy.js',
     ],
