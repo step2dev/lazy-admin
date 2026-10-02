@@ -32,7 +32,9 @@
                             <div
                                 @class([
                                     'col-span-12',
-                                    'md:col-span-3' => $widget['span'] <= 3,
+                                    'md:col-span-1' => $widget['span'] === 1,
+                                    'md:col-span-2' => $widget['span'] === 2,
+                                    'md:col-span-3' => $widget['span'] === 3,
                                     'md:col-span-4' => $widget['span'] === 4,
                                     'md:col-span-5' => $widget['span'] === 5,
                                     'md:col-span-6' => $widget['span'] === 6,
