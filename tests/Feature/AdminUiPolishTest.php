@@ -15,8 +15,9 @@ it('keeps polished admin surfaces on existing Lazy UI components', function (): 
         ->not->toContain('<table class="table');
 
     expect($dashboard)
-        ->toContain('<x-lazy-card')
-        ->toContain('group-hover:bg-primary');
+        ->toContain('dashboard-custom-{{ $widget[\'id\'] }}')
+        ->toContain('@include($widget[\'view\'], $widget[\'data\'])')
+        ->toContain('stats stats-vertical');
 
     expect($settings)
         ->toContain('<x-lazy-card')
