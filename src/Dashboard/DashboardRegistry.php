@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 class DashboardRegistry
 {
-    /** @var array<string, array{id:string,label:string,value:Closure,description:?string,route:?string,permission:?string,priority:int,group:?string,tone:string,progress:?Closure}> */
+    /** @var array<string, array<string,mixed>> */
     private array $widgets = [];
 
     public function registerWidget(
@@ -26,21 +26,45 @@ class DashboardRegistry
             ? $tone
             : 'neutral';
 
-        $this->widgets[$id] = compact(
-            'id',
-            'label',
-            'value',
-            'description',
-            'route',
-            'permission',
-            'priority',
-            'group',
-            'tone',
-            'progress',
-        );
+        $this->widgets[$id] = [
+            'type' => 'metric',
+            ...compact(
+                'id',
+                'label',
+                'value',
+                'description',
+                'route',
+                'permission',
+                'priority',
+                'group',
+                'tone',
+                'progress',
+            ),
+        ];
     }
 
-    /** @return list<array{id:string,label:string,value:mixed,description:?string,url:?string,group:?string,tone:string,progress:?float}> */
+    public function registerCustomWidget(
+        string $id,
+        string $view,
+        ?Closure $data = null,
+        ?string $group = null,
+        int $span = 6,
+        ?string $permission = null,
+        int $priority = 100,
+    ): void {
+        $this->widgets[$id] = [
+            'type' => 'custom',
+            'id' => $id,
+            'view' => $view,
+            'data' => $data,
+            'group' => $group,
+            'span' => max(1, min(12, $span)),
+            'permission' => $permission,
+            'priority' => $priority,
+        ];
+    }
+
+    /** @return list<array<string,mixed>> */
     public function widgetsFor(?object $user): array
     {
         $widgets = array_values(array_filter(
@@ -51,7 +75,19 @@ class DashboardRegistry
         usort($widgets, static fn (array $a, array $b): int => $a['priority'] <=> $b['priority']);
 
         return array_map(function (array $widget): array {
+            if (($widget['type'] ?? 'metric') === 'custom') {
+                return [
+                    'type' => 'custom',
+                    'id' => $widget['id'],
+                    'view' => $widget['view'],
+                    'data' => $widget['data'] !== null ? (array) ($widget['data'])() : [],
+                    'group' => $widget['group'],
+                    'span' => $widget['span'],
+                ];
+            }
+
             return [
+                'type' => 'metric',
                 'id' => $widget['id'],
                 'label' => $widget['label'],
                 'value' => ($widget['value'])(),

@@ -22,6 +22,13 @@
         @vite(config('lazy.admin.styles'))
     @endif
     @livewireStyles
+
+    @if(config('lazy.admin.trendcharts.enabled', true))
+        <script
+            type="module"
+            src="{{ config('lazy.admin.trendcharts.src', 'https://cdn.jsdelivr.net/npm/@weblogin/trendchart-elements@1.1.0/dist/index.js/+esm') }}"
+        ></script>
+    @endif
 </head>
 <body class="min-h-screen bg-base-200 font-sans antialiased">
 {{ $noscript ?? ''}}

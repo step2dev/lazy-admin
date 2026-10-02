@@ -15,6 +15,14 @@ return [
         'header_height' => env('LAZY_ADMIN_HEADER_HEIGHT', '4rem'),
     ],
 
+    'trendcharts' => [
+        'enabled' => env('LAZY_ADMIN_TRENDCHARTS_ENABLED', true),
+        'src' => env(
+            'LAZY_ADMIN_TRENDCHARTS_SRC',
+            'https://cdn.jsdelivr.net/npm/@weblogin/trendchart-elements@1.1.0/dist/index.js/+esm'
+        ),
+    ],
+
     'scripts' => [
         'resources/lazy/js/lazy.js',
     ],
