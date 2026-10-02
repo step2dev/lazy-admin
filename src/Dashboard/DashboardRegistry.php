@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 class DashboardRegistry
 {
-    /** @var array<string, array{id:string,label:string,value:Closure,description:?string,route:?string,permission:?string,priority:int}> */
+    /** @var array<string, array{id:string,label:string,value:Closure,description:?string,route:?string,permission:?string,priority:int,group:?string,tone:string}> */
     private array $widgets = [];
 
     public function registerWidget(
@@ -18,11 +18,27 @@ class DashboardRegistry
         ?string $route = null,
         ?string $permission = null,
         int $priority = 100,
+        ?string $group = null,
+        string $tone = 'neutral',
     ): void {
-        $this->widgets[$id] = compact('id', 'label', 'value', 'description', 'route', 'permission', 'priority');
+        $tone = in_array($tone, ['neutral', 'info', 'success', 'warning', 'error'], true)
+            ? $tone
+            : 'neutral';
+
+        $this->widgets[$id] = compact(
+            'id',
+            'label',
+            'value',
+            'description',
+            'route',
+            'permission',
+            'priority',
+            'group',
+            'tone',
+        );
     }
 
-    /** @return list<array{id:string,label:string,value:mixed,description:?string,url:?string}> */
+    /** @return list<array{id:string,label:string,value:mixed,description:?string,url:?string,group:?string,tone:string}> */
     public function widgetsFor(?object $user): array
     {
         $widgets = array_values(array_filter(
@@ -39,6 +55,8 @@ class DashboardRegistry
                 'value' => ($widget['value'])(),
                 'description' => $widget['description'],
                 'url' => $this->resolveUrl($widget['route']),
+                'group' => $widget['group'],
+                'tone' => $widget['tone'],
             ];
         }, $widgets);
     }
