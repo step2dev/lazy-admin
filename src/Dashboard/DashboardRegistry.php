@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 class DashboardRegistry
 {
-    /** @var array<string, array{id:string,label:string,value:Closure,description:?string,route:?string,permission:?string,priority:int,group:?string,tone:string}> */
+    /** @var array<string, array{id:string,label:string,value:Closure,description:?string,route:?string,permission:?string,priority:int,group:?string,tone:string,progress:?Closure}> */
     private array $widgets = [];
 
     public function registerWidget(
@@ -20,6 +20,7 @@ class DashboardRegistry
         int $priority = 100,
         ?string $group = null,
         string $tone = 'neutral',
+        ?Closure $progress = null,
     ): void {
         $tone = in_array($tone, ['neutral', 'info', 'success', 'warning', 'error'], true)
             ? $tone
@@ -35,10 +36,11 @@ class DashboardRegistry
             'priority',
             'group',
             'tone',
+            'progress',
         );
     }
 
-    /** @return list<array{id:string,label:string,value:mixed,description:?string,url:?string,group:?string,tone:string}> */
+    /** @return list<array{id:string,label:string,value:mixed,description:?string,url:?string,group:?string,tone:string,progress:?float}> */
     public function widgetsFor(?object $user): array
     {
         $widgets = array_values(array_filter(
@@ -57,6 +59,9 @@ class DashboardRegistry
                 'url' => $this->resolveUrl($widget['route']),
                 'group' => $widget['group'],
                 'tone' => $widget['tone'],
+                'progress' => $widget['progress'] !== null
+                    ? max(0, min(100, (float) ($widget['progress'])()))
+                    : null,
             ];
         }, $widgets);
     }
