@@ -2,6 +2,6 @@
   "name": "@step2dev/lazy-admin",
   "private": true,
   "dependencies": {
-    "@weblogin/trendchart-elements": "^1.1.0"
+    "@weblogin/trendchart-elements": "^2.0.3"
   }
 }
