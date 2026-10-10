@@ -468,7 +468,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
             $menu->group(__('lazy-admin::admin.navigation.overview'));
-            $menu->addItem($prefix.'.dashboard', __('lazy-admin::admin.navigation.dashboard'));
+            $menu->addItem($prefix.'.dashboard', __('lazy-admin::admin.navigation.dashboard'), iconView: 'lazy::icons.dashboard');
         }, id: 'lazy-admin-dashboard', priority: 10);
 
         MenuFacade::register(function (MenuManager $menu): void {
@@ -480,11 +480,11 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 $menu->group(__('lazy-admin::admin.navigation.system'));
 
                 if (! $enforce || $user?->can('settings.view')) {
-                    $menu->addItem($prefix.'.setting.index', __('lazy-admin::admin.navigation.settings'));
+                    $menu->addItem($prefix.'.setting.index', __('lazy-admin::admin.navigation.settings'), iconView: 'lazy::icons.settings');
                 }
 
                 if (! $enforce || $user?->can('activity.view')) {
-                    $menu->addItem($prefix.'.activity.index', __('lazy-admin::admin.navigation.activity_log'));
+                    $menu->addItem($prefix.'.activity.index', __('lazy-admin::admin.navigation.activity_log'), iconView: 'lazy::icons.activity');
                 }
             }
         }, id: 'lazy-admin-system', priority: 90);
@@ -508,6 +508,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 $menu->addItem(
                     $routeTarget,
                     __('lazy-admin::admin.navigation.redirects'),
+                    iconView: 'lazy::icons.redirect',
                 );
             }, id: 'lazy-admin-seo-redirects', priority: 70);
         }
@@ -522,7 +523,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 $menu->group(__('lazy-admin::admin.navigation.content'));
                 $menu->addItem(
                     $prefix.'.page.index',
-                    __('Pages'),
+                    __('lazy-admin::admin.navigation.pages'),
+                    iconView: 'lazy::icons.page',
                 );
             }
         }, id: 'lazy-admin-pages', priority: 60);
@@ -543,6 +545,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             $menu->addItem(
                 $prefix.'.access.index',
                 __('lazy-admin::admin.navigation.access'),
+                iconView: 'lazy::icons.shield',
             );
         }, id: 'lazy-admin-access', priority: 80);
     }
