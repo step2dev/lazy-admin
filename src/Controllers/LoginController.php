@@ -32,7 +32,9 @@ class LoginController extends Controller
                 $field => $request->string('email')->toString(),
                 'password' => $request->string('password')->toString(),
             ];
-            $candidate = $guard->getProvider()->retrieveByCredentials($credentials);
+            $candidate = method_exists($guard, 'getProvider')
+                ? $guard->getProvider()->retrieveByCredentials($credentials)
+                : null;
             if ($candidate && data_get($candidate, 'two_factor_secret')) {
                 return back()->withErrors(['email' => __('auth.failed')])->onlyInput('email');
             }
