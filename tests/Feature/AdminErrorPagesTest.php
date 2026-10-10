@@ -97,7 +97,6 @@ it('loads localized error titles and actions', function (): void {
         ->and(__('lazy-admin::errors.back_to_dashboard'))->toBe('До панелі керування');
 });
 
-
 it('renders the individual 404 view directly with the real admin shell', function (): void {
     $user = new class extends User {};
     $user->id = 456;
