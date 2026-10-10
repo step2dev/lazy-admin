@@ -56,7 +56,7 @@ class AdminActivity
 
     private static function sanitize(array $data): array
     {
-        foreach (['password', 'password_confirmation', 'remember_token', 'token', 'secret'] as $key) {
+        foreach (['password', 'password_confirmation', 'remember_token', 'token', 'secret', 'current_password', 'two_factor_secret', 'two_factor_recovery_codes', 'recovery_code', 'code'] as $key) {
             unset($data[$key]);
         }
 

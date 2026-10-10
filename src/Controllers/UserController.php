@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use RuntimeException;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 use Step2dev\LazyAdmin\Support\AdminActivity;
+use Step2dev\LazyAdmin\Support\UserSecurity;
 
 class UserController extends Controller
 {
@@ -33,7 +36,7 @@ class UserController extends Controller
 
         return lazyView('lazy::users.create', [
             'user' => $model,
-            'roles' => $this->availableRoles($model),
+            'roles' => $this->canManageRoles() ? $this->availableRoles($model) : [],
             'selectedRoles' => [],
         ]);
     }
@@ -47,10 +50,12 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique($model->getTable(), 'email')],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', Password::defaults(), 'confirmed'],
             'roles' => ['sometimes', 'array'],
             'roles.*' => $this->roleRules(),
         ]);
+
+        abort_if(! $this->canManageRoles() && ! empty($validated['roles']), 403);
 
         $model->setAttribute('name', $validated['name']);
         $model->setAttribute('email', $validated['email']);
@@ -83,8 +88,9 @@ class UserController extends Controller
 
         return lazyView('lazy::users.edit', [
             'user' => $model,
-            'roles' => $this->availableRoles($model),
+            'roles' => $this->canManageRoles() ? $this->availableRoles($model) : [],
             'selectedRoles' => $this->selectedRoles($model),
+            'canDelete' => $this->canDelete($model),
         ]);
     }
 
@@ -104,17 +110,15 @@ class UserController extends Controller
                 'max:255',
                 Rule::unique($model->getTable(), 'email')->ignore($model->getKey(), $model->getKeyName()),
             ],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'password' => ['prohibited'],
             'roles' => ['sometimes', 'array'],
             'roles.*' => $this->roleRules(),
         ]);
 
-        $model->setAttribute('name', $validated['name']);
-        $model->setAttribute('email', $validated['email']);
+        abort_if(! $this->canManageRoles() && ! empty($validated['roles']), 403);
 
-        if (! empty($validated['password'])) {
-            $model->setAttribute('password', Hash::make($validated['password']));
-        }
+        $model->setAttribute('name', $validated['name']);
+        UserSecurity::updateEmail($model, $validated['email']);
 
         $model->save();
 
@@ -124,6 +128,35 @@ class UserController extends Controller
         AdminActivity::log('updated', 'User updated', $model, old: $old, new: $this->auditData($model));
 
         return back()->with('status', __('User updated successfully.'));
+    }
+
+    public function password(Request $request, string $user): RedirectResponse
+    {
+        $this->authorizeUserAction('users.edit');
+        $model = $this->findUser($user);
+        $actor = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+        $request->validateWithBag('password', [
+            'current_password' => ['required', 'current_password:'.config('lazy.auth.guard', 'web')],
+            'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+        ]);
+
+        $model->setAttribute('password', Hash::make($request->string('password')->toString()));
+        $model->setAttribute($model->getRememberTokenName(), Str::random(60));
+        $model->save();
+        $request->session()->regenerate();
+        AdminActivity::log('password_changed', 'User password changed', $model, properties: [
+            'self' => $actor instanceof Model && $actor->is($model),
+        ]);
+
+        return back()->with('status', __('lazy-admin::users.password_changed'));
+    }
+
+    protected function canDelete(Model $model): bool
+    {
+        $actor = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+
+        return $actor instanceof Model && ! $actor->is($model)
+            && (! config('lazy.admin.permissions.enforce', true) || $actor->can('users.delete'));
     }
 
     public function destroy(Request $request, string $user): RedirectResponse
@@ -215,6 +248,12 @@ class UserController extends Controller
 
     protected function syncRoles(Model $user, array $roles): void
     {
+        if (! $this->canManageRoles()) {
+            abort_if($roles !== [], 403);
+
+            return;
+        }
+
         if ($roles !== [] && ! method_exists($user, 'syncRoles')) {
             abort(422, 'The configured user model must use HasLazyAdminPermissions or Spatie HasRoles.');
         }
@@ -222,6 +261,13 @@ class UserController extends Controller
         if (method_exists($user, 'syncRoles')) {
             $user->syncRoles($roles);
         }
+    }
+
+    protected function canManageRoles(): bool
+    {
+        $actor = Auth::guard((string) config('lazy.auth.guard', 'web'))->user();
+
+        return ! config('lazy.admin.permissions.enforce', true) || ($actor && $actor->can('roles.edit'));
     }
 
     protected function roleRules(): array

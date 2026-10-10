@@ -367,3 +367,49 @@ php artisan make:admin
 ```
 
 The command resolves the configured authentication user model, requires `HasLazyAdminPermissions` / `HasRoles`, seeds the default authorization data idempotently, and assigns the configured super-admin role.
+
+
+### User profiles and security
+
+Lazy Admin provides `admin.profile.show`, `admin.profile.update` and
+`admin.profile.password` (using the configured route name/prefix). These routes
+require the configured session guard, but no admin role: a user can edit only
+the authenticated account. They never accept a target user ID or role changes.
+Email changes clear `email_verified_at` when the host model has that column.
+The host application remains responsible for sending verification notifications.
+
+User administration separates account details from password changes. Password
+changes require the **acting user's** current password; a permitted administrator
+can change another user's password without knowing that user's old password.
+Role assignment additionally requires `roles.edit`. Password validation uses
+Laravel's `Password::defaults()`; configure the application's default policy as
+needed. Security writes are throttled and logged without password/2FA values.
+Remember tokens rotate after password changes. To invalidate existing sessions
+across devices, configure Laravel's `auth.session` middleware on the host's
+protected routes; token rotation alone does not revoke existing session cookies.
+
+#### Two-factor authentication
+
+2FA is an optional integration with Laravel Fortify, not a second implementation
+of TOTP. In the **host application**:
+
+1. Install/configure Fortify and run its published migrations.
+2. Add `Laravel\Fortify\TwoFactorAuthenticatable` to the authenticatable user model.
+3. Enable `Features::twoFactorAuthentication(['confirm' => true, 'confirmPassword' => true])`.
+4. Use the same `fortify.guard` and `lazy.auth.guard`.
+5. Keep `lazy.auth.login.enabled=false` and use Fortify's login pipeline, including
+   `RedirectIfTwoFactorAuthenticatable`. Custom login flows must enforce the same challenge.
+6. Configure Fortify views, including:
+
+```php
+Fortify::twoFactorChallengeView(fn () => view('lazy::auth.two-factor-challenge'));
+```
+
+Provide Fortify's password confirmation view/route as well. The profile displays
+2FA controls only when all required routes, model methods and confirmation options
+are available. The owner can enable, confirm and disable 2FA, display recovery
+codes and regenerate them. QR codes/recovery codes are retrieved on demand through
+Fortify's password-protected routes and are never embedded in the initial page.
+Administrators see the target's 2FA status but cannot read or reset their secrets.
+The optional simple Lazy Admin login refuses accounts with a 2FA secret so it
+cannot accidentally bypass Fortify's challenge.

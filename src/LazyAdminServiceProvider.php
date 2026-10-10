@@ -17,6 +17,8 @@ use Spatie\Activitylog\Models\Activity;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Step2Dev\LazyBreadcrumb\Breadcrumbs;
+use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
 use Step2dev\LazyAdmin\Authorization\AuthorizationManager;
 use Step2dev\LazyAdmin\Commands\CreateAdminCommand;
 use Step2dev\LazyAdmin\Commands\DbOptimize;
@@ -32,6 +34,7 @@ use Step2dev\LazyAdmin\Components\MenuLabel;
 use Step2dev\LazyAdmin\Controllers\AccessController;
 use Step2dev\LazyAdmin\Controllers\PageController;
 use Step2dev\LazyAdmin\Controllers\PermissionController;
+use Step2dev\LazyAdmin\Controllers\ProfileController;
 use Step2dev\LazyAdmin\Controllers\RoleController;
 use Step2dev\LazyAdmin\Controllers\SeoRedirectController;
 use Step2dev\LazyAdmin\Controllers\UserController;
@@ -55,8 +58,6 @@ use Step2dev\LazyAdmin\Notifications\NotificationCenter;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2dev\LazyAdmin\Search\SearchRegistry;
 use Step2dev\LazyAdmin\Settings\SettingsRegistry;
-use Step2Dev\LazyBreadcrumb\Breadcrumbs;
-use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
 use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
 use Step2dev\LazyMenu\LazyMenuServiceProvider;
 use Step2dev\LazyMenu\Navigation\Menu\Menu;
@@ -211,7 +212,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 'dashboardUrl' => Route::has('admin.dashboard')
                     ? route('admin.dashboard')
                     : url((string) config('lazy.admin.home', '/')),
-                'profileUrl' => Route::has('profile.show') ? route('profile.show') : null,
+                'profileUrl' => route(trim((string) config('lazy.admin.route.name', 'admin.'), '.').'.profile.show'),
                 'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
                 'logoUrl' => (static function (): ?string {
                     $logo = setting('admin.logo', config('lazy.admin.logo'));
@@ -274,6 +275,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         RouteFacade::admin(function (): void {
             RouteFacade::get('', DashboardPage::class)->name('dashboard');
             RouteFacade::resource('user', UserController::class);
+            RouteFacade::put('user/{user}/password', [UserController::class, 'password'])->middleware('throttle:6,1')->name('user.password');
             RouteFacade::get('setting', SettingsPage::class)->name('setting.index');
             RouteFacade::get('search', SearchPage::class)->name('search');
             RouteFacade::get('notifications', NotificationsPage::class)->name('notifications.index');
@@ -294,6 +296,12 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 });
             }
         });
+
+        RouteFacade::admin(function (): void {
+            RouteFacade::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+            RouteFacade::put('profile', [ProfileController::class, 'update'])->middleware('throttle:6,1')->name('profile.update');
+            RouteFacade::put('profile/password', [ProfileController::class, 'password'])->middleware('throttle:6,1')->name('profile.password');
+        }, ['middleware' => ['web', 'auth:'.config('lazy.auth.guard', 'web')]]);
 
         $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
