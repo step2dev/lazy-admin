@@ -80,3 +80,19 @@ it('registers a guarded fallback for unknown admin routes', function (): void {
         ->and($route->gatherMiddleware())->toContain('web')
         ->and($route->gatherMiddleware())->toContain('auth:web');
 });
+
+it('provides a separate overridable template for each supported status', function (): void {
+    foreach ([401, 403, 404, 419, 429, 500, 503] as $status) {
+        expect(view()->exists("lazy::errors.{$status}"))->toBeTrue();
+    }
+
+    expect(view()->exists('lazy::errors.partials.admin-layout'))->toBeTrue()
+        ->and(view()->exists('lazy::errors.partials.standalone'))->toBeTrue();
+});
+
+it('loads localized error titles and actions', function (): void {
+    app()->setLocale('uk');
+
+    expect(__('lazy-admin::errors.404.title'))->toBe('Сторінку не знайдено')
+        ->and(__('lazy-admin::errors.back_to_dashboard'))->toBe('До панелі керування');
+});
