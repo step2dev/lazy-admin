@@ -3,6 +3,8 @@
 namespace Step2dev\LazyAdmin;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Step2dev\LazyAdmin\Exceptions\AdminErrorPages;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -203,6 +205,12 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        $handler = $this->app->make(ExceptionHandler::class);
+
+        if (method_exists($handler, 'renderable')) {
+            $handler->renderable(new AdminErrorPages);
+        }
+
         View::composer('lazy::header', static function ($view): void {
             $guard = (string) config('lazy.auth.guard', 'web');
             $user = Auth::guard($guard)->user();
