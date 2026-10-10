@@ -45,6 +45,8 @@ class PermissionController extends Controller
         $this->authorizeAction('permissions.edit');
 
         $model = $this->findPermission($permission);
+        abort_if(in_array($model->name, config('lazy.admin.permissions.defaults', []), true), 422, 'System permissions cannot be modified.');
+
         $old = $this->auditData($model);
         $permissionModel = $this->authorization->permissionModel();
         $guard = $this->authorization->guard();
@@ -74,6 +76,8 @@ class PermissionController extends Controller
         $this->authorizeAction('permissions.delete');
 
         $model = $this->findPermission($permission);
+        abort_if(in_array($model->name, config('lazy.admin.permissions.defaults', []), true), 422, 'System permissions cannot be modified.');
+
         $old = $this->auditData($model);
         $model->delete();
 
