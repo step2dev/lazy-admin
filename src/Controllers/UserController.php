@@ -141,7 +141,9 @@ class UserController extends Controller
         ]);
 
         $model->setAttribute('password', Hash::make($request->string('password')->toString()));
-        $model->setAttribute($model->getRememberTokenName(), Str::random(60));
+        if (method_exists($model, 'getRememberTokenName')) {
+            $model->setAttribute($model->getRememberTokenName(), Str::random(60));
+        }
         $model->save();
         $request->session()->regenerate();
         AdminActivity::log('password_changed', 'User password changed', $model, properties: [

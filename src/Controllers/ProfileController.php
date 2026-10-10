@@ -54,7 +54,9 @@ class ProfileController extends Controller
             'password' => ['required', 'string', Password::defaults(), 'confirmed'],
         ]);
         $user->setAttribute('password', Hash::make($validated['password']));
-        $user->setAttribute($user->getRememberTokenName(), Str::random(60));
+        if (method_exists($user, 'getRememberTokenName')) {
+            $user->setAttribute($user->getRememberTokenName(), Str::random(60));
+        }
         $user->save();
         $request->session()->regenerate();
         AdminActivity::log('password_changed', 'User password changed', $user, properties: ['self' => true]);
