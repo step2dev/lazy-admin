@@ -270,3 +270,33 @@ it('renders superadmin as locked', function (): void {
         ->assertSee('This role is granted every permission automatically.')
         ->assertDontSee('Delete role');
 });
+
+
+it('keeps built-in permissions immutable while custom permissions stay editable', function (): void {
+    $admin = User::factory()->create();
+    $admin->assignRole('superadmin');
+    $this->actingAs($admin);
+
+    $system = Permission::findByName('users.view', 'web');
+
+    $this->put('/admin-test/permission/'.$system->getKey(), [
+        'name' => 'users.view.renamed',
+    ])->assertStatus(422);
+
+    $this->delete('/admin-test/permission/'.$system->getKey())
+        ->assertStatus(422);
+
+    expect(Permission::findByName('users.view', 'web'))->not->toBeNull();
+
+    $this->post('/admin-test/permission', ['name' => 'custom.manage'])
+        ->assertRedirect();
+
+    $custom = Permission::findByName('custom.manage', 'web');
+
+    $this->put('/admin-test/permission/'.$custom->getKey(), [
+        'name' => 'custom.view',
+    ])->assertRedirect();
+
+    $this->delete('/admin-test/permission/'.$custom->getKey())
+        ->assertRedirect();
+});
