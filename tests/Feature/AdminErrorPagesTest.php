@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Step2dev\LazyAdmin\Exceptions\AdminErrorPages;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -51,7 +52,7 @@ it('avoids the admin shell for guest requests and recoverable session errors', f
     }
 });
 
-it('uses the actual admin layout for missing pages regardless of the authentication flag', function (): void {
+it('uses the actual admin layout for authenticated missing pages', function (): void {
     $user = new class extends User {};
     $user->id = 123;
     $this->be($user);
@@ -63,10 +64,19 @@ it('uses the actual admin layout for missing pages regardless of the authenticat
         ->and($response?->getContent())->toContain('Back to dashboard');
 });
 
-it('attempts full admin rendering for a guest 404 instead of the standalone template', function (): void {
+it('does not expose the admin interface to guests', function (): void {
     $renderer = new AdminErrorPages;
     $response = $renderer(new HttpException(404), Request::create('/admin/missing'));
 
     expect($response?->getStatusCode())->toBe(404)
-        ->and($response?->getContent())->toContain('data-lazy-admin-shell');
+        ->and($response?->getContent())->not->toContain('data-lazy-admin-shell');
+});
+
+it('registers a guarded fallback for unknown admin routes', function (): void {
+    $route = collect(Route::getRoutes()->getRoutes())
+        ->first(fn ($route) => $route->isFallback && str_contains($route->uri(), 'admin'));
+
+    expect($route)->not->toBeNull()
+        ->and($route->gatherMiddleware())->toContain('web')
+        ->and($route->gatherMiddleware())->toContain('auth:web');
 });
