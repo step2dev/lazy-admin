@@ -321,7 +321,6 @@
 
                             <div class="grid gap-3 lg:grid-cols-2">
                                 @foreach ($permissions as $permission)
-                                    @php($isSystemPermission = in_array($permission->name, config('lazy.admin.permissions.defaults', []), true))
                                     <x-lazy-card compact class="border border-base-300 bg-base-100 shadow-sm">
                                         <form
                                             method="POST"
@@ -331,7 +330,7 @@
                                             @csrf
                                             @method('PUT')
 
-                                            @if ($canEditPermissions && ! $isSystemPermission)
+                                            @if ($canEditPermissions && ! in_array($permission->name, config('lazy.admin.permissions.defaults', []), true))
                                                 <x-lazy-input
                                                     type="text"
                                                     name="name"
@@ -345,13 +344,13 @@
                                             @else
                                                 <span class="min-w-0 flex-1 break-all font-medium">
                                                     {{ $permission->name }}
-                                                    @if ($isSystemPermission)
+                                                    @if (in_array($permission->name, config('lazy.admin.permissions.defaults', []), true))
                                                         <span class="mt-1 block text-xs font-normal opacity-60">{{ __('lazy-admin::access.system_permission') }}</span>
                                                     @endif
                                                 </span>
                                             @endif
 
-                                            @if ($canDeletePermissions && ! $isSystemPermission)
+                                            @if ($canDeletePermissions && ! in_array($permission->name, config('lazy.admin.permissions.defaults', []), true))
                                                 <x-lazy-btn
                                                     ghost
                                                     sm
@@ -363,7 +362,7 @@
                                             @endif
                                         </form>
 
-                                        @if ($canDeletePermissions && ! $isSystemPermission)
+                                        @if ($canDeletePermissions && ! in_array($permission->name, config('lazy.admin.permissions.defaults', []), true))
                                             <form
                                                 id="delete-permission-{{ $permission->getKey() }}"
                                                 method="POST"
