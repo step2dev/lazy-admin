@@ -27,6 +27,16 @@ class LoginController extends Controller
         $loginFields = array_values(array_filter((array) config('lazy.auth.login_fields', ['email'])));
 
         foreach ($loginFields as $field) {
+            // The simple login controller must never bypass a host's second factor.
+            $credentials = [
+                $field => $request->string('email')->toString(),
+                'password' => $request->string('password')->toString(),
+            ];
+            $candidate = $guard->getProvider()->retrieveByCredentials($credentials);
+            if ($candidate && data_get($candidate, 'two_factor_secret')) {
+                return back()->withErrors(['email' => __('auth.failed')])->onlyInput('email');
+            }
+
             if ($guard->attempt([
                 $field => $request->string('email')->toString(),
                 'password' => $request->string('password')->toString(),

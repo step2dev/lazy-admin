@@ -5,8 +5,8 @@
         @method($method)
     @endif
 
-    <label class="form-control">
-        <span class="label-text">{{ __('Name') }}</span>
+    <label class="flex flex-col gap-2">
+        <span class="label-text">{{ __('lazy-admin::users.name') }}</span>
         <x-lazy-input
             type="text"
             name="name"
@@ -19,8 +19,8 @@
         @enderror
     </label>
 
-    <label class="form-control">
-        <span class="label-text">{{ __('Email') }}</span>
+    <label class="flex flex-col gap-2">
+        <span class="label-text">{{ __('lazy-admin::users.email') }}</span>
         <x-lazy-input
             type="email"
             name="email"
@@ -33,7 +33,8 @@
         @enderror
     </label>
 
-    <label class="form-control">
+    @if (! $user->exists)
+    <label class="flex flex-col gap-2">
         <span class="label-text">
             {{ $user->exists ? __('New password') : __('Password') }}
         </span>
@@ -49,7 +50,7 @@
         @enderror
     </label>
 
-    <label class="form-control">
+    <label class="flex flex-col gap-2">
         <span class="label-text">{{ __('Confirm password') }}</span>
         <x-lazy-input
             type="password"
@@ -59,13 +60,15 @@
         />
     </label>
 
+    @endif
+
     @if ($roles !== [])
         <fieldset>
             <legend class="mb-2 font-medium">{{ __('Roles') }}</legend>
 
-            <div class="grid gap-2 sm:grid-cols-2">
+            <div class="grid gap-3 sm:grid-cols-2">
                 @foreach ($roles as $role)
-                    <label class="flex items-center gap-2">
+                    <label class="flex items-center gap-3 rounded-xl border border-base-300 bg-base-200/40 p-3">
                         <x-lazy-checkbox
                             name="roles[]"
                             :value="$role"
