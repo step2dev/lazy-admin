@@ -24,6 +24,7 @@ return [
     'no_permissions' => 'No permissions found.',
     'selected' => 'Selected permissions',
     'confirm_role_delete' => 'Delete this role?',
+    'system_permission' => 'System · read-only',
     'catalog' => 'Permission catalog',
     'total' => ':count total',
     'catalog_description' => 'Create, rename or remove reusable permissions. Role assignments are managed above.',
