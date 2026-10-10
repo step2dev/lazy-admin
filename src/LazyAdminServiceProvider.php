@@ -206,13 +206,14 @@ class LazyAdminServiceProvider extends PackageServiceProvider
         View::composer('lazy::header', static function ($view): void {
             $guard = (string) config('lazy.auth.guard', 'web');
             $user = Auth::guard($guard)->user();
+            $profileRoute = trim((string) config('lazy.admin.route.name', 'admin.'), '.').'.profile.show';
 
             $view->with([
                 'user' => $user,
                 'dashboardUrl' => Route::has('admin.dashboard')
                     ? route('admin.dashboard')
                     : url((string) config('lazy.admin.home', '/')),
-                'profileUrl' => Route::has($profileRoute = trim((string) config('lazy.admin.route.name', 'admin.'), '.').'.profile.show') ? route($profileRoute) : null,
+                'profileUrl' => Route::has($profileRoute) ? route($profileRoute) : null,
                 'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
                 'logoUrl' => (static function (): ?string {
                     $logo = setting('admin.logo', config('lazy.admin.logo'));
