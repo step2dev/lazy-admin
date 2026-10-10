@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Step2dev\LazyAdmin\Exceptions\AdminErrorPages;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -51,7 +52,7 @@ it('avoids the admin shell for guest requests and recoverable session errors', f
 });
 
 it('uses the actual admin layout for missing pages regardless of the authentication flag', function (): void {
-    $user = new class extends \Illuminate\Foundation\Auth\User {};
+    $user = new class extends User {};
     $user->id = 123;
     $this->be($user);
 
@@ -61,7 +62,6 @@ it('uses the actual admin layout for missing pages regardless of the authenticat
         ->and($response?->getContent())->toContain('data-lazy-admin-shell')
         ->and($response?->getContent())->toContain('Back to dashboard');
 });
-
 
 it('attempts full admin rendering for a guest 404 instead of the standalone template', function (): void {
     $renderer = new AdminErrorPages;

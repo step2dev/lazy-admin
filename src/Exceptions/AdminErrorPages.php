@@ -3,8 +3,8 @@
 namespace Step2dev\LazyAdmin\Exceptions;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
@@ -31,9 +31,9 @@ final class AdminErrorPages
 
         try {
             return response()->view('lazy::errors.page', [
-            'status' => $status,
-            'useAdminLayout' => $useAdminLayout,
-            'homeUrl' => url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/')),
+                'status' => $status,
+                'useAdminLayout' => $useAdminLayout,
+                'homeUrl' => url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/')),
             ], $status, $exception->getHeaders());
         } catch (Throwable $renderFailure) {
             if (! $useAdminLayout) {
