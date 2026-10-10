@@ -271,7 +271,6 @@ it('renders superadmin as locked', function (): void {
         ->assertDontSee('Delete role');
 });
 
-
 it('keeps built-in permissions immutable while custom permissions stay editable', function (): void {
     $admin = User::factory()->create();
     $admin->assignRole('superadmin');
