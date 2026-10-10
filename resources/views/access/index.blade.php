@@ -1,29 +1,39 @@
-<x-lazy-layout>
-<div class="mx-auto max-w-[1500px] space-y-6">
-        <div class="flex flex-col gap-2">
-            <h1 class="text-2xl font-semibold">{{ __('Access') }}</h1>
+<x-lazy-layout :title="__('lazy-admin::access.title')">
+    <div class="mx-auto w-full max-w-[1600px] space-y-5 px-1 pb-8">
+        <div class="flex flex-col gap-1 border-b border-base-300 pb-5">
+            <h1 class="text-2xl font-semibold">{{ __('lazy-admin::access.title') }}</h1>
             <p class="text-sm opacity-60">
-                {{ __('Manage admin roles and the permissions assigned to each role.') }}
+                {{ __('lazy-admin::access.description') }}
             </p>
         </div>
+
+        @if ($errors->any())
+            <x-lazy-alert error>
+                <ul class="list-inside list-disc text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </x-lazy-alert>
+        @endif
 
         @if (session('status'))
             <x-lazy-alert success class="shadow-sm" :message="session('status')" />
         @endif
 
-        <div class="{{ $layoutClass }}">
+        <div class="grid grid-cols-1 items-start gap-5 {{ $canViewRoles ? 'lg:grid-cols-[300px_minmax(0,1fr)]' : '' }}">
             @if ($canViewRoles)
-                <aside class="space-y-4 lg:sticky lg:top-24 lg:self-start">
+                <aside class="space-y-4 lg:sticky lg:max-h-[calc(100dvh-6rem)] lg:overflow-y-auto lg:self-start" style="top: calc(var(--lazy-admin-content-sticky-offset, 4rem) + 1rem);">
                     @if ($canCreateRoles)
-                        <section class="space-y-3">
+                        <section class="rounded-xl border border-base-300 bg-base-100 p-4 space-y-3">
                             <div class="text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
-                                {{ __('Create role') }}
+                                {{ __('lazy-admin::access.create_role') }}
                             </div>
 
                             <form
                                 method="POST"
                                 action="{{ route($routePrefix.'.role.store') }}"
-                                class="flex gap-3"
+                                class="flex flex-col gap-2"
                             >
                                 @csrf
 
@@ -38,57 +48,59 @@
 
                                 <x-lazy-btn primary type="submit" class="shrink-0">
                                     <span class="text-lg leading-none">＋</span>
-                                    {{ __('Create') }}
+                                    {{ __('lazy-admin::access.create') }}
                                 </x-lazy-btn>
                             </form>
                         </section>
                     @endif
 
-                    <section class="space-y-3">
-                        <div class="text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
-                            {{ __('Roles') }}
+                    <section class="space-y-3 rounded-xl border border-base-300 bg-base-100 p-3">
+                        <div class="flex items-center justify-between px-2 text-xs font-semibold uppercase tracking-wider opacity-60">
+                            {{ __('lazy-admin::access.roles') }}
+                            <span class="text-xs font-normal tabular-nums">{{ $roles->count() }}</span>
                         </div>
 
-                        <div class="space-y-3">
+                        <nav class="space-y-1" aria-label="{{ __('lazy-admin::access.roles') }}">
                             @forelse ($roleItems as $roleItem)
                                 <a
                                     href="{{ $roleItem['href'] }}"
-                                    class="{{ $roleItem['classes'] }}"
+                                    class="block rounded-lg border px-3 py-2.5 transition-colors {{ $roleItem['active'] ? 'border-primary/50 bg-primary/10' : 'border-transparent hover:border-base-300 hover:bg-base-200/70' }}"
+                                    @if ($roleItem['active']) aria-current="page" @endif
                                 >
                                     <div class="flex items-center justify-between gap-3">
                                         <div class="min-w-0">
-                                            <div class="truncate text-lg font-semibold">
+                                            <div class="truncate text-sm font-semibold">
                                                 {{ $roleItem['role']->name }}
                                             </div>
 
-                                            <div class="mt-1 text-sm opacity-55">
-                                                {{ __('guard: :guard', ['guard' => $roleItem['role']->guard_name]) }}
+                                            <div class="mt-1 text-xs opacity-55">
+                                                {{ __('lazy-admin::access.guard', ['guard' => $roleItem['role']->guard_name]) }}
                                             </div>
                                         </div>
 
                                         @if ($roleItem['superAdmin'])
-                                            <x-lazy-badge warning outline class="shrink-0" :label="__('locked')" />
+                                            <x-lazy-badge warning outline class="shrink-0" :label="__('lazy-admin::access.locked')" />
                                         @endif
                                     </div>
                                 </a>
                             @empty
                                 <div class="rounded-2xl border border-dashed border-base-300 p-6 text-sm opacity-60">
-                                    {{ __('No roles found.') }}
+                                    {{ __('lazy-admin::access.no_roles') }}
                                 </div>
                             @endforelse
-                        </div>
+                        </nav>
                     </section>
 
-                    <section class="rounded-2xl border border-info/30 bg-info/15 p-5 text-info-content">
+                    <section class="rounded-xl border border-info/30 bg-info/10 p-4 text-base-content">
                         <div class="flex gap-3">
                             <div class="flex size-7 shrink-0 items-center justify-center rounded-full border border-current text-sm">
                                 i
                             </div>
 
                             <div>
-                                <div class="font-semibold">{{ __('Access rules') }}</div>
+                                <div class="font-semibold">{{ __('lazy-admin::access.rules') }}</div>
                                 <p class="mt-2 text-sm leading-6 opacity-80">
-                                    {{ __('Only :role permissions are locked. All other roles can be edited here.', ['role' => $superAdminRole]) }}
+                                    {{ __('lazy-admin::access.rules_description', ['role' => $superAdminRole]) }}
                                 </p>
                             </div>
                         </div>
@@ -101,7 +113,22 @@
                     <form
                         method="POST"
                         action="{{ route($routePrefix.'.role.update', $selectedRole) }}"
-                        class="space-y-6"
+                        class="space-y-4"
+                        x-data="{
+                            query: '',
+                            selected: 0,
+                            matches(value) { return value.toLocaleLowerCase().includes(this.query.trim().toLocaleLowerCase()) },
+                            recount() { this.selected = this.$el.querySelectorAll('input[name=\'permissions[]\']:checked').length },
+                            init() { this.recount() },
+                            toggleGroup(root, checked) {
+                                root.querySelectorAll('[data-permission]').forEach(row => {
+                                    const input = row.querySelector('input[type=checkbox]');
+                                    if (input &amp;&amp; !input.disabled &amp;&amp; this.matches(row.dataset.search)) input.checked = checked;
+                                });
+                                this.recount();
+                            }
+                        }"
+                        @change="recount()"
                     >
                         @csrf
                         @method('PUT')
@@ -109,13 +136,13 @@
                         <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                             <div class="min-w-0">
                                 <div class="text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
-                                    {{ __('Permissions') }}
+                                    {{ __('lazy-admin::access.permissions') }}
                                 </div>
 
                                 <div class="mt-2 flex flex-wrap items-center gap-3">
                                     @if ($canEditRoles && ! $selectedIsSuperAdmin)
                                         <label class="w-full max-w-sm">
-                                            <span class="mb-1 block text-xs font-medium opacity-55">{{ __('Role name') }}</span>
+                                            <span class="mb-1 block text-xs font-medium opacity-55">{{ __('lazy-admin::access.role_name') }}</span>
                                             <x-lazy-input
                                                 type="text"
                                                 name="name"
@@ -131,15 +158,15 @@
                                     @endif
 
                                     @if ($selectedIsSuperAdmin)
-                                        <x-lazy-badge warning outline :label="__('locked')" />
+                                        <x-lazy-badge warning outline :label="__('lazy-admin::access.locked')" />
                                     @endif
                                 </div>
 
                                 <p class="mt-2 text-sm opacity-60">
                                     @if ($selectedIsSuperAdmin)
-                                        {{ __('This role is granted every permission automatically.') }}
+                                        {{ __('lazy-admin::access.superadmin_description') }}
                                     @else
-                                        {{ __('Permissions are split into logical groups for the selected role.') }}
+                                        {{ __('lazy-admin::access.groups_description') }}
                                     @endif
                                 </p>
                             </div>
@@ -152,31 +179,56 @@
                                         type="submit"
                                         form="delete-selected-role"
                                         class="text-error"
-                                        :label="__('Delete role')"
+                                        :label="__('lazy-admin::access.delete_role')"
                                     />
                                 @endif
 
                                 @if ($canEditRoles && ! $selectedIsSuperAdmin)
                                     <x-lazy-btn primary type="submit" class="min-w-28">
-                                        ✓ {{ __('Save') }}
+                                        ✓ {{ __('lazy-admin::access.save') }}
                                     </x-lazy-btn>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="space-y-5">
+                        <div class="rounded-xl border border-base-300 bg-base-100 p-4">
+                            <label class="block">
+                                <span class="mb-2 block text-sm font-medium">{{ __('lazy-admin::access.search') }}</span>
+                                <x-lazy-input type="search" x-model.debounce.150ms="query" placeholder="users.view" />
+                            </label>
+                            <p class="mt-2 text-xs opacity-60">{{ __('lazy-admin::access.filter_hint') }}</p>
+                        </div>
+
+                        <div class="space-y-4">
                             @forelse ($permissionGroups as $group => $groupPermissions)
-                                <x-lazy-fieldset class="rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm">
-                                    <div class="mb-5">
-                                        <h3 class="text-lg font-semibold">{{ $group }}</h3>
+                                <x-lazy-fieldset
+                                    class="rounded-xl border border-base-300 bg-base-100 p-4"
+                                    data-search="{{ $group.' '.collect($groupPermissions)->pluck('permission.name')->implode(' ') }}"
+                                    x-show="matches($el.dataset.search)"
+                                >
+                                    <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+                                        <div>
+                                        <h3 class="text-sm font-semibold">{{ $group }}</h3>
                                         <div class="text-sm opacity-50">
-                                            {{ trans_choice(':count permission|:count permissions', count($groupPermissions), ['count' => count($groupPermissions)]) }}
+                                            {{ trans_choice('lazy-admin::access.count', count($groupPermissions), ['count' => count($groupPermissions)]) }}
                                         </div>
+                                        </div>
+                                        @if ($permissionsEditable)
+                                            <div class="flex gap-2">
+                                                <x-lazy-btn ghost sm type="button" @click="toggleGroup($el.closest('fieldset'), true)" :label="__('lazy-admin::access.select_visible')" />
+                                                <x-lazy-btn ghost sm type="button" @click="toggleGroup($el.closest('fieldset'), false)" :label="__('lazy-admin::access.clear_visible')" />
+                                            </div>
+                                        @endif
                                     </div>
 
-                                    <div class="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
+                                    <div class="grid gap-2 xl:grid-cols-2">
                                         @foreach ($groupPermissions as $permissionItem)
-                                            <label class="{{ $permissionItem['classes'] }}">
+                                            <label
+                                                data-permission
+                                                data-search="{{ $group.' '.$permissionItem['permission']->name }}"
+                                                x-show="matches($el.dataset.search)"
+                                                class="flex min-w-0 items-start gap-3 rounded-lg border border-base-300 p-3 {{ $permissionsEditable ? 'cursor-pointer hover:bg-base-200' : 'opacity-70' }}"
+                                            >
                                                 <x-lazy-checkbox
                                                     primary
                                                     sm
@@ -187,7 +239,7 @@
                                                 />
 
                                                 <span class="min-w-0">
-                                                    <span class="block break-words font-medium">
+                                                    <span class="block break-words text-sm font-medium">
                                                         {{ $permissionItem['label'] }}
                                                     </span>
                                                     <span class="mt-1 block text-xs opacity-45">
@@ -200,10 +252,20 @@
                                 </x-lazy-fieldset>
                             @empty
                                 <div class="rounded-3xl border border-dashed border-base-300 p-10 text-center opacity-60">
-                                    {{ __('No permissions found.') }}
+                                    {{ __('lazy-admin::access.no_permissions') }}
                                 </div>
                             @endforelse
                         </div>
+                        @if ($permissionsEditable)
+                            <div class="sticky bottom-3 z-20 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-base-300 bg-base-100 p-4 shadow-lg">
+                                <p class="text-sm">
+                                    {{ __('lazy-admin::access.selected') }}:
+                                    <strong x-text="selected">{{ collect($permissionGroups)->flatten(1)->where('checked', true)->count() }}</strong>
+                                    / {{ $permissions->count() }}
+                                </p>
+                                <x-lazy-btn primary type="submit" :label="__('lazy-admin::access.save')" />
+                            </div>
+                        @endif
                     </form>
 
                     @if ($canDeleteRoles && ! $selectedIsSuperAdmin)
@@ -211,7 +273,7 @@
                             id="delete-selected-role"
                             method="POST"
                             action="{{ route($routePrefix.'.role.destroy', $selectedRole) }}"
-                            onsubmit="return confirm('{{ __('Delete this role?') }}')"
+                            onsubmit="return confirm('{{ __('lazy-admin::access.confirm_role_delete') }}')"
                         >
                             @csrf
                             @method('DELETE')
@@ -226,13 +288,13 @@
                         content-class="space-y-5"
                     >
                         <x-slot:summary>
-                            {{ __('Permission catalog') }}
+                            {{ __('lazy-admin::access.catalog') }}
                             <span class="ml-2 text-sm font-normal opacity-50">
-                                {{ __(':count total', ['count' => $permissions->count()]) }}
+                                {{ __('lazy-admin::access.total', ['count' => $permissions->count()]) }}
                             </span>
                         </x-slot:summary>
                             <p class="text-sm opacity-60">
-                                {{ __('Create, rename or remove reusable permissions. Role assignments are managed above.') }}
+                                {{ __('lazy-admin::access.catalog_description') }}
                             </p>
 
                             @if ($canCreatePermissions)
@@ -252,7 +314,7 @@
                                     />
 
                                     <x-lazy-btn primary type="submit">
-                                        ＋ {{ __('Create permission') }}
+                                        ＋ {{ __('lazy-admin::access.create_permission') }}
                                     </x-lazy-btn>
                                 </form>
                             @endif
@@ -278,7 +340,7 @@
                                                     required
                                                 />
 
-                                                <x-lazy-btn sm type="submit" :label="__('Save')" />
+                                                <x-lazy-btn sm type="submit" :label="__('lazy-admin::access.save')" />
                                             @else
                                                 <span class="min-w-0 flex-1 break-all font-medium">
                                                     {{ $permission->name }}
@@ -292,7 +354,7 @@
                                                     type="submit"
                                                     form="delete-permission-{{ $permission->getKey() }}"
                                                     class="text-error"
-                                                    title="{{ __('Delete') }}"
+                                                    title="{{ __('lazy-admin::access.delete') }}"
                                                 >×</x-lazy-btn>
                                             @endif
                                         </form>
@@ -302,7 +364,7 @@
                                                 id="delete-permission-{{ $permission->getKey() }}"
                                                 method="POST"
                                                 action="{{ route($routePrefix.'.permission.destroy', $permission) }}"
-                                                onsubmit="return confirm('{{ __('Delete this permission?') }}')"
+                                                onsubmit="return confirm('{{ __('lazy-admin::access.confirm_permission_delete') }}')"
                                             >
                                                 @csrf
                                                 @method('DELETE')
