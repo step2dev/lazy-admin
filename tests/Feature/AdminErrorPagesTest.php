@@ -38,3 +38,26 @@ it('honors a configured admin domain', function (): void {
     expect($render(new HttpException(404), Request::create('https://example.test/admin/missing')))->toBeNull()
         ->and($render(new HttpException(404), Request::create('https://admin.example.test/admin/missing'))?->getStatusCode())->toBe(404);
 });
+
+it('avoids the admin shell for guest requests and recoverable session errors', function (): void {
+    $renderer = new AdminErrorPages;
+
+    foreach ([401, 403, 404, 419, 429, 500, 503] as $status) {
+        $response = $renderer(new HttpException($status), Request::create('/admin/missing'));
+
+        expect($response?->getStatusCode())->toBe($status)
+            ->and($response?->getContent())->not->toContain('data-lazy-admin-shell');
+    }
+});
+
+it('uses the actual admin layout for signed-in missing pages', function (): void {
+    $user = new class extends \\Illuminate\\Foundation\\Auth\\User {};
+    $user->id = 123;
+    $this->be($user);
+
+    $response = (new AdminErrorPages)(new HttpException(404), Request::create('/admin/missing'));
+
+    expect($response?->getStatusCode())->toBe(404)
+        ->and($response?->getContent())->toContain('data-lazy-admin-shell')
+        ->and($response?->getContent())->toContain('Back to dashboard');
+});

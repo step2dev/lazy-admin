@@ -1,5 +1,5 @@
-{{-- Severe failures use a dependency-free fallback to prevent secondary rendering errors. --}}
-@if(in_array($status, [500, 503], true))
+{{-- Only authenticated 403/404 responses may render the full admin shell. --}}
+@if(! $useAdminLayout)
 @php
     $pages = [
         401 => ['title' => 'Authentication required', 'text' => 'Sign in to continue to the admin area.', 'icon' => 'lock'],

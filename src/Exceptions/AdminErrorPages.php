@@ -3,6 +3,7 @@
 namespace Step2dev\LazyAdmin\Exceptions;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -25,8 +26,12 @@ final class AdminErrorPages
             return null;
         }
 
+        $guard = (string) config('lazy.auth.guard', 'web');
+        $useAdminLayout = in_array($status, [403, 404], true) && Auth::guard($guard)->check();
+
         return response()->view('lazy::errors.page', [
             'status' => $status,
+            'useAdminLayout' => $useAdminLayout,
             'homeUrl' => url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/')),
         ], $status, $exception->getHeaders());
     }
