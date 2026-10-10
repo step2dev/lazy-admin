@@ -24,6 +24,7 @@ return [
     'no_permissions' => 'Прав доступу немає.',
     'selected' => 'Вибрано прав',
     'confirm_role_delete' => 'Видалити цю роль?',
+    'system_permission' => 'Системне · лише перегляд',
     'catalog' => 'Каталог прав',
     'total' => 'Усього: :count',
     'catalog_description' => 'Створення, перейменування та видалення прав. Права ролі призначаються вище.',
