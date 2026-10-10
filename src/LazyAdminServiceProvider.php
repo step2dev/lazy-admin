@@ -212,7 +212,7 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                 'dashboardUrl' => Route::has('admin.dashboard')
                     ? route('admin.dashboard')
                     : url((string) config('lazy.admin.home', '/')),
-                'profileUrl' => route(trim((string) config('lazy.admin.route.name', 'admin.'), '.').'.profile.show'),
+                'profileUrl' => Route::has($profileRoute = trim((string) config('lazy.admin.route.name', 'admin.'), '.').'.profile.show') ? route($profileRoute) : null,
                 'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
                 'logoUrl' => (static function (): ?string {
                     $logo = setting('admin.logo', config('lazy.admin.logo'));
