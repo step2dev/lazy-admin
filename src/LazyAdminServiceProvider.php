@@ -312,6 +312,14 @@ class LazyAdminServiceProvider extends PackageServiceProvider
             RouteFacade::put('profile/password', [ProfileController::class, 'password'])->middleware('throttle:6,1')->name('profile.password');
         }, ['middleware' => ['web', 'auth:'.config('lazy.auth.guard', 'web')]]);
 
+        // Let missing admin URLs pass through the same web/session/auth middleware as normal pages.
+        // Laravel evaluates fallback routes after regular routes, including host-defined admin routes.
+        RouteFacade::admin(function (): void {
+            RouteFacade::fallback(static function (): never {
+                abort(404);
+            });
+        });
+
         $prefix = trim((string) config('lazy.admin.route.name', 'admin.'), '.');
 
         app(SettingsRegistry::class)->registerSection(

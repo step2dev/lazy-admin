@@ -27,7 +27,7 @@ final class AdminErrorPages
         }
 
         $guard = (string) config('lazy.auth.guard', 'web');
-        $useAdminLayout = $status === 404 || ($status === 403 && Auth::guard($guard)->check());
+        $useAdminLayout = in_array($status, [403, 404], true) && Auth::guard($guard)->check();
 
         try {
             return response()->view('lazy::errors.page', [
