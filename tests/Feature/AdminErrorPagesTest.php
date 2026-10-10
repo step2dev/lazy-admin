@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Step2dev\LazyAdmin\Exceptions\AdminErrorPages;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -71,9 +72,8 @@ it('does not expose the admin interface to guests', function (): void {
         ->and($response?->getContent())->not->toContain('data-lazy-admin-shell');
 });
 
-
 it('registers a guarded fallback for unknown admin routes', function (): void {
-    $route = collect(\Illuminate\Support\Facades\Route::getRoutes()->getRoutes())
+    $route = collect(Route::getRoutes()->getRoutes())
         ->first(fn ($route) => $route->isFallback && str_contains($route->uri(), 'admin'));
 
     expect($route)->not->toBeNull()
