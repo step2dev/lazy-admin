@@ -2,6 +2,7 @@
 
 namespace Step2dev\LazyAdmin;
 
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,7 @@ use Step2dev\LazyAdmin\Controllers\SeoRedirectController;
 use Step2dev\LazyAdmin\Controllers\UserController;
 use Step2dev\LazyAdmin\Dashboard\DashboardRegistry;
 use Step2dev\LazyAdmin\Database\Seeders\DatabaseSeeder;
+use Step2dev\LazyAdmin\Exceptions\AdminErrorPages;
 use Step2dev\LazyAdmin\Facades\Route as RouteFacade;
 use Step2dev\LazyAdmin\Http\Livewire\Activity\Page as ActivityPage;
 use Step2dev\LazyAdmin\Http\Livewire\Dashboard\Page as DashboardPage;
@@ -203,6 +205,12 @@ class LazyAdminServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        $handler = $this->app->make(ExceptionHandler::class);
+
+        if (method_exists($handler, 'renderable')) {
+            $handler->renderable(new AdminErrorPages);
+        }
+
         View::composer('lazy::header', static function ($view): void {
             $guard = (string) config('lazy.auth.guard', 'web');
             $user = Auth::guard($guard)->user();
