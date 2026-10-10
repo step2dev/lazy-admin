@@ -1,6 +1,6 @@
 <x-lazy-layout :title="__('lazy-admin::access.title')">
-    <div class="mx-auto max-w-[1440px] space-y-5">
-        <div class="flex flex-col gap-2">
+    <div class="mx-auto w-full max-w-[1600px] space-y-5 px-1 pb-8">
+        <div class="flex flex-col gap-1 border-b border-base-300 pb-5">
             <h1 class="text-2xl font-semibold">{{ __('lazy-admin::access.title') }}</h1>
             <p class="text-sm opacity-60">
                 {{ __('lazy-admin::access.description') }}
@@ -21,7 +21,7 @@
             <x-lazy-alert success class="shadow-sm" :message="session('status')" />
         @endif
 
-        <div class="{{ $canViewRoles ? 'grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)]' : 'grid gap-5' }}">
+        <div class="grid grid-cols-1 items-start gap-5 {{ $canViewRoles ? 'lg:grid-cols-[300px_minmax(0,1fr)]' : '' }}">
             @if ($canViewRoles)
                 <aside class="space-y-4 lg:sticky lg:max-h-[calc(100dvh-6rem)] lg:overflow-y-auto lg:self-start" style="top: calc(var(--lazy-admin-content-sticky-offset, 4rem) + 1rem);">
                     @if ($canCreateRoles)
@@ -54,16 +54,17 @@
                         </section>
                     @endif
 
-                    <section class="space-y-3">
-                        <div class="text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
+                    <section class="space-y-3 rounded-xl border border-base-300 bg-base-100 p-3">
+                        <div class="flex items-center justify-between px-2 text-xs font-semibold uppercase tracking-wider opacity-60">
                             {{ __('lazy-admin::access.roles') }}
+                            <span class="text-xs font-normal tabular-nums">{{ $roles->count() }}</span>
                         </div>
 
-                        <div class="space-y-3">
+                        <nav class="space-y-1" aria-label="{{ __('lazy-admin::access.roles') }}">
                             @forelse ($roleItems as $roleItem)
                                 <a
                                     href="{{ $roleItem['href'] }}"
-                                    class="block rounded-xl border px-4 py-3 transition {{ $roleItem['active'] ? 'border-primary bg-primary/10' : 'border-base-300 bg-base-100 hover:bg-base-200' }}"
+                                    class="block rounded-lg border px-3 py-2.5 transition-colors {{ $roleItem['active'] ? 'border-primary/50 bg-primary/10' : 'border-transparent hover:border-base-300 hover:bg-base-200/70' }}"
                                     @if ($roleItem['active']) aria-current="page" @endif
                                 >
                                     <div class="flex items-center justify-between gap-3">
@@ -87,7 +88,7 @@
                                     {{ __('lazy-admin::access.no_roles') }}
                                 </div>
                             @endforelse
-                        </div>
+                        </nav>
                     </section>
 
                     <section class="rounded-xl border border-info/30 bg-info/10 p-4 text-base-content">
