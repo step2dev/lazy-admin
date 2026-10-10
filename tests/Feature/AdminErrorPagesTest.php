@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Step2dev\LazyAdmin\Exceptions\AdminErrorPages;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 it('renders only admin HTML errors', function (): void {
     config()->set('lazy.admin.route.prefix', 'admin');

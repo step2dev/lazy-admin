@@ -3,12 +3,13 @@
 namespace Step2dev\LazyAdmin\Exceptions;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 final class AdminErrorPages
 {
-    public function __invoke(Throwable $exception, Request $request): ?\Illuminate\Http\Response
+    public function __invoke(Throwable $exception, Request $request): ?Response
     {
         if ($request->expectsJson() || $request->is('livewire/*') || ! $this->isAdminRequest($request)) {
             return null;
