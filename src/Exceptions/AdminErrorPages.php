@@ -27,13 +27,28 @@ final class AdminErrorPages
         }
 
         $guard = (string) config('lazy.auth.guard', 'web');
-        $useAdminLayout = in_array($status, [403, 404], true) && Auth::guard($guard)->check();
+        $useAdminLayout = $status === 404 || ($status === 403 && Auth::guard($guard)->check());
 
-        return response()->view('lazy::errors.page', [
+        try {
+            return response()->view('lazy::errors.page', [
             'status' => $status,
             'useAdminLayout' => $useAdminLayout,
             'homeUrl' => url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/')),
-        ], $status, $exception->getHeaders());
+            ], $status, $exception->getHeaders());
+        } catch (Throwable $renderFailure) {
+            if (! $useAdminLayout) {
+                throw $renderFailure;
+            }
+
+            // A missing admin page must never escalate into a secondary server error.
+            report($renderFailure);
+
+            return response()->view('lazy::errors.page', [
+                'status' => $status,
+                'useAdminLayout' => false,
+                'homeUrl' => url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/')),
+            ], $status, $exception->getHeaders());
+        }
     }
 
     private function isAdminRequest(Request $request): bool

@@ -42,7 +42,7 @@ it('honors a configured admin domain', function (): void {
 it('avoids the admin shell for guest requests and recoverable session errors', function (): void {
     $renderer = new AdminErrorPages;
 
-    foreach ([401, 403, 404, 419, 429, 500, 503] as $status) {
+    foreach ([401, 403, 419, 429, 500, 503] as $status) {
         $response = $renderer(new HttpException($status), Request::create('/admin/missing'));
 
         expect($response?->getStatusCode())->toBe($status)
@@ -50,8 +50,8 @@ it('avoids the admin shell for guest requests and recoverable session errors', f
     }
 });
 
-it('uses the actual admin layout for signed-in missing pages', function (): void {
-    $user = new class extends \\Illuminate\\Foundation\\Auth\\User {};
+it('uses the actual admin layout for missing pages regardless of the authentication flag', function (): void {
+    $user = new class extends \Illuminate\Foundation\Auth\User {};
     $user->id = 123;
     $this->be($user);
 
@@ -60,4 +60,13 @@ it('uses the actual admin layout for signed-in missing pages', function (): void
     expect($response?->getStatusCode())->toBe(404)
         ->and($response?->getContent())->toContain('data-lazy-admin-shell')
         ->and($response?->getContent())->toContain('Back to dashboard');
+});
+
+
+it('attempts full admin rendering for a guest 404 instead of the standalone template', function (): void {
+    $renderer = new AdminErrorPages;
+    $response = $renderer(new HttpException(404), Request::create('/admin/missing'));
+
+    expect($response?->getStatusCode())->toBe(404)
+        ->and($response?->getContent())->toContain('data-lazy-admin-shell');
 });
