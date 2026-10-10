@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
@@ -11,6 +12,8 @@ use Step2dev\LazyAdmin\Tests\Fixtures\User;
 
 beforeEach(function (): void {
     $this->withoutVite();
+    Route::get('/login', fn () => 'Login')->name('login');
+    Route::getRoutes()->refreshNameLookups();
     config()->set([
         'database.connections.testing' => ['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => ''],
         'auth.providers.users.model' => User::class,
