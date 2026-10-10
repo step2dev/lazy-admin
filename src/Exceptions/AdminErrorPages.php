@@ -30,7 +30,7 @@ final class AdminErrorPages
         $useAdminLayout = in_array($status, [403, 404], true) && Auth::guard($guard)->check();
 
         try {
-            return response()->view('lazy::errors.page', [
+            return response()->view('lazy::errors.'.$status, [
                 'status' => $status,
                 'useAdminLayout' => $useAdminLayout,
                 'homeUrl' => url('/'.trim((string) config('lazy.admin.route.prefix', 'admin'), '/')),

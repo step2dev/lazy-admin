@@ -96,3 +96,15 @@ it('loads localized error titles and actions', function (): void {
     expect(__('lazy-admin::errors.404.title'))->toBe('Сторінку не знайдено')
         ->and(__('lazy-admin::errors.back_to_dashboard'))->toBe('До панелі керування');
 });
+
+
+it('renders the individual 404 view directly with the real admin shell', function (): void {
+    $user = new class extends User {};
+    $user->id = 456;
+    $this->be($user);
+
+    $response = (new AdminErrorPages)(new HttpException(404), Request::create('/admin/missing'));
+
+    expect($response?->getStatusCode())->toBe(404)
+        ->and($response?->getContent())->toContain('data-lazy-admin-shell');
+});
