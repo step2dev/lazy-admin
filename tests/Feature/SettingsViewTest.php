@@ -12,6 +12,7 @@ beforeEach(function (): void {
         (object) ['group' => 'admin', 'key' => 'description', 'value' => 'Example description'],
     ]));
     $this->settingsStore->shouldReceive('get')->with('admin.background', null)->andReturn(null);
+    $this->settingsStore->shouldReceive('get')->with('admin.logo_dark', null)->andReturn(null)->byDefault();
     $this->app->instance('setting', $this->settingsStore);
 });
 
@@ -58,4 +59,36 @@ it('displays validation errors next to the fields', function (): void {
         ->call('save')
         ->assertHasErrors(['settings.name' => 'max'])
         ->assertSee(__('validation.max.string', ['attribute' => 'settings.name', 'max' => 255]));
+});
+
+it('stores a dark logo and deletes only its replaced file', function (): void {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    $this->settingsStore->shouldReceive('get')->with('admin.logo', null)->andReturn('lazy-admin/settings/primary.png');
+    $this->settingsStore->shouldReceive('get')->with('admin.logo_dark', null)->andReturn('lazy-admin/settings/old-dark.png');
+    $this->settingsStore->shouldReceive('set')->with('admin.name', 'Example site')->once();
+    $this->settingsStore->shouldReceive('set')->with('admin.description', 'Example description')->once();
+    $this->settingsStore->shouldReceive('set')->with('admin.logo_dark', Mockery::type('string'), 'image')->once();
+    $disk = \Illuminate\Support\Facades\Storage::disk('public');
+    $disk->put('lazy-admin/settings/primary.png', 'primary');
+    $disk->put('lazy-admin/settings/old-dark.png', 'old');
+
+    $component = Livewire::test(Setting::class)
+        ->set('darkLogo', \Illuminate\Http\UploadedFile::fake()->image('dark.png'))
+        ->call('save')
+        ->assertHasNoErrors()
+        ->assertSet('darkLogo', null);
+
+    $disk->assertExists('lazy-admin/settings/primary.png');
+    $disk->assertMissing('lazy-admin/settings/old-dark.png');
+    expect($component->get('currentDarkLogoUrl'))->not->toBeNull();
+});
+
+it('rejects non-image dark logos', function (): void {
+    $this->settingsStore->shouldReceive('get')->with('admin.logo', null)->andReturn(null);
+    $this->settingsStore->shouldNotReceive('set');
+
+    Livewire::test(Setting::class)
+        ->set('darkLogo', \Illuminate\Http\UploadedFile::fake()->create('file.pdf', 10, 'application/pdf'))
+        ->call('save')
+        ->assertHasErrors(['darkLogo' => 'image']);
 });

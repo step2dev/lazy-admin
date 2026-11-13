@@ -45,6 +45,33 @@
             </div>
         </section>
 
+        <section aria-labelledby="site-dark-logo-title" class="flex flex-col gap-5 rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm sm:p-6">
+            <div class="flex flex-col gap-1">
+                <h2 id="site-dark-logo-title" class="text-lg font-semibold">{{ __('lazy-admin::settings.dark_logo') }}</h2>
+                <p class="text-sm opacity-70">{{ __('lazy-admin::settings.dark_logo_help') }}</p>
+            </div>
+
+            <div class="flex min-h-40 items-center justify-center rounded-xl border border-dashed border-base-300 bg-base-200 p-6">
+                @if ($currentDarkLogoUrl)
+                    <x-lazy-image :src="$currentDarkLogoUrl" :alt="__('lazy-admin::settings.current_dark_logo')" class="max-h-28 max-w-full object-contain" />
+                @else
+                    <span class="text-sm opacity-60">{{ __('lazy-admin::settings.dark_logo_fallback') }}</span>
+                @endif
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <x-lazy-form-image id="settings-dark-logo" wire:model="darkLogo" accept="image/*" hr
+                                   :label="__('lazy-admin::settings.upload_dark_logo')" aria-label="{{ __('lazy-admin::settings.upload_dark_logo') }}"
+                                   class="min-w-0 text-sm"
+                                   aria-describedby="settings-dark-logo-help" />
+                <p id="settings-dark-logo-help" class="text-xs opacity-70">{{ __('lazy-admin::settings.logo_limit') }}</p>
+                <p wire:loading wire:target="darkLogo" role="status" class="text-sm opacity-70">{{ __('lazy-admin::settings.uploading') }}</p>
+                @if ($darkLogo)
+                    <p class="break-words text-sm opacity-70">{{ __('lazy-admin::settings.selected', ['name' => $darkLogo->getClientOriginalName()]) }}</p>
+                @endif
+            </div>
+        </section>
+
         <section aria-labelledby="login-background-title" class="flex flex-col gap-5 rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm sm:p-6 lg:col-span-3">
             <div class="flex flex-col gap-1">
                 <h2 id="login-background-title" class="text-lg font-semibold">{{ __('lazy-admin::settings.login_background') }}</h2>
@@ -82,7 +109,7 @@
         <div class="flex items-center justify-end gap-3">
             @if($canEdit)
                 <span wire:dirty class="text-xs opacity-70">{{ __('lazy-admin::settings.unsaved_changes') }}</span>
-                <x-lazy-btn primary type="submit" wire:loading.attr="disabled" wire:target="save,logo,background">
+                <x-lazy-btn primary type="submit" wire:loading.attr="disabled" wire:target="save,logo,darkLogo,background">
                     <span wire:loading.remove wire:target="save">{{ __('lazy-admin::settings.save_changes') }}</span>
                     <span wire:loading wire:target="save" role="status">{{ __('lazy-admin::settings.saving') }}</span>
                 </x-lazy-btn>

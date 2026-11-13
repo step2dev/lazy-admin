@@ -1,7 +1,6 @@
 @php
     $brandTitle = setting('admin.name', config('lazy.auth.branding.title', config('app.name')));
     $brandSubtitle = setting('admin.description', config('lazy.auth.branding.subtitle'));
-    $brandLogo = setting('admin.logo', config('lazy.auth.branding.logo'));
     $brandBackground = setting('admin.background', config('lazy.auth.branding.background'));
 
     $resolveAsset = static function (?string $value): ?string {
@@ -22,7 +21,8 @@
         return \Illuminate\Support\Facades\Storage::disk('public')->url($value);
     };
 
-    $brandLogoUrl = $resolveAsset(is_string($brandLogo) ? $brandLogo : null);
+    $brandLogoUrl = \Step2dev\LazyAdmin\Support\Branding::logoUrl(fallback: config('lazy.auth.branding.logo'));
+    $brandDarkLogoUrl = \Step2dev\LazyAdmin\Support\Branding::logoUrl(true, config('lazy.auth.branding.logo'));
     $brandBackgroundUrl = $resolveAsset(is_string($brandBackground) ? $brandBackground : null);
     $resolvedHeading = $heading ?? null;
 
@@ -96,12 +96,12 @@
                 <div class="w-full max-w-md">
                     <div class="mb-8 text-center">
                         @if($brandLogoUrl)
-                            <img
-                                src="{{ $brandLogoUrl }}"
-                                alt="{{ $brandTitle }}"
-                                class="mx-auto mb-5 max-h-40 max-w-64 object-contain"
-                                onerror="this.hidden=true"
-                            />
+                            @include('lazy::brand-logo', [
+                                'logoUrl' => $brandLogoUrl,
+                                'darkLogoUrl' => $brandDarkLogoUrl,
+                                'logoAlt' => $brandTitle,
+                                'logoClass' => 'mx-auto mb-5 max-h-40 max-w-64 object-contain',
+                            ])
                         @endif
 
                         @if(filled($resolvedHeading) || ! $brandLogoUrl)

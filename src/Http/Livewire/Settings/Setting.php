@@ -20,9 +20,13 @@ class Setting extends Component
 
     public mixed $logo = null;
 
+    public mixed $darkLogo = null;
+
     public mixed $background = null;
 
     public ?string $currentLogoUrl = null;
+
+    public ?string $currentDarkLogoUrl = null;
 
     public ?string $currentBackgroundUrl = null;
 
@@ -45,6 +49,7 @@ class Setting extends Component
 
         $this->originalSettings = $this->settings;
         $this->currentLogoUrl = $this->resolveImageUrl(setting('admin.logo'));
+        $this->currentDarkLogoUrl = $this->resolveImageUrl(setting('admin.logo_dark'));
         $this->currentBackgroundUrl = $this->resolveImageUrl(setting('admin.background'));
     }
 
@@ -54,6 +59,7 @@ class Setting extends Component
             'settings.name' => ['nullable', 'string', 'max:255'],
             'settings.description' => ['nullable', 'string'],
             'logo' => ['nullable', 'image', 'max:1024'],
+            'darkLogo' => ['nullable', 'image', 'max:1024'],
             'background' => ['nullable', 'image', 'max:4096'],
         ];
     }
@@ -68,6 +74,7 @@ class Setting extends Component
             'name' => $this->originalSettings['name'] ?? null,
             'description' => $this->originalSettings['description'] ?? null,
             'logo' => setting('admin.logo'),
+            'logo_dark' => setting('admin.logo_dark'),
             'background' => setting('admin.background'),
         ];
 
@@ -75,15 +82,29 @@ class Setting extends Component
         setting()->set('admin.description', $this->settings['description'] ?? '');
 
         $logoPath = $old['logo'];
+        $darkLogoPath = $old['logo_dark'];
         $backgroundPath = $old['background'];
 
         if ($this->logo instanceof UploadedFile) {
             $logoPath = $this->logo->store('lazy-admin/settings', 'public');
 
             setting()->set('admin.logo', $logoPath, 'image');
-            $this->deleteStoredImage($old['logo']);
+            if ($old['logo'] !== $darkLogoPath) {
+                $this->deleteStoredImage($old['logo']);
+            }
             $this->currentLogoUrl = Storage::disk('public')->url($logoPath);
             $this->logo = null;
+        }
+
+        if ($this->darkLogo instanceof UploadedFile) {
+            $darkLogoPath = $this->darkLogo->store('lazy-admin/settings', 'public');
+
+            setting()->set('admin.logo_dark', $darkLogoPath, 'image');
+            if ($old['logo_dark'] !== $logoPath) {
+                $this->deleteStoredImage($old['logo_dark']);
+            }
+            $this->currentDarkLogoUrl = Storage::disk('public')->url($darkLogoPath);
+            $this->darkLogo = null;
         }
 
         if ($this->background instanceof UploadedFile) {
@@ -105,6 +126,7 @@ class Setting extends Component
                 'name' => $this->settings['name'] ?? '',
                 'description' => $this->settings['description'] ?? '',
                 'logo' => $logoPath,
+                'logo_dark' => $darkLogoPath,
                 'background' => $backgroundPath,
             ],
         );

@@ -2,11 +2,11 @@
     <div class="flex flex-auto items-center justify-start px-4">
         <a href="{{ $dashboardUrl }}" class="flex items-center space-x-2" aria-label="{{ config('app.name') }}">
             @if($logoUrl)
-                <img
-                    src="{{ $logoUrl }}"
-                    alt="{{ config('app.name') }}"
-                    class="h-10 max-w-40 object-contain"
-                />
+                @include('lazy::brand-logo', [
+                    'darkLogoUrl' => $darkLogoUrl ?? $logoUrl,
+                    'logoAlt' => config('app.name'),
+                    'logoClass' => 'h-10 max-w-40 object-contain',
+                ])
             @else
                 <svg
                     class="h-10 w-10 shrink-0"

@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'dark_logo' => 'Dark theme logo',
+    'dark_logo_help' => 'Optional. Used in the dark theme; the main logo is used when this is empty.',
+    'current_dark_logo' => 'Current dark theme logo',
+    'dark_logo_fallback' => 'The main logo will be used',
+    'upload_dark_logo' => 'Upload dark theme logo',
+
     'title' => 'Settings',
     'sections' => 'Settings sections',
     'general' => 'General',
