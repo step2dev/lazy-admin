@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
@@ -58,6 +57,7 @@ use Step2dev\LazyAdmin\Notifications\NotificationCenter;
 use Step2dev\LazyAdmin\Routing\Router as AdminRouter;
 use Step2dev\LazyAdmin\Search\SearchRegistry;
 use Step2dev\LazyAdmin\Settings\SettingsRegistry;
+use Step2dev\LazyAdmin\Support\Branding;
 use Step2Dev\LazyBreadcrumb\Breadcrumbs;
 use Step2Dev\LazyBreadcrumb\LazyBreadcrumbServiceProvider;
 use Step2dev\LazyMenu\Facades\Menu as MenuFacade;
@@ -223,25 +223,8 @@ class LazyAdminServiceProvider extends PackageServiceProvider
                     : url((string) config('lazy.admin.home', '/')),
                 'profileUrl' => Route::has($profileRoute) ? route($profileRoute) : null,
                 'settingsUrl' => Route::has('admin.setting.index') ? route('admin.setting.index') : null,
-                'logoUrl' => (static function (): ?string {
-                    $logo = setting('admin.logo', config('lazy.admin.logo'));
-
-                    if (! is_string($logo) || $logo === '') {
-                        return null;
-                    }
-
-                    if (
-                        str_starts_with($logo, 'http://')
-                        || str_starts_with($logo, 'https://')
-                        || str_starts_with($logo, '//')
-                        || str_starts_with($logo, 'data:')
-                        || str_starts_with($logo, '/')
-                    ) {
-                        return $logo;
-                    }
-
-                    return Storage::disk('public')->url($logo);
-                })(),
+                'logoUrl' => Branding::logoUrl(fallback: config('lazy.admin.logo')),
+                'darkLogoUrl' => Branding::logoUrl(true, config('lazy.admin.logo')),
                 'avatarUrl' => $user
                     ? (data_get($user, 'avatar')
                         ?: data_get($user, 'profile_photo_url')

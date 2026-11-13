@@ -413,3 +413,14 @@ Fortify's password-protected routes and are never embedded in the initial page.
 Administrators see the target's 2FA status but cannot read or reset their secrets.
 The optional simple Lazy Admin login refuses accounts with a 2FA secret so it
 cannot accidentally bypass Fortify's challenge.
+
+### Theme logos
+
+In Settings, upload the primary logo for the light theme and optionally a second logo
+for the dark theme (each up to 1 MB). If no dark logo is configured, the primary logo
+is used in both themes. Existing `admin.logo` settings and configured logo fallbacks
+remain supported; no migration is required.
+
+The admin header and authentication pages switch logos when the active
+`data-theme` changes to or from `dark`. The second image is stored as
+`admin.logo_dark` on the public disk alongside the primary image.

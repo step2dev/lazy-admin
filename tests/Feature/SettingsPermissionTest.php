@@ -55,6 +55,7 @@ beforeEach(function (): void {
     ]));
     $this->settingsStore->shouldReceive('get')->with('admin.logo', null)->andReturn(null);
     $this->settingsStore->shouldReceive('get')->with('admin.background', null)->andReturn(null);
+    $this->settingsStore->shouldReceive('get')->with('admin.logo_dark', null)->andReturn(null);
     $this->app->instance('setting', $this->settingsStore);
 
     Route::middleware(['web', 'auth', LazyAdminMiddleware::class])
